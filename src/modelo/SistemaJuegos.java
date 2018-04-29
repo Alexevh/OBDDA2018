@@ -1,0 +1,74 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package modelo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author alex
+ */
+public class SistemaJuegos {
+    
+    private List<Juego> listaJuegos = new ArrayList();
+    
+    private int maxJugadores = 2;
+    private int luz = 10;
+    private List<Jugador> listaJugadores = new ArrayList();
+    private List<Administrador> listaAdmins = new ArrayList();
+    private Juego proximoJuego = new Juego(luz, maxJugadores);
+    
+    public List<Juego> getListaJuegos() {
+        return listaJuegos;
+    }
+
+    public void setListaJuegos(List<Juego> listaJuegos) {
+        this.listaJuegos = listaJuegos;
+    }
+
+    public Juego getProximoJuego() {
+        return proximoJuego;
+    }
+
+    public void setProximoJuego(Juego proximoJuego) {
+        this.proximoJuego = proximoJuego;
+    }
+
+    public int getMaxJugadores() {
+        return maxJugadores;
+    }
+
+    public void setMaxJugadores(int maxJugadores) {
+        this.maxJugadores = maxJugadores;
+    }
+
+    public int getLuz() {
+        return luz;
+    }
+
+    public void setLuz(int luz) {
+        this.luz = luz;
+    }
+
+    public List<Jugador> getListaJugadores() {
+        return listaJugadores;
+    }
+
+    public void setListaJugadores(List<Jugador> listaJugadores) {
+        this.listaJugadores = listaJugadores;
+    }
+
+    public List<Administrador> getListaAdmins() {
+        return listaAdmins;
+    }
+
+    public void setListaAdmins(List<Administrador> listaAdmins) {
+        this.listaAdmins = listaAdmins;
+    }
+    
+    
+}
