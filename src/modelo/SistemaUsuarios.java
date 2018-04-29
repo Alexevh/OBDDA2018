@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class SistemaUsuarios {
     
-    private List<Usuario> listaUsuarios;
+    private List<Usuario> listaUsuarios = new ArrayList();
 
     public List<Usuario> getListaUsuarios() {
         return listaUsuarios;
@@ -26,5 +27,19 @@ public class SistemaUsuarios {
     public void agregarUsuario (Usuario u)
     {
         this.listaUsuarios.add(u);
+    }
+    
+    public Usuario loginAdmin(String login, String password)
+    {
+        for (Usuario a: listaUsuarios)
+        {
+            if (a.getClass().equals(Administrador.class) && a.getNombreUsuario().equalsIgnoreCase(login) && a.getPassword().equals(password))
+            {
+                return a;
+            }
+        }
+        
+        return null;
+        
     }
 }

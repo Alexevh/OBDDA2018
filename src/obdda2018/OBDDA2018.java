@@ -24,7 +24,7 @@ public class OBDDA2018 {
         
         
         generarUsuarios();
-        iniciarSistemJuegos();
+       
         
         
     }
@@ -45,12 +45,11 @@ public class OBDDA2018 {
         Fachada.getInstancia().agregarUsuario(j1);
         Fachada.getInstancia().agregarUsuario(j2);
         Fachada.getInstancia().agregarUsuario(j3);
+        
+        new MenuInicial().setVisible(true);
       
     }
 
-    private static void iniciarSistemJuegos() {
-        
-       
-    }
+   
     
 }
