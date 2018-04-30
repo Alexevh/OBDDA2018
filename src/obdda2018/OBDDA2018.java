@@ -34,17 +34,17 @@ public class OBDDA2018 {
         /* Agrego a dos administradores */
         Administrador a1 = new Administrador("Jack Bauer", "jack", "password");  
         Administrador a2 = new Administrador("Peter Parker", "peter", "password");
-        Fachada.getInstancia().agregarUsuario(a1);
-        Fachada.getInstancia().agregarUsuario(a2);
+        Fachada.getInstancia().agregarAdmin(a1);
+        Fachada.getInstancia().agregarAdmin(a2);
         
         /* Agrego a tres jugadores */
         Jugador j1 = new Jugador("Mario B", "mario", "password", 500); 
         Jugador j2 = new Jugador("Luigi B", "luigi", "password", 500); 
         Jugador j3 = new Jugador("Amanda A", "amanda", "password", 500); 
         
-        Fachada.getInstancia().agregarUsuario(j1);
-        Fachada.getInstancia().agregarUsuario(j2);
-        Fachada.getInstancia().agregarUsuario(j3);
+        Fachada.getInstancia().agregarJugador(j1);
+        Fachada.getInstancia().agregarJugador(j2);
+        Fachada.getInstancia().agregarJugador(j3);
         
         new MenuInicial().setVisible(true);
       

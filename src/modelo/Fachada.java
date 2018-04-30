@@ -40,9 +40,15 @@ public class Fachada extends Observable{
     }
     
     
-    public void agregarUsuario(Usuario u)
+    public void agregarAdmin(Administrador a)
     {
-        sisUsuarios.agregarUsuario(u);
+        sisUsuarios.agregarAdministrador(a);
+    }
+    
+    
+     public void agregarJugador(Jugador j)
+    {
+        sisUsuarios.agregarJugador(j);
     }
     
     public Usuario loginAdmin(String nombre, String password)
