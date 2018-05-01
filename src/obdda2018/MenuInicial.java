@@ -6,6 +6,7 @@
 package obdda2018;
 
 import vista.LoginAdmin;
+import vista.LoginJugador;
 
 /**
  *
@@ -30,6 +31,7 @@ public class MenuInicial extends javax.swing.JFrame {
     private void initComponents() {
 
         AbrirLoginAdmin = new javax.swing.JButton();
+        btn_jugador = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,13 +42,22 @@ public class MenuInicial extends javax.swing.JFrame {
             }
         });
 
+        btn_jugador.setText("Abrir login jugador");
+        btn_jugador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_jugadorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(AbrirLoginAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(AbrirLoginAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                    .addComponent(btn_jugador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(152, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -54,7 +65,9 @@ public class MenuInicial extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(AbrirLoginAdmin)
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_jugador)
+                .addContainerGap(180, Short.MAX_VALUE))
         );
 
         pack();
@@ -63,6 +76,10 @@ public class MenuInicial extends javax.swing.JFrame {
     private void AbrirLoginAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirLoginAdminActionPerformed
        new LoginAdmin().setVisible(true);
     }//GEN-LAST:event_AbrirLoginAdminActionPerformed
+
+    private void btn_jugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jugadorActionPerformed
+       new LoginJugador().setVisible(true);
+    }//GEN-LAST:event_btn_jugadorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,5 +118,6 @@ public class MenuInicial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AbrirLoginAdmin;
+    private javax.swing.JButton btn_jugador;
     // End of variables declaration//GEN-END:variables
 }

@@ -55,4 +55,9 @@ public class Fachada extends Observable{
     {
        return sisUsuarios.loginAdmin(nombre, password);
     }
+    
+    public Jugador loginJugador(String nombre, String password)
+    {
+       return sisUsuarios.loginJugador(nombre, password);
+    }
 }

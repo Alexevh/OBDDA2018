@@ -7,6 +7,7 @@ package controlador;
 
 import modelo.Administrador;
 import modelo.Fachada;
+import modelo.Jugador;
 
 /**
  *
@@ -23,7 +24,7 @@ public class ControladorLogin {
    
           public void loginAdmin(String u, String p)
     {
-        Administrador a = (Administrador)fachada.loginAdmin(u, p);
+        Administrador a = fachada.loginAdmin(u, p);
         
         if (a==null)
         {
@@ -34,5 +35,19 @@ public class ControladorLogin {
         }
         
     }
+          
+         public void loginJugador(String u, String p)
+    {
+        Jugador j = fachada.loginJugador(u, p);
+        
+        if (j==null)
+        {
+            vista.errorLoginIncorrecto();
+            
+        } else {
+            vista.ingresar(j);
+        }
+        
+    }     
       
 }

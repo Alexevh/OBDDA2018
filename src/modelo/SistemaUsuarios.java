@@ -15,7 +15,7 @@ import java.util.List;
 public class SistemaUsuarios {
     
     private List<Administrador> listaAdministradores= new ArrayList();
-private List<Jugador> ListaJugadores= new ArrayList();
+private List<Jugador> listaJugadores= new ArrayList();
 
     public List<Administrador> getListaAdministradores() {
         return listaAdministradores;
@@ -26,11 +26,11 @@ private List<Jugador> ListaJugadores= new ArrayList();
     }
 
     public List<Jugador> getListaJugadores() {
-        return ListaJugadores;
+        return listaJugadores;
     }
 
     public void setListaJugadores(List<Jugador> ListaJugadores) {
-        this.ListaJugadores = ListaJugadores;
+        this.listaJugadores = ListaJugadores;
     }
     
     public void agregarAdministrador(Administrador a)
@@ -44,9 +44,9 @@ private List<Jugador> ListaJugadores= new ArrayList();
     
      public void agregarJugador(Jugador j)
     {
-         if (!this.ListaJugadores.contains(j))
+         if (!this.listaJugadores.contains(j))
         {
-            this.ListaJugadores.add(j);
+            this.listaJugadores.add(j);
         }
     }
 
@@ -66,4 +66,19 @@ private List<Jugador> ListaJugadores= new ArrayList();
         return null;
         
     }
+    
+       public Jugador loginJugador(String login, String password)
+    {
+        for (Jugador j: listaJugadores)
+        {
+            if (j.getNombreUsuario().equalsIgnoreCase(login) && j.getPassword().equals(password))
+            {
+                return j;
+            }
+        }
+        
+        return null;
+        
+    }
+    
 }

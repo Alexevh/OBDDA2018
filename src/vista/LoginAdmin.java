@@ -54,13 +54,13 @@ public class LoginAdmin extends javax.swing.JFrame implements VistaLogin{
             }
         });
         getContentPane().add(txtLogin);
-        txtLogin.setBounds(120, 30, 200, 27);
+        txtLogin.setBounds(120, 30, 200, 20);
 
         jLabel2.setText("Password : ");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(30, 80, 80, 17);
+        jLabel2.setBounds(30, 80, 80, 14);
         getContentPane().add(txtPassword);
-        txtPassword.setBounds(120, 80, 200, 27);
+        txtPassword.setBounds(120, 80, 200, 20);
 
         jButton1.setText("Ingresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -69,7 +69,7 @@ public class LoginAdmin extends javax.swing.JFrame implements VistaLogin{
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(300, 120, 72, 29);
+        jButton1.setBounds(292, 120, 80, 23);
 
         setBounds(0, 0, 410, 196);
     }// </editor-fold>//GEN-END:initComponents
