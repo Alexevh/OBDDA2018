@@ -21,6 +21,19 @@ public class SistemaJuegos {
     private List<Jugador> listaJugadores = new ArrayList();
     private List<Administrador> listaAdmins = new ArrayList();
     private Juego proximoJuego = new Juego(luz, maxJugadores);
+
+    public SistemaJuegos() {
+        
+        /* Consultar al docente si cargamos el juego a la lista o no antes de iniciarse
+        Consultar si conviene o no tener lista de participantes en el sistema de juegos
+        
+        */
+        //this.listaJuegos.add(proximoJuego);
+    }
+    
+    
+    
+    
     
     public List<Juego> getListaJuegos() {
         return listaJuegos;

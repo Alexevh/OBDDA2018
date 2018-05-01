@@ -60,4 +60,8 @@ public class Fachada extends Observable{
     {
        return sisUsuarios.loginJugador(nombre, password);
     }
+    
+    public Juego getSiguienteJuego(){
+        return sisJuegos.getProximoJuego();
+    }
 }

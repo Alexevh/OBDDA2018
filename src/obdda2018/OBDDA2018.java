@@ -8,6 +8,7 @@ package obdda2018;
 import com.sun.prism.impl.BaseMesh;
 import modelo.Administrador;
 import modelo.Fachada;
+import modelo.Juego;
 import modelo.Jugador;
 import modelo.SistemaUsuarios;
 
@@ -24,7 +25,8 @@ public class OBDDA2018 {
         
         
         generarUsuarios();
-       
+        generarJuego();
+        new MenuInicial().setVisible(true);
         
         
     }
@@ -46,8 +48,14 @@ public class OBDDA2018 {
         Fachada.getInstancia().agregarJugador(j2);
         Fachada.getInstancia().agregarJugador(j3);
         
-        new MenuInicial().setVisible(true);
+        
       
+    }
+
+    private static void generarJuego() {
+        
+        
+        
     }
 
    

@@ -7,12 +7,13 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  *
  * @author alex
  */
-public class Juego {
+public class Juego extends Observable{
     
     private int pozo;
     private int luz;

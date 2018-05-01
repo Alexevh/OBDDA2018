@@ -8,7 +8,9 @@ package vista;
 import controlador.ControladorLogin;
 import controlador.VistaLogin;
 import iu.MesaJuego;
+import modelo.Fachada;
 import modelo.Jugador;
+import modelo.SistemaJuegos;
 import modelo.Usuario;
 
 
@@ -93,7 +95,9 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLogin{
      @Override
     public void ingresar(Usuario u) {
         dispose();
-        new MesaJuego((Jugador)u).setVisible(true);
+        /* Esto lo cambiamos manana*/
+        new MesaJuego((Jugador)u, Fachada.getInstancia().getSiguienteJuego()).setVisible(true);
+        
     }
     
     
