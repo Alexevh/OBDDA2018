@@ -14,22 +14,22 @@ import java.util.List;
  */
 public class SistemaUsuarios {
     
-    private List<Usuario> listaAdministradores= new ArrayList();
-private List<Usuario> ListaJugadores= new ArrayList();
+    private List<Administrador> listaAdministradores= new ArrayList();
+private List<Jugador> ListaJugadores= new ArrayList();
 
-    public List<Usuario> getListaAdministradores() {
+    public List<Administrador> getListaAdministradores() {
         return listaAdministradores;
     }
 
-    public void setListaAdministradores(List<Usuario> listaAdministradores) {
+    public void setListaAdministradores(List<Administrador> listaAdministradores) {
         this.listaAdministradores = listaAdministradores;
     }
 
-    public List<Usuario> getListaJugadores() {
+    public List<Jugador> getListaJugadores() {
         return ListaJugadores;
     }
 
-    public void setListaJugadores(List<Usuario> ListaJugadores) {
+    public void setListaJugadores(List<Jugador> ListaJugadores) {
         this.ListaJugadores = ListaJugadores;
     }
     
@@ -53,9 +53,9 @@ private List<Usuario> ListaJugadores= new ArrayList();
 
     
     /*  No castear, usar 2 listas una para admin y otra para jugadores */
-    public Usuario loginAdmin(String login, String password)
+    public Administrador loginAdmin(String login, String password)
     {
-        for (Usuario a: listaAdministradores)
+        for (Administrador a: listaAdministradores)
         {
             if (a.getNombreUsuario().equalsIgnoreCase(login) && a.getPassword().equals(password))
             {
