@@ -8,6 +8,7 @@ package controlador;
 import java.util.Observable;
 import java.util.Observer;
 import modelo.Juego;
+import modelo.Jugador;
 
 /**
  *
@@ -34,20 +35,25 @@ public class ControladorJuego implements Observer{
         this.vista = vista;
     }
 
-    public ControladorJuego(Juego juego, VistaJuego vista) {
+    public ControladorJuego(Juego juego, VistaJuego vista, Jugador j) {
         this.juego = juego;
-        this.vista = vista;
+        this.vista = vista;      
         juego.addObserver(this);
+        this.juego.agregarJugador(j);
     }
     
     
     
     
     
-
+    /* Metodo que escucha al juego y hace los cambios*/
     @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Observable o, Object evento) {
+        
+         if(evento.equals(Juego.Eventos.ingresaNuevoParticipante)){
+           vista.mostrarParticipantes();
+       }
+        
     }
     
     

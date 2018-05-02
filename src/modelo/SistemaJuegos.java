@@ -31,6 +31,12 @@ public class SistemaJuegos {
         //this.listaJuegos.add(proximoJuego);
     }
     
+    /* por experto */
+    public void agregarJugadorAproximoJuego(Jugador j)
+    {
+        this.proximoJuego.agregarJugador(j);
+    }
+    
     
     
     

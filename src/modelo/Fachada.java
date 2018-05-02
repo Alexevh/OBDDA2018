@@ -64,4 +64,9 @@ public class Fachada extends Observable{
     public Juego getSiguienteJuego(){
         return sisJuegos.getProximoJuego();
     }
+    
+    public void agregarJugadorSiguienteJuego(Jugador j)
+    {
+        sisJuegos.agregarJugadorAproximoJuego(j);
+    }
 }

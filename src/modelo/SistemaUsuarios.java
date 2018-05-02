@@ -73,6 +73,7 @@ private List<Jugador> listaJugadores= new ArrayList();
         {
             if (j.getNombreUsuario().equalsIgnoreCase(login) && j.getPassword().equals(password))
             {
+                
                 return j;
             }
         }

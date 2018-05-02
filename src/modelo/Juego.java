@@ -22,6 +22,22 @@ public class Juego extends Observable{
     private List<Participante> listaParticipantes;
     private List<Jugador> listaJugadores;
     private Mazo mazo;
+    /*Preguntar al docente*/
+    private boolean iniciado;
+    
+    public enum Eventos {
+        inicioJuego, ingresaNuevoParticipante;
+    }
+
+    public boolean isIniciado() {
+        return iniciado;
+    }
+
+    public void setIniciado(boolean iniciado) {
+        this.iniciado = iniciado;
+    }
+    
+    
 
     public int getPozo() {
         return pozo;
@@ -94,6 +110,27 @@ public class Juego extends Observable{
         
     }
     
+    /* preguntar si se agrega a ambas listas */
+    public void agregarJugador(Jugador j)
+    {
+        /* Lo primero antes de agregar un jugador es verificar que haya lugar */
+        if (this.listaJugadores.size() < this.cantidadJugadores)
+        {
+            this.listaJugadores.add(j);
+            Participante p = new Participante();
+            p.setActivo(true);
+            p.setJugador(j);
+            this.listaParticipantes.add(p);
+            /* Aviso el cambio */
+            avisar(Eventos.ingresaNuevoParticipante);
+        }
+    }
+    
+    /* Metodo que avisa a los observadores*/
+      private void avisar(Eventos evento) {
+        setChanged();
+        notifyObservers(evento);
+    }
     
     
 }

@@ -51,8 +51,9 @@ ControladorJuego controlador;
         initComponents();
         this.j=j;
         this.juego = juego;
-        controlador = new ControladorJuego(juego, this);
-        txtInformacion.setText("Paricipantes :"+this.juego.getCantidadJugadores());
+        controlador = new ControladorJuego(juego, this, j);
+        
+        //txtInformacion.setText("Paricipantes :"+this.juego.getCantidadJugadores());
     }
 
     
@@ -86,4 +87,9 @@ ControladorJuego controlador;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel txtInformacion;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mostrarParticipantes() {
+        this.txtInformacion.setText("Hay un nuevo participante, faltan : "+(this.juego.getCantidadJugadores()-this.juego.getListaJugadores().size()));
+    }
 }

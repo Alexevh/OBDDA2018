@@ -42,15 +42,15 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLogin{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
         getContentPane().add(txt_name);
-        txt_name.setBounds(120, 40, 150, 20);
+        txt_name.setBounds(120, 40, 150, 27);
 
         jLabel1.setText("Login:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(10, 40, 29, 14);
+        jLabel1.setBounds(10, 40, 42, 17);
 
         jLabel2.setText("Password:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(10, 90, 60, 14);
+        jLabel2.setBounds(10, 90, 60, 17);
 
         jButton1.setText("Ingresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -59,11 +59,9 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLogin{
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(270, 130, 73, 23);
-
-        txt_pass.setText("jPasswordField1");
+        jButton1.setBounds(270, 130, 69, 29);
         getContentPane().add(txt_pass);
-        txt_pass.setBounds(120, 90, 150, 20);
+        txt_pass.setBounds(120, 90, 150, 27);
 
         setBounds(0, 0, 416, 207);
     }// </editor-fold>//GEN-END:initComponents
@@ -95,7 +93,7 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLogin{
      @Override
     public void ingresar(Usuario u) {
         dispose();
-        /* Esto lo cambiamos manana*/
+        /* Esto lo cambiamos manana, preguntar al docente si esta bien ponerlo en el constructor el juego*/
         new MesaJuego((Jugador)u, Fachada.getInstancia().getSiguienteJuego()).setVisible(true);
         
     }

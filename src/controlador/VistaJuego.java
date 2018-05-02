@@ -11,4 +11,5 @@ package controlador;
  */
 public interface VistaJuego {
     
+    public void mostrarParticipantes();
 }
