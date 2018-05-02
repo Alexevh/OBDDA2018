@@ -110,7 +110,7 @@ public class Juego extends Observable{
         
     }
     
-    /* preguntar si se agrega a ambas listas */
+    /* preguntar si se agrega a ambas listas  devolver al particpante*/
     public void agregarJugador(Jugador j)
     {
         /* Lo primero antes de agregar un jugador es verificar que haya lugar */

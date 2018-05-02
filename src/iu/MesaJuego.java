@@ -51,6 +51,7 @@ ControladorJuego controlador;
         initComponents();
         this.j=j;
         this.juego = juego;
+        /* El juego no se almacena en la vista, solo en el controlador*/
         controlador = new ControladorJuego(juego, this, j);
         
         //txtInformacion.setText("Paricipantes :"+this.juego.getCantidadJugadores());
@@ -88,6 +89,7 @@ ControladorJuego controlador;
     private javax.swing.JLabel txtInformacion;
     // End of variables declaration//GEN-END:variables
 
+    /* OJO la vista jamas debe conocer nada del modelo, solo trabaja mediante el controlador*/
     @Override
     public void mostrarParticipantes() {
         this.txtInformacion.setText("Hay un nuevo participante, faltan : "+(this.juego.getCantidadJugadores()-this.juego.getListaJugadores().size()));

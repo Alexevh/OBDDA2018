@@ -35,10 +35,12 @@ public class ControladorJuego implements Observer{
         this.vista = vista;
     }
 
+    /* Cambiar jugador por particpante, */
     public ControladorJuego(Juego juego, VistaJuego vista, Jugador j) {
         this.juego = juego;
         this.vista = vista;      
         juego.addObserver(this);
+        /* Esto hay que hacerlo en el login asi el sistema sabe si hay un juego nuevo*/
         this.juego.agregarJugador(j);
     }
     
