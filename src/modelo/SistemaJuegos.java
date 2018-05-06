@@ -8,10 +8,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author alex
- */
+
 public class SistemaJuegos {
     
     private List<Juego> listaJuegos = new ArrayList();
@@ -47,9 +44,6 @@ public class SistemaJuegos {
     public void setMinimasApuestas(int minimasApuestas) {
         this.minimasApuestas = minimasApuestas;
     }
-    
-    
-    
     
     
     public List<Juego> getListaJuegos() {

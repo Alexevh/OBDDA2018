@@ -23,16 +23,17 @@ public class ControladorLogin {
         this.vista = vista;
     }
     
-    public void loginAdmin(String u, String p) {
-        Administrador a = fachada.loginAdmin(u, p);
-        vista.ingresar(a);
-        
-        if (a == null) {
-            vista.errorLoginIncorrecto("Incorrecto");
-            
-        } else {
+    public void loginAdmin(String u, String p)throws PokerExcepciones  {
+       
+        try{
+            Administrador a = fachada.loginAdmin(u, p);
+            vista.ingresar(a);
+        }catch (PokerExcepciones e) {
+     
+            vista.errorLoginIncorrecto(e.getMessage());
             
         }
+   
         
     }
     

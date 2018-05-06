@@ -54,7 +54,7 @@ private List<Jugador> listaJugadores= new ArrayList();
 
     
     /*  No castear, usar 2 listas una para admin y otra para jugadores */
-    public Administrador loginAdmin(String login, String password)
+    public Administrador loginAdmin(String login, String password)throws PokerExcepciones
     {
         for (Administrador a: listaAdministradores)
         {
@@ -64,8 +64,8 @@ private List<Jugador> listaJugadores= new ArrayList();
             }
         }
         
-        return null;
-        
+        //return null;
+        throw new PokerExcepciones("No existe el usuario");
     }
     
     /*  Es el sistema que levanta la excepcion?*/
