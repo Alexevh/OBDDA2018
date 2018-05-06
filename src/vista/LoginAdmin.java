@@ -110,11 +110,7 @@ public class LoginAdmin extends javax.swing.JFrame implements VistaLogin{
     @Override
     public void ingresar(Usuario u) {
         dispose();
-       try{
-            new MenuAdministrador((Administrador)u).setVisible(true);
-        } catch (IOException ex) {
-         Logger.getLogger(LoginAdmin.class.getName()).log(Level.SEVERE, null, ex);
-     }
+        new MenuAdministrador((Administrador)u).setVisible(true);
     }
 
    private void login()throws PokerExcepciones  {

@@ -23,19 +23,19 @@ public class ControladorLogin {
         this.vista = vista;
     }
     
-  /*  public void loginAdmin(String u, String p)throws PokerExcepciones  {
+   public void loginAdmin(String u, String p)throws PokerExcepciones  {
        
-        try{
-            Administrador a = fachada.loginAdmin(u, p);
-            vista.ingresar(a);
-        }catch (PokerExcepciones e) {
-     
-            vista.errorLoginIncorrecto(e.getMessage());
-            
-        }
+       try {
+           Administrador a = fachada.loginAdmin(u, p);
+       vista.ingresar(a);
+       } catch (PokerExcepciones ex)
+       {
+           vista.errorLoginIncorrecto(ex.getMessage());
+       }
+       
    
         
-    }*/
+    }
     
     public void loginJugador(String u, String p) throws PokerExcepciones {
         

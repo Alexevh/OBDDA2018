@@ -54,7 +54,7 @@ public class Fachada extends Observable{
         sisUsuarios.agregarJugador(j);
     }
     
-    public Administrador loginAdmin(String nombre, String password)
+    public Administrador loginAdmin(String nombre, String password) throws PokerExcepciones
     {
        return sisUsuarios.loginAdmin(nombre, password);
     }
