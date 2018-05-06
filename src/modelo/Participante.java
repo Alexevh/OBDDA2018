@@ -41,10 +41,7 @@ public class Participante {
         this.jugador = jugador;
     }
     
-    public boolean equals(Participante p) {
-    
-        return p.getJugador().getNombreUsuario().equals(this.getJugador().getNombreUsuario());
-}
+   
 
     @Override
     public boolean equals(Object object)
