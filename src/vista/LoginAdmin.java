@@ -16,10 +16,7 @@ import javax.swing.JOptionPane;
 import modelo.Administrador;
 import modelo.Usuario;
 
-/**
- *
- * @author alex
- */
+
 public class LoginAdmin extends javax.swing.JFrame implements VistaLogin{
 
     private ControladorLogin controlador;
@@ -113,14 +110,14 @@ public class LoginAdmin extends javax.swing.JFrame implements VistaLogin{
     @Override
     public void ingresar(Usuario u) {
         dispose();
-        try{
+       try{
             new MenuAdministrador((Administrador)u).setVisible(true);
         } catch (IOException ex) {
          Logger.getLogger(LoginAdmin.class.getName()).log(Level.SEVERE, null, ex);
      }
     }
 
-    private void login()throws PokerExcepciones  {
+   private void login()throws PokerExcepciones  {
         String pwd = new String(txtPassword.getPassword());
         controlador.loginAdmin(txtLogin.getText(), pwd);
     }

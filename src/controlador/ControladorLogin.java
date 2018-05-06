@@ -23,7 +23,7 @@ public class ControladorLogin {
         this.vista = vista;
     }
     
-    public void loginAdmin(String u, String p)throws PokerExcepciones  {
+  /*  public void loginAdmin(String u, String p)throws PokerExcepciones  {
        
         try{
             Administrador a = fachada.loginAdmin(u, p);
@@ -35,7 +35,7 @@ public class ControladorLogin {
         }
    
         
-    }
+    }*/
     
     public void loginJugador(String u, String p) throws PokerExcepciones {
         
