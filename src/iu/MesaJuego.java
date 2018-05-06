@@ -7,6 +7,15 @@ package iu;
 
 import controlador.ControladorJuego;
 import controlador.VistaJuego;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import modelo.Juego;
 import modelo.Jugador;
 
@@ -41,14 +50,14 @@ ControladorJuego controlador;
     /**
      * Creates new form MesaJuego
      */
-    public MesaJuego(Jugador j, Juego juego) {
+    public MesaJuego(Jugador j, Juego juego) throws IOException {
         initComponents();
         this.j=j;
         
         /* El juego no se almacena en la vista, solo en el controlador*/
         controlador = new ControladorJuego(juego, this, j);
         controlador.agregarParticipante(j);
-        
+        pintarMesa();
         //txtInformacion.setText("Paricipantes :"+this.juego.getCantidadJugadores());
     }
 
@@ -64,15 +73,28 @@ ControladorJuego controlador;
     private void initComponents() {
 
         txtInformacion = new javax.swing.JLabel();
+        imgSaldo = new javax.swing.JLabel();
+        imgPozo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
+        txtInformacion.setForeground(new java.awt.Color(253, 251, 251));
         txtInformacion.setText("Cantidad de participantes");
         getContentPane().add(txtInformacion);
-        txtInformacion.setBounds(30, 20, 260, 17);
+        txtInformacion.setBounds(260, 20, 260, 17);
 
-        setBounds(0, 0, 628, 339);
+        imgSaldo.setForeground(new java.awt.Color(254, 247, 247));
+        imgSaldo.setText("Mi saldo");
+        getContentPane().add(imgSaldo);
+        imgSaldo.setBounds(10, 400, 230, 30);
+
+        imgPozo.setForeground(new java.awt.Color(254, 254, 254));
+        imgPozo.setText("Pozo actual  $: ");
+        getContentPane().add(imgPozo);
+        imgPozo.setBounds(340, 180, 240, 50);
+
+        setBounds(0, 0, 818, 472);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -81,6 +103,8 @@ ControladorJuego controlador;
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel imgPozo;
+    private javax.swing.JLabel imgSaldo;
     private javax.swing.JLabel txtInformacion;
     // End of variables declaration//GEN-END:variables
 
@@ -89,5 +113,24 @@ ControladorJuego controlador;
     public void mostrarParticipantes() {
         
         this.txtInformacion.setText("Hay un nuevo participante, faltan : "+(this.controlador.getJuego().getCantidadJugadores()- controlador.getJuego().getListaParticipantes().size()));
+    }
+
+    private void pintarMesa() {
+       
+        setLayout(new BorderLayout());
+	JLabel background=new JLabel(new ImageIcon("src/imagenes/pkt2.jpg"));
+       
+	add(background);
+	background.setLayout(new FlowLayout());
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/imagenes/saldo.jpg").getImage().getScaledInstance(60, 70, Image.SCALE_DEFAULT));
+        imgSaldo.setIcon(imageIcon);
+        imgSaldo.setText("Saldo : "+j.getSaldo());
+        
+        ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.jpg").getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        imgPozo.setIcon(pozo);
+        imgPozo.setText("Pozo : $ "+controlador.getJuego().getPozo());
+        
+        //imgSaldo.setIcon(new ImageIcon("/home/alex/Downloads/saldo.jpg"));
+	
     }
 }

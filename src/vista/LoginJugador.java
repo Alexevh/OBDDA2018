@@ -9,6 +9,7 @@ import Excepciones.PokerExcepciones;
 import controlador.ControladorLogin;
 import controlador.VistaLogin;
 import iu.MesaJuego;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -103,8 +104,12 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLogin{
      @Override
     public void ingresar(Usuario u) {
         dispose();
-        /* Esto lo cambiamos manana, preguntar al docente si esta bien ponerlo en el constructor el juego*/
-        new MesaJuego((Jugador)u, Fachada.getInstancia().getSiguienteJuego()).setVisible(true);
+     try {
+         /* Esto lo cambiamos manana, preguntar al docente si esta bien ponerlo en el constructor el juego*/
+         new MesaJuego((Jugador)u, Fachada.getInstancia().getSiguienteJuego()).setVisible(true);
+     } catch (IOException ex) {
+         Logger.getLogger(LoginJugador.class.getName()).log(Level.SEVERE, null, ex);
+     }
         
     }
     
