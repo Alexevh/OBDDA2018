@@ -18,9 +18,12 @@ public class SistemaJuegos {
     
     private int maxJugadores = 2;
     private int luz = 10;
+    /* Esto es para calcular el saldo antes de dejar entrar al jugador, si el saldo del jugador es menor a este numero X luz entonces no entra*/
+    private int minimasApuestas = 3;
     private List<Jugador> listaJugadores = new ArrayList();
     private List<Administrador> listaAdmins = new ArrayList();
     private Juego proximoJuego = new Juego(luz, maxJugadores);
+    
 
     public SistemaJuegos() {
         
@@ -35,6 +38,14 @@ public class SistemaJuegos {
     public void agregarJugadorAproximoJuego(Jugador j)
     {
         this.proximoJuego.agregarJugador(j);
+    }
+
+    public int getMinimasApuestas() {
+        return minimasApuestas;
+    }
+
+    public void setMinimasApuestas(int minimasApuestas) {
+        this.minimasApuestas = minimasApuestas;
     }
     
     

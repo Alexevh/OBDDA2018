@@ -13,7 +13,7 @@ import modelo.Usuario;
  */
 public interface VistaLogin {
     
-     public void errorLoginIncorrecto();
+     public void errorLoginIncorrecto(String msg);
 
     public void ingresar(Usuario u);
 }

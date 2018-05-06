@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import Excepciones.PokerExcepciones;
 import java.util.Observable;
 
 /**
@@ -40,6 +41,8 @@ public class Fachada extends Observable{
     }
     
     
+    
+    
     public void agregarAdmin(Administrador a)
     {
         sisUsuarios.agregarAdministrador(a);
@@ -56,7 +59,7 @@ public class Fachada extends Observable{
        return sisUsuarios.loginAdmin(nombre, password);
     }
     
-    public Jugador loginJugador(String nombre, String password)
+    public Jugador loginJugador(String nombre, String password) throws PokerExcepciones
     {
        return sisUsuarios.loginJugador(nombre, password);
     }
@@ -69,4 +72,10 @@ public class Fachada extends Observable{
     {
         sisJuegos.agregarJugadorAproximoJuego(j);
     }
+
+    public int getMinimasApuestas() {
+        return sisJuegos.getMinimasApuestas();
+    }
+    
+    
 }

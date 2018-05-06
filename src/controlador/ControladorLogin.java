@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import Excepciones.PokerExcepciones;
 import modelo.Administrador;
 import modelo.Fachada;
 import modelo.Jugador;
@@ -15,39 +16,35 @@ import modelo.Jugador;
  */
 public class ControladorLogin {
     
-    private Fachada fachada =  Fachada.getInstancia();
+    private Fachada fachada = Fachada.getInstancia();
     private VistaLogin vista;
     
-      public ControladorLogin(VistaLogin vista) {
+    public ControladorLogin(VistaLogin vista) {
         this.vista = vista;
     }
-   
-          public void loginAdmin(String u, String p)
-    {
+    
+    public void loginAdmin(String u, String p) {
         Administrador a = fachada.loginAdmin(u, p);
+        vista.ingresar(a);
         
-        if (a==null)
-        {
-            vista.errorLoginIncorrecto();
+        if (a == null) {
+            vista.errorLoginIncorrecto("Incorrecto");
             
         } else {
-            vista.ingresar(a);
+            
         }
         
     }
-          
-         public void loginJugador(String u, String p)
-    {
-        Jugador j = fachada.loginJugador(u, p);
+    
+    public void loginJugador(String u, String p) throws PokerExcepciones {
         
-        if (j==null)
-        {
-            vista.errorLoginIncorrecto();
-            
-        } else {
+        try {
+            Jugador j = fachada.loginJugador(u, p);
             vista.ingresar(j);
+        } catch (PokerExcepciones e) {
+            vista.errorLoginIncorrecto(e.getMessage());
         }
         
-    }     
-      
+    }    
+    
 }

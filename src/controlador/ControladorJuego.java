@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 import modelo.Juego;
 import modelo.Jugador;
+import modelo.Participante;
 
 /**
  *
@@ -41,6 +42,18 @@ public class ControladorJuego implements Observer{
         this.vista = vista;      
         juego.addObserver(this);
         /* Esto hay que hacerlo en el login asi el sistema sabe si hay un juego nuevo*/
+        //this.juego.agregarJugador(j);
+    }
+    
+    /* Agregue este metodo por que como saque la segunda lista de jugadores por indicacion del docente, si dejaba en
+    el constructor el agregar participante entonces en el inicio de la vista el constructor no habia acabado, entonces estaba en null
+    y cuando se disparaba el evento daba una excepcion
+    
+    Es por eso que ahora la clase mesajuego primero crea el controlador y recien luego agrega al participante, hay que pensar y de ultima
+    consultar al docente si eso esta bien, si esta bien que la vista llame a ese metodo del controlador o si deberiamos solucionar toda la
+    linea en el mismo metodo del controlador.
+    */
+    public void agregarParticipante(Jugador j){
         this.juego.agregarJugador(j);
     }
     
@@ -52,13 +65,17 @@ public class ControladorJuego implements Observer{
     @Override
     public void update(Observable o, Object evento) {
         
-         if(evento.equals(Juego.Eventos.ingresaNuevoParticipante)){
-           vista.mostrarParticipantes();
-       }
+         switch ((Juego.Eventos)evento) {
+             case 
+             ingresaNuevoParticipante:
+             vista.mostrarParticipantes();
+             break;
+        
+       
         
     }
     
     
-    
+    } 
     
 }

@@ -18,9 +18,9 @@ public class Juego extends Observable{
     private int pozo;
     private int luz;
     private int cantidadJugadores;
-    private List<Mano> listaManos;
-    private List<Participante> listaParticipantes;
-    private List<Jugador> listaJugadores;
+    private List<Mano> listaManos = new ArrayList();
+    private List<Participante> listaParticipantes = new ArrayList();
+  
     private Mazo mazo;
     /*Preguntar al docente*/
     private boolean iniciado;
@@ -87,13 +87,7 @@ public class Juego extends Observable{
         this.mazo = mazo;
     }
 
-    public List<Jugador> getListaJugadores() {
-        return listaJugadores;
-    }
 
-    public void setListaJugadores(List<Jugador> listaJugadores) {
-        this.listaJugadores = listaJugadores;
-    }
     
     
 
@@ -103,20 +97,20 @@ public class Juego extends Observable{
     public Juego(int luz, int cantidadJugadores) {
         this.luz = luz;
         this.cantidadJugadores = cantidadJugadores;
-        this.listaManos = new ArrayList();
-        this.listaParticipantes = new ArrayList();
+        //this.listaManos = new ArrayList();
+        //this.listaParticipantes = new ArrayList();
         this.mazo = new Mazo();
-        this.listaJugadores = new ArrayList();
+        
         
     }
     
-    /* preguntar si se agrega a ambas listas  devolver al particpante*/
+   
     public void agregarJugador(Jugador j)
     {
         /* Lo primero antes de agregar un jugador es verificar que haya lugar */
-        if (this.listaJugadores.size() < this.cantidadJugadores)
+        if (this.listaParticipantes.size() < this.cantidadJugadores)
         {
-            this.listaJugadores.add(j);
+            
             Participante p = new Participante();
             p.setActivo(true);
             p.setJugador(j);

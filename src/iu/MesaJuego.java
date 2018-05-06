@@ -14,16 +14,10 @@ import modelo.Jugador;
 public class MesaJuego extends javax.swing.JFrame  implements VistaJuego{
     
 Jugador j;
-Juego juego;
+
 ControladorJuego controlador;
 
-    public Juego getJuego() {
-        return juego;
-    }
-
-    public void setJuego(Juego juego) {
-        this.juego = juego;
-    }
+  
 
     public ControladorJuego getControlador() {
         return controlador;
@@ -50,9 +44,10 @@ ControladorJuego controlador;
     public MesaJuego(Jugador j, Juego juego) {
         initComponents();
         this.j=j;
-        this.juego = juego;
+        
         /* El juego no se almacena en la vista, solo en el controlador*/
         controlador = new ControladorJuego(juego, this, j);
+        controlador.agregarParticipante(j);
         
         //txtInformacion.setText("Paricipantes :"+this.juego.getCantidadJugadores());
     }
@@ -92,6 +87,7 @@ ControladorJuego controlador;
     /* OJO la vista jamas debe conocer nada del modelo, solo trabaja mediante el controlador*/
     @Override
     public void mostrarParticipantes() {
-        this.txtInformacion.setText("Hay un nuevo participante, faltan : "+(this.juego.getCantidadJugadores()-this.juego.getListaJugadores().size()));
+        
+        this.txtInformacion.setText("Hay un nuevo participante, faltan : "+(this.controlador.getJuego().getCantidadJugadores()- controlador.getJuego().getListaParticipantes().size()));
     }
 }

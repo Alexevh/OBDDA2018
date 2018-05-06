@@ -5,9 +5,13 @@
  */
 package vista;
 
+import Excepciones.PokerExcepciones;
 import controlador.ControladorLogin;
 import controlador.VistaLogin;
 import iu.MesaJuego;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modelo.Fachada;
 import modelo.Jugador;
 import modelo.SistemaJuegos;
@@ -67,12 +71,18 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLogin{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        login();
+     try {
+         login();
+     } catch (PokerExcepciones ex) {
+         Logger.getLogger(LoginJugador.class.getName()).log(Level.SEVERE, null, ex);
+     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     @Override
-    public void errorLoginIncorrecto() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void errorLoginIncorrecto(String msg) {
+        
+        JOptionPane.showMessageDialog(this, msg);
+    
     }
 
    
@@ -99,7 +109,7 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLogin{
     }
     
     
-    private void login() {
+    private void login() throws PokerExcepciones {
          String pwd = new String(txt_pass.getPassword());
         controlador.loginJugador(txt_name.getText(), pwd);
     }

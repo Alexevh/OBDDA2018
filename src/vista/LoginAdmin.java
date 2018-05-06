@@ -8,6 +8,7 @@ package vista;
 import iu.MenuAdministrador;
 import controlador.ControladorLogin;
 import controlador.VistaLogin;
+import javax.swing.JOptionPane;
 import modelo.Administrador;
 import modelo.Usuario;
 
@@ -126,8 +127,8 @@ public class LoginAdmin extends javax.swing.JFrame implements VistaLogin{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void errorLoginIncorrecto() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void errorLoginIncorrecto(String msg) {
+        JOptionPane.showMessageDialog(this, msg);
     }
 
     @Override
