@@ -5,6 +5,7 @@
  */
 package iu;
 
+import Excepciones.PokerExcepciones;
 import controlador.ControladorJuego;
 import controlador.VistaJuego;
 import java.awt.BorderLayout;
@@ -13,20 +14,23 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import modelo.Juego;
 import modelo.Jugador;
+import modelo.Participante;
 
+public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
-public class MesaJuego extends javax.swing.JFrame  implements VistaJuego{
-    
-Jugador j;
+    /* JUgador o participante aca???*/
+    Participante j;
 
-ControladorJuego controlador;
-
-  
+    ControladorJuego controlador;
 
     public ControladorJuego getControlador() {
         return controlador;
@@ -36,24 +40,23 @@ ControladorJuego controlador;
         this.controlador = controlador;
     }
 
-
-
-    public Jugador getJ() {
+    public Participante getJ() {
         return j;
     }
 
-    public void setJ(Jugador j) {
+    public void setJ(Participante j) {
         this.j = j;
     }
-    
+
+  
 
     /**
      * Creates new form MesaJuego
      */
-    public MesaJuego(Jugador j, Juego juego) throws IOException {
+    public MesaJuego(Participante j, Juego juego)  {
         initComponents();
-        this.j=j;
-        
+        this.j = j;
+
         /* El juego no se almacena en la vista, solo en el controlador*/
         controlador = new ControladorJuego(juego, this, j);
         controlador.agregarParticipante(j);
@@ -61,8 +64,6 @@ ControladorJuego controlador;
         //txtInformacion.setText("Paricipantes :"+this.juego.getCantidadJugadores());
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,6 +76,10 @@ ControladorJuego controlador;
         txtInformacion = new javax.swing.JLabel();
         imgSaldo = new javax.swing.JLabel();
         imgPozo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaParticipantes = new javax.swing.JList();
+        jLabel1 = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -87,50 +92,108 @@ ControladorJuego controlador;
         imgSaldo.setForeground(new java.awt.Color(254, 247, 247));
         imgSaldo.setText("Mi saldo");
         getContentPane().add(imgSaldo);
-        imgSaldo.setBounds(10, 400, 230, 30);
+        imgSaldo.setBounds(30, 400, 160, 40);
 
         imgPozo.setForeground(new java.awt.Color(254, 254, 254));
         imgPozo.setText("Pozo actual  $: ");
         getContentPane().add(imgPozo);
-        imgPozo.setBounds(340, 180, 240, 50);
+        imgPozo.setBounds(340, 170, 260, 100);
+
+        jScrollPane1.setViewportView(listaParticipantes);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(30, 100, 90, 140);
+
+        jLabel1.setForeground(new java.awt.Color(255, 250, 250));
+        jLabel1.setText("Participantes:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(30, 70, 100, 17);
+
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSalir);
+        btnSalir.setBounds(692, 400, 100, 29);
 
         setBounds(0, 0, 818, 472);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        salir();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel imgPozo;
     private javax.swing.JLabel imgSaldo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList listaParticipantes;
     private javax.swing.JLabel txtInformacion;
     // End of variables declaration//GEN-END:variables
 
     /* OJO la vista jamas debe conocer nada del modelo, solo trabaja mediante el controlador*/
     @Override
     public void mostrarParticipantes() {
-        
-        this.txtInformacion.setText("Hay un nuevo participante, faltan : "+(this.controlador.getJuego().getCantidadJugadores()- controlador.getJuego().getListaParticipantes().size()));
+
+        this.txtInformacion.setText("Hay un nuevo participante, faltan : " + (this.controlador.getJuego().getCantidadJugadores() - controlador.getJuego().getListaParticipantes().size()));
+        listaParticipantes.setListData(controlador.getJuego().getListaParticipantes().toArray());
+        imgPozo.setText("Pozo :$" + controlador.getJuego().getPozo());
     }
+    
+    
 
     private void pintarMesa() {
-       
+
         setLayout(new BorderLayout());
-	JLabel background=new JLabel(new ImageIcon("src/imagenes/pkt2.jpg"));
-       
-	add(background);
-	background.setLayout(new FlowLayout());
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/imagenes/saldo.jpg").getImage().getScaledInstance(60, 70, Image.SCALE_DEFAULT));
+        JLabel background = new JLabel(new ImageIcon("src/imagenes/pkt2.jpg"));
+
+        add(background);
+        background.setLayout(new FlowLayout());
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/imagenes/saldo.png").getImage().getScaledInstance(40, 60, Image.SCALE_DEFAULT));
         imgSaldo.setIcon(imageIcon);
-        imgSaldo.setText("Saldo : "+j.getSaldo());
-        
-        ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.jpg").getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        imgSaldo.setText("Saldo : " + j.getJugador().getSaldo());
+
+        ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
         imgPozo.setIcon(pozo);
-        imgPozo.setText("Pozo : $ "+controlador.getJuego().getPozo());
-        
+        imgPozo.setText("Pozo : $ " + controlador.getJuego().getPozo());
+
         //imgSaldo.setIcon(new ImageIcon("/home/alex/Downloads/saldo.jpg"));
-	
+    }
+
+    private void salir() {
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Seguro quieres salir", "Salir del juego", dialogButton);
+
+        if (dialogResult == JOptionPane.YES_OPTION) {
+           
+           
+            dispose();
+        }
+
+    }
+
+    @Override
+    public void inicioJuego() {
+        this.txtInformacion.setText("Inicio el juego!!!");
+        listaParticipantes.setListData(controlador.getJuego().getListaParticipantes().toArray());
+        imgPozo.setText("Pozo :$" + controlador.getJuego().getPozo());
+    }
+
+    @Override
+    public void mostrarError(String mensaje) {
+        
+        
+        JOptionPane.showMessageDialog(this, mensaje);
+       
+        
     }
 }

@@ -12,4 +12,8 @@ package controlador;
 public interface VistaJuego {
     
     public void mostrarParticipantes();
+    
+    public void inicioJuego();
+
+    public void mostrarError(String mensaje);
 }

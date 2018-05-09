@@ -59,22 +59,23 @@ public class Fachada extends Observable{
        return sisUsuarios.loginAdmin(nombre, password);
     }
     
-    public Jugador loginJugador(String nombre, String password) throws PokerExcepciones
-    {
-       return sisUsuarios.loginJugador(nombre, password);
-    }
+  
     
     public Juego getSiguienteJuego(){
         return sisJuegos.getProximoJuego();
     }
     
-    public void agregarJugadorSiguienteJuego(Jugador j)
+    public void agregarJugadorSiguienteJuego(Participante j) throws PokerExcepciones 
     {
         sisJuegos.agregarJugadorAproximoJuego(j);
     }
 
     public int getMinimasApuestas() {
         return sisJuegos.getMinimasApuestas();
+    }
+
+    public Participante loginJugador(String login, String password) throws PokerExcepciones {
+        return sisUsuarios.loginJugador(login, password);
     }
     
     

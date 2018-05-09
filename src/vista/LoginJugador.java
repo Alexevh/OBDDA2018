@@ -8,6 +8,7 @@ package vista;
 import Excepciones.PokerExcepciones;
 import controlador.ControladorLogin;
 import controlador.VistaLogin;
+import controlador.VistaLoginParticipante;
 import iu.MesaJuego;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -15,11 +16,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Fachada;
 import modelo.Jugador;
+import modelo.Participante;
 import modelo.SistemaJuegos;
 import modelo.Usuario;
 
 
-public class LoginJugador extends javax.swing.JFrame implements VistaLogin{ 
+public class LoginJugador extends javax.swing.JFrame implements VistaLoginParticipante{ 
  private  ControladorLogin controlador;
     /**
      * Creates new form LoginJugador
@@ -102,14 +104,12 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLogin{
     // End of variables declaration//GEN-END:variables
 
      @Override
-    public void ingresar(Usuario u) {
-        dispose();
-     try {
+    public void ingresar(Participante u) {
+        
+    
          /* Esto lo cambiamos manana, preguntar al docente si esta bien ponerlo en el constructor el juego*/
-         new MesaJuego((Jugador)u, Fachada.getInstancia().getSiguienteJuego()).setVisible(true);
-     } catch (IOException ex) {
-         Logger.getLogger(LoginJugador.class.getName()).log(Level.SEVERE, null, ex);
-     }
+         new MesaJuego((Participante)u, Fachada.getInstancia().getSiguienteJuego()).setVisible(true);
+        dispose();
         
     }
     
@@ -118,4 +118,6 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLogin{
          String pwd = new String(txt_pass.getPassword());
         controlador.loginJugador(txt_name.getText(), pwd);
     }
+
+  
 }

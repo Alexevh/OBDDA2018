@@ -5,16 +5,17 @@
  */
 package controlador;
 
-import modelo.Usuario;
+import modelo.Participante;
+
 
 /**
  *
  * @author alex
  */
-public interface VistaLogin {
+public interface VistaLoginParticipante {
     
      public void errorLoginIncorrecto(String msg);
 
      /* esto cambia a participante*/
-    public void ingresar(Usuario u);
+    public void ingresar(Participante p);
 }

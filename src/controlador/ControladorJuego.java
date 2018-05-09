@@ -5,8 +5,12 @@
  */
 package controlador;
 
+import Excepciones.PokerExcepciones;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.Fachada;
 import modelo.Juego;
 import modelo.Jugador;
 import modelo.Participante;
@@ -37,7 +41,7 @@ public class ControladorJuego implements Observer{
     }
 
     /* Cambiar jugador por particpante, */
-    public ControladorJuego(Juego juego, VistaJuego vista, Jugador j) {
+    public ControladorJuego(Juego juego, VistaJuego vista, Participante j) {
         this.juego = juego;
         this.vista = vista;      
         juego.addObserver(this);
@@ -53,8 +57,12 @@ public class ControladorJuego implements Observer{
     consultar al docente si eso esta bien, si esta bien que la vista llame a ese metodo del controlador o si deberiamos solucionar toda la
     linea en el mismo metodo del controlador.
     */
-    public void agregarParticipante(Jugador j){
-        this.juego.agregarJugador(j);
+    public void agregarParticipante(Participante j) {
+        try {
+            Fachada.getInstancia().agregarJugadorSiguienteJuego(j);
+        } catch (PokerExcepciones ex) {
+            vista.mostrarError(ex.getMessage());
+        }
     }
     
     
@@ -70,7 +78,11 @@ public class ControladorJuego implements Observer{
              ingresaNuevoParticipante:
              vista.mostrarParticipantes();
              break;
-        
+             
+             case 
+             inicioJuego:
+             vista.inicioJuego();
+             break;
        
         
     }

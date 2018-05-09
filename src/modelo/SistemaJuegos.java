@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import Excepciones.PokerExcepciones;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +33,15 @@ public class SistemaJuegos {
     }
     
     /* por experto */
-    public void agregarJugadorAproximoJuego(Jugador j)
+    public void agregarJugadorAproximoJuego(Participante j) throws PokerExcepciones 
     {
         this.proximoJuego.agregarJugador(j);
+        if (proximoJuego.getCantidadJugadores()==proximoJuego.getListaParticipantes().size())
+        {
+            this.listaJuegos.add(proximoJuego);
+            this.proximoJuego = new Juego(luz, maxJugadores);
+            System.out.println("sss");
+        }
     }
 
     public int getMinimasApuestas() {
@@ -93,6 +100,7 @@ public class SistemaJuegos {
     public void setListaAdmins(List<Administrador> listaAdmins) {
         this.listaAdmins = listaAdmins;
     }
+    
     
     
 }

@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import Excepciones.PokerExcepciones;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -104,26 +105,72 @@ public class Juego extends Observable{
         
     }
     
-   
-    public void agregarJugador(Jugador j)
+   /* esto retrun a participante*/
+    public void agregarJugador(Participante j) throws PokerExcepciones
     {
+        /*Validar saldo y no este*/
+        // Participante p = new Participante();
+         
         /* Lo primero antes de agregar un jugador es verificar que haya lugar */
+        
+       if (!JugadorTieneSaldo(j.getJugador()))
+       {
+           throw new PokerExcepciones("El jugador no tiene el saldo suficiente");
+       }
+       
+       if (jugadorYaEstaEnPartida(j))
+       {
+           throw new PokerExcepciones("El jugador ya esta en la partida a iniciarse");
+       }
+        
+        
+        
         if (this.listaParticipantes.size() < this.cantidadJugadores)
         {
             
-            Participante p = new Participante();
-            p.setActivo(true);
-            p.setJugador(j);
-            this.listaParticipantes.add(p);
+            j.setActivo(true);
+           
+            j.getJugador().setSaldo(j.getJugador().getSaldo()-this.luz);
+            this.pozo = pozo+luz;
+            this.listaParticipantes.add(j);
             /* Aviso el cambio */
             avisar(Eventos.ingresaNuevoParticipante);
         }
+        
+        if (this.cantidadJugadores==listaParticipantes.size())
+        {
+            avisar(Eventos.inicioJuego);
+            this.iniciado=true;
+        }
+        
+   
     }
     
     /* Metodo que avisa a los observadores*/
       private void avisar(Eventos evento) {
         setChanged();
         notifyObservers(evento);
+    }
+      
+      
+       private boolean JugadorTieneSaldo(Jugador j){
+        
+        if (j.getSaldo() >=  Fachada.getInstancia().getSiguienteJuego().getLuz()* Fachada.getInstancia().getSiguienteJuego().getCantidadJugadores())
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean jugadorYaEstaEnPartida(Participante j)
+    {
+        if (Fachada.getInstancia().getSiguienteJuego().getListaParticipantes().contains(j))
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     

@@ -42,7 +42,7 @@ public class OBDDA2018 {
         /* Agrego a tres jugadores */
         Jugador j1 = new Jugador("Mario B", "mario", "password", 500); 
         Jugador j2 = new Jugador("Luigi B", "luigi", "password", 400); 
-        Jugador j3 = new Jugador("Amanda A", "amanda", "password", 20); 
+        Jugador j3 = new Jugador("Amanda A", "amanda", "password", 10); 
         
         Fachada.getInstancia().agregarJugador(j1);
         Fachada.getInstancia().agregarJugador(j2);

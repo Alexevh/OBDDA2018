@@ -69,39 +69,23 @@ private List<Jugador> listaJugadores= new ArrayList();
     }
     
     /*  Es el sistema que levanta la excepcion?*/
-       public Jugador loginJugador(String login, String password) throws PokerExcepciones
+       public Participante loginJugador(String login, String password) throws PokerExcepciones
     {
-        boolean encontre = false;
-        Jugador encontrado = null;
-        Participante p= null;
+       
         
         for (Jugador j: listaJugadores)
         {
             if (j.getNombreUsuario().equalsIgnoreCase(login) && j.getPassword().equals(password))
             {
-                encontre = true;
-                p = new Participante();
+               
+                Participante p = new Participante();
                 p.setJugador(j);
-                encontrado=j;
                 
-            }
-        } 
-        
-        if (encontre)
-        {
-            if (!JugadorTieneSaldo(encontrado))
-            {
-                throw new PokerExcepciones("El jugador no tiene el saldo suficiente para ingresar a la partida siguiente");
-            } else if(jugadorYaEstaEnPartida(p))
-            {
-                throw new PokerExcepciones("El jugador ya esta como participante en el siguiente juego a iniciarse");
-            }
- 
-            else {
-                return encontrado;
+                return p;
+               
             }
         }
-       
+        
         
         
         
@@ -109,24 +93,6 @@ private List<Jugador> listaJugadores= new ArrayList();
         
     }
        
-    private boolean JugadorTieneSaldo(Jugador j){
-        
-        if (j.getSaldo() >=  Fachada.getInstancia().getSiguienteJuego().getLuz()* Fachada.getInstancia().getMinimasApuestas())
-        {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    private boolean jugadorYaEstaEnPartida(Participante j)
-    {
-        if (Fachada.getInstancia().getSiguienteJuego().getListaParticipantes().contains(j))
-        {
-            return true;
-        } else {
-            return false;
-        }
-    }
+   
     
 }

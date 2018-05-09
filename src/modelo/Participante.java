@@ -56,4 +56,9 @@ public class Participante {
         return mismo;
     }
     
+    @Override
+    public String toString(){
+        return this.jugador.getNombreCompleto();
+    }
+    
 }

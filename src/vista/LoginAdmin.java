@@ -8,6 +8,7 @@ package vista;
 import Excepciones.PokerExcepciones;
 import iu.MenuAdministrador;
 import controlador.ControladorLogin;
+import controlador.ControladorLoginAdmin;
 import controlador.VistaLogin;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -19,13 +20,13 @@ import modelo.Usuario;
 
 public class LoginAdmin extends javax.swing.JFrame implements VistaLogin{
 
-    private ControladorLogin controlador;
+    private ControladorLoginAdmin controlador;
     /**
      * Creates new form LoginAdmin
      */
     public LoginAdmin() {
         initComponents();
-        controlador = new ControladorLogin(this);
+        controlador = new ControladorLoginAdmin(this);
     }
 
     /**
