@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Fachada;
+import modelo.Juego;
 import modelo.Jugador;
 import modelo.Participante;
 import modelo.SistemaJuegos;
@@ -104,11 +105,13 @@ public class LoginJugador extends javax.swing.JFrame implements VistaLoginPartic
     // End of variables declaration//GEN-END:variables
 
      @Override
-    public void ingresar(Participante u) {
+    public void ingresar(Participante u)  throws PokerExcepciones{
         
-    
+      Juego juego = Fachada.getInstancia().getSiguienteJuego();
+       Fachada.getInstancia().agregarJugadorSiguienteJuego(u);
+       
          /* Esto lo cambiamos manana, preguntar al docente si esta bien ponerlo en el constructor el juego*/
-         new MesaJuego((Participante)u, Fachada.getInstancia().getSiguienteJuego()).setVisible(true);
+         new MesaJuego(u, juego).setVisible(true);
         dispose();
         
     }

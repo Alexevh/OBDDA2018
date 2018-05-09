@@ -58,7 +58,7 @@ public class ControladorLogin {
         
         try {
             Participante pa = fachada.loginJugador(u, p);
-            
+           
             vista.ingresar(pa);
         } catch (PokerExcepciones e) {
             vista.errorLoginIncorrecto(e.getMessage());

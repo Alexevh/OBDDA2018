@@ -139,8 +139,9 @@ public class Juego extends Observable{
         
         if (this.cantidadJugadores==listaParticipantes.size())
         {
-            avisar(Eventos.inicioJuego);
             this.iniciado=true;
+            avisar(Eventos.inicioJuego);
+            
         }
         
    

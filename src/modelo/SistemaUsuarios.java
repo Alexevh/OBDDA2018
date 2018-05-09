@@ -68,7 +68,7 @@ private List<Jugador> listaJugadores= new ArrayList();
         throw new PokerExcepciones("No existe el usuario");
     }
     
-    /*  Es el sistema que levanta la excepcion?*/
+    /*  Antes aca teniamos el control de todas las excepciones y esta se comunicaba con la vista del login*/
        public Participante loginJugador(String login, String password) throws PokerExcepciones
     {
        

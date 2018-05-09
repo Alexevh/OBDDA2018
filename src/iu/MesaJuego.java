@@ -14,9 +14,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import static java.lang.System.exit;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -59,10 +61,23 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
         /* El juego no se almacena en la vista, solo en el controlador*/
         controlador = new ControladorJuego(juego, this, j);
-        controlador.agregarParticipante(j);
+        //controlador.agregarParticipante(j);
         pintarMesa();
-        //txtInformacion.setText("Paricipantes :"+this.juego.getCantidadJugadores());
+        if (juego.isIniciado())
+        {
+            inicioJuego();
+        } else {
+             mostrarParticipantes();
+        }
+       
+        
+        
+        
     }
+    
+   
+      
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -183,6 +198,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     @Override
     public void inicioJuego() {
+        
         this.txtInformacion.setText("Inicio el juego!!!");
         listaParticipantes.setListData(controlador.getJuego().getListaParticipantes().toArray());
         imgPozo.setText("Pozo :$" + controlador.getJuego().getPozo());
@@ -193,6 +209,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         
         
         JOptionPane.showMessageDialog(this, mensaje);
+        
+        
        
         
     }
