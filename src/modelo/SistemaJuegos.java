@@ -14,7 +14,7 @@ public class SistemaJuegos {
     
     private List<Juego> listaJuegos = new ArrayList();
     
-    private int maxJugadores = 2;
+    private int maxJugadores = 3;
     private int luz = 10;
     /* Esto es para calcular el saldo antes de dejar entrar al jugador, si el saldo del jugador es menor a este numero X luz entonces no entra*/
     private int minimasApuestas = 3;
@@ -40,9 +40,13 @@ public class SistemaJuegos {
         {
             this.listaJuegos.add(proximoJuego);
             this.proximoJuego = new Juego(luz, maxJugadores);
-            System.out.println("sss");
+            
         }
     }
+
+  
+  
+    
 
     public int getMinimasApuestas() {
         return minimasApuestas;

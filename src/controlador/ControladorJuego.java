@@ -65,6 +65,11 @@ public class ControladorJuego implements Observer{
         }
     }
     
+    public void eliminarParticipante(Participante p)
+    {
+        juego.eliminarParticipante(p);
+    }
+    
     
     
     
@@ -83,7 +88,11 @@ public class ControladorJuego implements Observer{
              inicioJuego:
              vista.inicioJuego();
              break;
-       
+        case 
+             seEliminaParticipante:
+             vista.mostrarParticipantes();
+             break;
+             
         
     }
     

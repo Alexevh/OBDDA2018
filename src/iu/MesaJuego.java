@@ -63,6 +63,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         controlador = new ControladorJuego(juego, this, j);
         //controlador.agregarParticipante(j);
         pintarMesa();
+        this.setTitle(j.getJugador().getNombreCompleto());
+        
         if (juego.isIniciado())
         {
             inicioJuego();
@@ -158,9 +160,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     @Override
     public void mostrarParticipantes() {
 
-        this.txtInformacion.setText("Hay un nuevo participante, faltan : " + (this.controlador.getJuego().getCantidadJugadores() - controlador.getJuego().getListaParticipantes().size()));
-        listaParticipantes.setListData(controlador.getJuego().getListaParticipantes().toArray());
-        imgPozo.setText("Pozo :$" + controlador.getJuego().getPozo());
+        this.txtInformacion.setText("Hay un nuevo participante, faltan : " + (this.controlador.getJuego().getCantidadJugadores() - controlador.getJuego().getListaParticipantes().size()));      
+        actualizarMesa();
+        
     }
     
     
@@ -172,15 +174,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
         add(background);
         background.setLayout(new FlowLayout());
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/imagenes/saldo.png").getImage().getScaledInstance(40, 60, Image.SCALE_DEFAULT));
-        imgSaldo.setIcon(imageIcon);
-        imgSaldo.setText("Saldo : " + j.getJugador().getSaldo());
-
-        ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-        imgPozo.setIcon(pozo);
-        imgPozo.setText("Pozo : $ " + controlador.getJuego().getPozo());
-
-        //imgSaldo.setIcon(new ImageIcon("/home/alex/Downloads/saldo.jpg"));
+        actualizarMesa();
+     
     }
 
     private void salir() {
@@ -190,7 +185,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
         if (dialogResult == JOptionPane.YES_OPTION) {
            
-           
+            controlador.getJuego().eliminarParticipante(j);
             dispose();
         }
 
@@ -201,17 +196,26 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         
         this.txtInformacion.setText("Inicio el juego!!!");
         listaParticipantes.setListData(controlador.getJuego().getListaParticipantes().toArray());
-        imgPozo.setText("Pozo :$" + controlador.getJuego().getPozo());
+        actualizarMesa();
     }
 
     @Override
     public void mostrarError(String mensaje) {
+               
+        JOptionPane.showMessageDialog(this, mensaje);      
         
+    }
+    
+    public void actualizarMesa()
+    {
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/imagenes/saldo.png").getImage().getScaledInstance(40, 60, Image.SCALE_DEFAULT));
+        imgSaldo.setIcon(imageIcon);
+        imgSaldo.setText("Saldo : " + j.getJugador().getSaldo());
+
+        ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        imgPozo.setIcon(pozo);
+        imgPozo.setText("Pozo : $ " + controlador.getJuego().getPozo());
         
-        JOptionPane.showMessageDialog(this, mensaje);
-        
-        
-       
-        
+        listaParticipantes.setListData(controlador.getJuego().getActivos().toArray());
     }
 }

@@ -27,7 +27,7 @@ public class Juego extends Observable{
     private boolean iniciado;
     
     public enum Eventos {
-        inicioJuego, ingresaNuevoParticipante;
+        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante;
     }
 
     public boolean isIniciado() {
@@ -147,6 +147,23 @@ public class Juego extends Observable{
    
     }
     
+    public void eliminarParticipante(Participante p)
+    {
+        /*Si el juego ya inicio, el participante no se le devuelve lo que haya puesto*/
+        if (iniciado)
+        {
+            p.setActivo(false);
+            
+        } else {
+            p.getJugador().setSaldo(p.getJugador().getSaldo()+luz);
+            pozo = pozo - luz;
+            this.listaParticipantes.remove(p);
+            
+            
+        }
+        avisar(Eventos.seEliminaParticipante);
+    }
+    
     /* Metodo que avisa a los observadores*/
       private void avisar(Eventos evento) {
         setChanged();
@@ -172,6 +189,20 @@ public class Juego extends Observable{
         } else {
             return false;
         }
+    }
+    
+    public List<Participante> getActivos()
+    {
+        List<Participante> resultado = new ArrayList();
+        for (Participante p: listaParticipantes)
+        {
+            if (p.isActivo())
+            {
+                resultado.add(p);
+            }
+        }
+        
+        return resultado;
     }
     
     
