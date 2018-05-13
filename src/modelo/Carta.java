@@ -57,5 +57,21 @@ public class Carta {
          return 0;     
               
     }
+    
+     @Override
+    public boolean equals(Object object)
+    {
+        boolean mismo = false;
+
+        if (object != null && object instanceof Carta)
+        {
+            if (this.getNumero() == ((Carta)object).getNumero() && this.getPalo() == ((Carta)object).getPalo())
+            {
+                mismo = true;
+            }
+        }
+
+        return mismo;
+    }
 
 }

@@ -205,5 +205,31 @@ public class Juego extends Observable{
         return resultado;
     }
     
+    public void generarNuevaMano()
+    {
+        Mano m = new Mano();
+        m.setManoActual(true);
+        
+        /* Genero un nuevo mazo y lo barajo */
+        /* Genero nuevo  mazo y barajo */
+        this.mazo = new Mazo();
+        this.mazo.barajar();
+        
+        
+        /*Agrego a los participantes activos a la mano*/
+        for (Participante p: listaParticipantes)
+        {
+            if (p.isActivo())
+            {
+                m.getListaParticipantesMano().add(p);
+                /* Le doy 5 cartas nuevas */
+                p.setCartasMano(mazo.repartir(5));
+                
+            }
+        }
+    }
+    
+  
+    
     
 }

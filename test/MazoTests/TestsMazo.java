@@ -5,6 +5,7 @@
  */
 package MazoTests;
 
+import java.util.List;
 import junit.framework.Assert;
 import modelo.Carta;
 import modelo.Mazo;
@@ -41,6 +42,19 @@ public class TestsMazo {
     public void compararCartas()
     {
       
+    }
+    
+     @Test
+    public void reparit5()
+    {
+       Mazo m = new Mazo();
+       m.barajar();
+       
+       List<Carta> lista1 = m.repartir(5);
+       List<Carta> lista2 = m.repartir(5);
+       
+       Assert.assertNotSame(lista1, lista2);
+       
     }
     
 }

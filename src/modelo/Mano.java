@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
 public class Mano {
     
     private boolean manoActual;
-    private List<Participante> listaParticipantesMano;
+    private List<Participante> listaParticipantesMano = new ArrayList();
     private int apuesta;
 
     public boolean isManoActual() {

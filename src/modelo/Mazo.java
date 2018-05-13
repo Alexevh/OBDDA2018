@@ -50,6 +50,25 @@ public class Mazo {
     }
     
     
+    /* Recibo un parametro por que ahora son cartas pero puedo llegar a querer reemplazar una*/
+    public List<Carta> repartir(int cantidad)
+    {
+        List<Carta> result = new ArrayList();
+        
+        for (int i=0; i<cantidad;i++)
+        {
+            /*Obtengo la carta, sienmpre es la cero porque una vez que la doy la elimino del mazo
+            y la siguiente carta es la del top*/
+            Carta c = cartas.get(0);
+            /*La agrego al resultado*/
+            result.add(c);
+            /* La quito del mazo */
+            cartas.remove(c);
+            
+        }
+        
+        return result;
+    }
     
     
     
