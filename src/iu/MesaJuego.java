@@ -68,6 +68,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         if (juego.isIniciado())
         {
             inicioJuego();
+            inicioNuevaMano();
+            
         } else {
              mostrarParticipantes();
         }
@@ -97,6 +99,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         listaParticipantes = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
+        btnApostar = new javax.swing.JButton();
+        txtMontoApuesta = new javax.swing.JTextField();
+        btnPagar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -135,6 +140,26 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         getContentPane().add(btnSalir);
         btnSalir.setBounds(692, 400, 100, 29);
 
+        btnApostar.setText("Apostar");
+        btnApostar.setEnabled(false);
+        btnApostar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApostarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnApostar);
+        btnApostar.setBounds(260, 400, 72, 29);
+
+        txtMontoApuesta.setText("0");
+        txtMontoApuesta.setEnabled(false);
+        getContentPane().add(txtMontoApuesta);
+        txtMontoApuesta.setBounds(340, 400, 70, 27);
+
+        btnPagar.setText("Pagar");
+        btnPagar.setEnabled(false);
+        getContentPane().add(btnPagar);
+        btnPagar.setBounds(420, 400, 72, 29);
+
         setBounds(0, 0, 818, 472);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -142,11 +167,17 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         salir();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApostarActionPerformed
+       apostar();
+    }//GEN-LAST:event_btnApostarActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApostar;
+    private javax.swing.JButton btnPagar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel imgPozo;
     private javax.swing.JLabel imgSaldo;
@@ -154,6 +185,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList listaParticipantes;
     private javax.swing.JLabel txtInformacion;
+    private javax.swing.JTextField txtMontoApuesta;
     // End of variables declaration//GEN-END:variables
 
     /* OJO la vista jamas debe conocer nada del modelo, solo trabaja mediante el controlador*/
@@ -217,5 +249,29 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         imgPozo.setText("Pozo : $ " + controlador.getJuego().getPozo());
         
         listaParticipantes.setListData(controlador.getJuego().getActivos().toArray());
+    }
+
+    @Override
+    public void inicioNuevaMano() {
+        
+        /* Aca lo que hacemos es, vemos que cartas tiene en la mano el participante y las mostramos
+        en imagenes*/
+        
+        btnApostar.setEnabled(true);
+        txtMontoApuesta.setEnabled(true);
+        
+    }
+
+    @Override
+    public void inicioNuevaApuesta() {
+        
+        btnApostar.setEnabled(false);
+        txtMontoApuesta.setEnabled(false);
+        btnPagar.setEnabled(true);
+    }
+
+    private void apostar() {
+        controlador.registrarApuesta(j, Integer.parseInt(txtMontoApuesta.getText()));
+                
     }
 }

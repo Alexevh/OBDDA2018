@@ -29,6 +29,16 @@ public class Jugador extends Usuario{
         
     }
     
+    public void sumarAlSaldo(int valor)
+    {
+        this.saldo = this.saldo+valor;
+    }
+    
+     public void restarAlSaldo(int valor)
+    {
+        this.saldo = this.saldo-valor;
+    }
+    
     
     
 }

@@ -16,4 +16,8 @@ public interface VistaJuego {
     public void inicioJuego();
 
     public void mostrarError(String mensaje);
+
+    public void inicioNuevaMano();
+
+    public void inicioNuevaApuesta();
 }

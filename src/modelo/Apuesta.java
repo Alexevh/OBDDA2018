@@ -15,7 +15,7 @@ public class Apuesta {
     
     /* En nuestro UML las listas son de jugadores, mi duda es si se necesitaba por algo de la letra*/
     private int valor;
-    private Jugador dueno;
+    private Participante dueno;
     private List<Jugador> listaPagan;
     private List<Jugador> listaPasan;
 
@@ -27,13 +27,15 @@ public class Apuesta {
         this.valor = valor;
     }
 
-    public Jugador getDueno() {
+    public Participante getDueno() {
         return dueno;
     }
 
-    public void setDueno(Jugador dueno) {
+    public void setDueno(Participante dueno) {
         this.dueno = dueno;
     }
+
+
 
     public List<Jugador> getListaPagan() {
         return listaPagan;

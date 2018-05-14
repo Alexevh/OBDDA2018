@@ -69,6 +69,10 @@ public class ControladorJuego implements Observer{
     {
         juego.eliminarParticipante(p);
     }
+
+    public void registrarApuesta(Participante p, int valor) {
+        juego.registrarApuesta(p, valor);
+    }
     
     
     
@@ -92,8 +96,14 @@ public class ControladorJuego implements Observer{
              seEliminaParticipante:
              vista.mostrarParticipantes();
              break;
-             
-        
+        case 
+             nuevaMano:
+             vista.inicioNuevaMano();
+             break;
+        case 
+             nuevaApuesta:
+             vista.inicioNuevaApuesta();
+             break;
     }
     
     

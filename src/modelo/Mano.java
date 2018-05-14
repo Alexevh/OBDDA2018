@@ -16,7 +16,7 @@ public class Mano {
     
     private boolean manoActual;
     private List<Participante> listaParticipantesMano = new ArrayList();
-    private int apuesta;
+    private Apuesta apuesta;
 
     public boolean isManoActual() {
         return manoActual;
@@ -34,13 +34,15 @@ public class Mano {
         this.listaParticipantesMano = listaParticipantesMano;
     }
 
-    public int getApuesta() {
+    public Apuesta getApuesta() {
         return apuesta;
     }
 
-    public void setApuesta(int apuesta) {
+    public void setApuesta(Apuesta apuesta) {
         this.apuesta = apuesta;
     }
+
+ 
     
     
     

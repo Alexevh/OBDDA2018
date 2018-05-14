@@ -27,7 +27,7 @@ public class Juego extends Observable{
     private boolean iniciado;
     
     public enum Eventos {
-        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante;
+        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta;
     }
 
     public boolean isIniciado() {
@@ -139,8 +139,11 @@ public class Juego extends Observable{
         
         if (this.cantidadJugadores==listaParticipantes.size())
         {
+            
             this.iniciado=true;
             avisar(Eventos.inicioJuego);
+            generarNuevaMano();
+            
             
         }
         
@@ -227,6 +230,24 @@ public class Juego extends Observable{
                 
             }
         }
+        
+        avisar(Eventos.nuevaMano);
+    }
+    
+    
+    
+    
+    
+    public void registrarApuesta(Participante p, int valor)
+    {
+        Apuesta a = new Apuesta();
+        a.setDueno(p);
+        a.setValor(valor);
+        pozo = pozo+valor;
+        /*QUitamos del saldo al jugador*/
+        
+        avisar(Eventos.nuevaApuesta);
+        
     }
     
   
