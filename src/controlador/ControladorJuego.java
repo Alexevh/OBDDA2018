@@ -23,6 +23,8 @@ public class ControladorJuego implements Observer{
     
     private Juego juego;
     private VistaJuego vista;
+    private Participante p;
+    
 
     public Juego getJuego() {
         return juego;
@@ -43,8 +45,23 @@ public class ControladorJuego implements Observer{
     /* Cambiar jugador por particpante, */
     public ControladorJuego(Juego juego, VistaJuego vista, Participante j) {
         this.juego = juego;
+        
         this.vista = vista;      
         juego.addObserver(this);
+        
+       if (juego.isIniciado())
+        {
+            vista.inicioJuego(this.juego.getListaParticipantes());
+            vista.inicioNuevaMano();
+            
+        } else {
+             vista.mostrarParticipantes(getFaltantes());
+        }
+       
+        
+        
+        
+        
         /* Esto hay que hacerlo en el login asi el sistema sabe si hay un juego nuevo*/
         //this.juego.agregarJugador(j);
     }
@@ -75,6 +92,10 @@ public class ControladorJuego implements Observer{
     }
     
     
+    public int getFaltantes()
+    {
+        return this.juego.getCantidadJugadores()-this.juego.getListaParticipantes().size();
+    }
     
     
     
@@ -85,16 +106,18 @@ public class ControladorJuego implements Observer{
          switch ((Juego.Eventos)evento) {
              case 
              ingresaNuevoParticipante:
-             vista.mostrarParticipantes();
+             //vista.mostrarParticipantes(getFaltantes());
+             //vista.actualizarMesa(10, juego.getPozo(), juego.getListaParticipantes());
              break;
              
              case 
              inicioJuego:
-             vista.inicioJuego();
+             vista.inicioJuego(this.juego.getListaParticipantes());
+             //vista.mostrarParticipantes(getFaltantes());
              break;
         case 
              seEliminaParticipante:
-             vista.mostrarParticipantes();
+             vista.mostrarParticipantes(getFaltantes());
              break;
         case 
              nuevaMano:

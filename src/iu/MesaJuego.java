@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.System.exit;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,22 +59,14 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     public MesaJuego(Participante j, Juego juego)  {
         initComponents();
         this.j = j;
-
+         pintarMesa();
         /* El juego no se almacena en la vista, solo en el controlador*/
         controlador = new ControladorJuego(juego, this, j);
         //controlador.agregarParticipante(j);
-        pintarMesa();
-        this.setTitle(j.getJugador().getNombreCompleto());
-        
-        if (juego.isIniciado())
-        {
-            inicioJuego();
-            inicioNuevaMano();
-            
-        } else {
-             mostrarParticipantes();
-        }
        
+        this.setTitle(j.getJugador().getNombreCompleto());
+        /* esto va todo al con trolador en el constructor 14/5*/
+        
         
         
         
@@ -190,9 +183,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     /* OJO la vista jamas debe conocer nada del modelo, solo trabaja mediante el controlador*/
     @Override
-    public void mostrarParticipantes() {
-
-        this.txtInformacion.setText("Hay un nuevo participante, faltan : " + (this.controlador.getJuego().getCantidadJugadores() - controlador.getJuego().getListaParticipantes().size()));      
+    public void mostrarParticipantes(int cantidadFaltante) {
+/*Hacer en el juego metido cuantos */
+        this.txtInformacion.setText("Hay un nuevo participante, faltan : " + cantidadFaltante);      
         actualizarMesa();
         
     }
@@ -216,7 +209,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         int dialogResult = JOptionPane.showConfirmDialog(this, "Seguro quieres salir", "Salir del juego", dialogButton);
 
         if (dialogResult == JOptionPane.YES_OPTION) {
-           
+            
+            /*CONTROLADOR.SALIR OJO!!! la vista en esta caso habla con el modelo y esta mal*/
             controlador.getJuego().eliminarParticipante(j);
             dispose();
         }
@@ -224,10 +218,10 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     }
 
     @Override
-    public void inicioJuego() {
+    public void inicioJuego(List<Participante> lista) {
         
         this.txtInformacion.setText("Inicio el juego!!!");
-        listaParticipantes.setListData(controlador.getJuego().getListaParticipantes().toArray());
+        listaParticipantes.setListData(lista.toArray());
         actualizarMesa();
     }
 
@@ -246,9 +240,10 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
         ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
         imgPozo.setIcon(pozo);
-        imgPozo.setText("Pozo : $ " + controlador.getJuego().getPozo());
+        //imgPozo.setText("Pozo : $ " + controlador.getJuego().getPozo());
         
-        listaParticipantes.setListData(controlador.getJuego().getActivos().toArray());
+        /*hACR METODO MOSTRAR PARTICIPANTES Y RECIBO PARTICIPANTES QUE LLAMO DESDE EL CONTROLADOR*/
+        //listaParticipantes.setListData(controlador.getJuego().getActivos().toArray());
     }
 
     @Override
