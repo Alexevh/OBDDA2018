@@ -103,7 +103,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         txtMontoApuesta = new javax.swing.JTextField();
         btnPagar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(null);
 
         txtInformacion.setForeground(new java.awt.Color(253, 251, 251));
@@ -268,6 +268,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         btnApostar.setEnabled(false);
         txtMontoApuesta.setEnabled(false);
         btnPagar.setEnabled(true);
+        actualizarMesa();
+        
     }
 
     private void apostar() {

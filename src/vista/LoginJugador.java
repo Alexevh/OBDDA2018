@@ -7,19 +7,14 @@ package vista;
 
 import Excepciones.PokerExcepciones;
 import controlador.ControladorLogin;
-import controlador.VistaLogin;
 import controlador.VistaLoginParticipante;
 import iu.MesaJuego;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Fachada;
 import modelo.Juego;
-import modelo.Jugador;
 import modelo.Participante;
-import modelo.SistemaJuegos;
-import modelo.Usuario;
 
 
 public class LoginJugador extends javax.swing.JFrame implements VistaLoginParticipante{ 
