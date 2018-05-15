@@ -62,10 +62,10 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
          pintarMesa();
         /* El juego no se almacena en la vista, solo en el controlador*/
         controlador = new ControladorJuego(juego, this, j);
-        //controlador.agregarParticipante(j);
-       
+        
+      
         this.setTitle(j.getJugador().getNombreCompleto());
-        /* esto va todo al con trolador en el constructor 14/5*/
+       
         
         
         
@@ -184,9 +184,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     /* OJO la vista jamas debe conocer nada del modelo, solo trabaja mediante el controlador*/
     @Override
     public void mostrarParticipantes(int cantidadFaltante) {
-/*Hacer en el juego metido cuantos */
+
         this.txtInformacion.setText("Hay un nuevo participante, faltan : " + cantidadFaltante);      
-        actualizarMesa();
+        
         
     }
     
@@ -199,7 +199,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
         add(background);
         background.setLayout(new FlowLayout());
-        actualizarMesa();
+        
      
     }
 
@@ -210,8 +210,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
         if (dialogResult == JOptionPane.YES_OPTION) {
             
-            /*CONTROLADOR.SALIR OJO!!! la vista en esta caso habla con el modelo y esta mal*/
-            controlador.getJuego().eliminarParticipante(j);
+            
+            controlador.eliminarParticipante(j);
             dispose();
         }
 
@@ -222,7 +222,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         
         this.txtInformacion.setText("Inicio el juego!!!");
         listaParticipantes.setListData(lista.toArray());
-        actualizarMesa();
+        
     }
 
     @Override
@@ -232,18 +232,14 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         
     }
     
-    public void actualizarMesa()
+    @Override
+    public void actualizarMesa( List<Participante> lista)
     {
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/imagenes/saldo.png").getImage().getScaledInstance(40, 60, Image.SCALE_DEFAULT));
         imgSaldo.setIcon(imageIcon);
         imgSaldo.setText("Saldo : " + j.getJugador().getSaldo());
 
-        ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-        imgPozo.setIcon(pozo);
-        //imgPozo.setText("Pozo : $ " + controlador.getJuego().getPozo());
-        
-        /*hACR METODO MOSTRAR PARTICIPANTES Y RECIBO PARTICIPANTES QUE LLAMO DESDE EL CONTROLADOR*/
-        //listaParticipantes.setListData(controlador.getJuego().getActivos().toArray());
+        listaParticipantes.setListData(lista.toArray());
     }
 
     @Override
@@ -263,12 +259,21 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         btnApostar.setEnabled(false);
         txtMontoApuesta.setEnabled(false);
         btnPagar.setEnabled(true);
-        actualizarMesa();
+        //actualizarMesa();
         
     }
 
     private void apostar() {
         controlador.registrarApuesta(j, Integer.parseInt(txtMontoApuesta.getText()));
                 
+    }
+    
+    
+    @Override
+    public void actualizarPozo(int valor)
+    {
+        ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        imgPozo.setIcon(pozo);
+        imgPozo.setText("Pozo : $ " + valor);
     }
 }

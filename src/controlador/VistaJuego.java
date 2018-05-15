@@ -25,4 +25,8 @@ public interface VistaJuego {
     public void inicioNuevaApuesta();
 
    // public void actualizarMesa(int saldo, int pozo, List<Participante> lista);
+
+    public void actualizarMesa(List<Participante> activos);
+
+    public void actualizarPozo(int pozo);
 }

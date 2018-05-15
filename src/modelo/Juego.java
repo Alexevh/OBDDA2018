@@ -97,6 +97,8 @@ public class Juego extends Observable {
         this.mazo = new Mazo();
 
     }
+    
+  
 
     /* esto retrun a participante*/
     public void agregarJugador(Participante j) throws PokerExcepciones {

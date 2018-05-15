@@ -19,12 +19,10 @@ import modelo.Participante;
  *
  * @author alex
  */
-public class ControladorJuego implements Observer{
-    
+public class ControladorJuego implements Observer {
+
     private Juego juego;
     private VistaJuego vista;
-    private Participante p;
-    
 
     public Juego getJuego() {
         return juego;
@@ -45,27 +43,26 @@ public class ControladorJuego implements Observer{
     /* Cambiar jugador por particpante, */
     public ControladorJuego(Juego juego, VistaJuego vista, Participante j) {
         this.juego = juego;
-        
-        this.vista = vista;      
+
+        this.vista = vista;
         juego.addObserver(this);
-        
-       if (juego.isIniciado())
-        {
+
+        if (juego.isIniciado()) {
             vista.inicioJuego(this.juego.getListaParticipantes());
+            vista.actualizarMesa(this.juego.getActivos());
+            vista.actualizarPozo(juego.getPozo());
             vista.inicioNuevaMano();
-            
+
         } else {
-             vista.mostrarParticipantes(getFaltantes());
+            vista.mostrarParticipantes(getFaltantes());
+            vista.actualizarMesa(this.juego.getActivos());
+            vista.actualizarPozo(juego.getPozo());
         }
-       
-        
-        
-        
-        
+
         /* Esto hay que hacerlo en el login asi el sistema sabe si hay un juego nuevo*/
         //this.juego.agregarJugador(j);
     }
-    
+
     /* Agregue este metodo por que como saque la segunda lista de jugadores por indicacion del docente, si dejaba en
     el constructor el agregar participante entonces en el inicio de la vista el constructor no habia acabado, entonces estaba en null
     y cuando se disparaba el evento daba una excepcion
@@ -73,7 +70,7 @@ public class ControladorJuego implements Observer{
     Es por eso que ahora la clase mesajuego primero crea el controlador y recien luego agrega al participante, hay que pensar y de ultima
     consultar al docente si eso esta bien, si esta bien que la vista llame a ese metodo del controlador o si deberiamos solucionar toda la
     linea en el mismo metodo del controlador.
-    */
+     */
     public void agregarParticipante(Participante j) {
         try {
             Fachada.getInstancia().agregarJugadorSiguienteJuego(j);
@@ -81,55 +78,48 @@ public class ControladorJuego implements Observer{
             vista.mostrarError(ex.getMessage());
         }
     }
-    
-    public void eliminarParticipante(Participante p)
-    {
+
+    public void eliminarParticipante(Participante p) {
         juego.eliminarParticipante(p);
     }
 
     public void registrarApuesta(Participante p, int valor) {
         juego.registrarApuesta(p, valor);
     }
-    
-    
-    public int getFaltantes()
-    {
-        return this.juego.getCantidadJugadores()-this.juego.getListaParticipantes().size();
+
+    public int getFaltantes() {
+        return this.juego.getCantidadJugadores() - this.juego.getListaParticipantes().size();
     }
-    
-    
-    
+
     /* Metodo que escucha al juego y hace los cambios*/
     @Override
     public void update(Observable o, Object evento) {
-        
-         switch ((Juego.Eventos)evento) {
-             case 
-             ingresaNuevoParticipante:
-             //vista.mostrarParticipantes(getFaltantes());
-             //vista.actualizarMesa(10, juego.getPozo(), juego.getListaParticipantes());
-             break;
-             
-             case 
-             inicioJuego:
-             vista.inicioJuego(this.juego.getListaParticipantes());
-             //vista.mostrarParticipantes(getFaltantes());
-             break;
-        case 
-             seEliminaParticipante:
-             vista.mostrarParticipantes(getFaltantes());
-             break;
-        case 
-             nuevaMano:
-             vista.inicioNuevaMano();
-             break;
-        case 
-             nuevaApuesta:
-             vista.inicioNuevaApuesta();
-             break;
+
+        switch ((Juego.Eventos) evento) {
+            case ingresaNuevoParticipante:
+                vista.mostrarParticipantes(getFaltantes());
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
+                break;
+
+            case inicioJuego:
+                vista.inicioJuego(this.juego.getListaParticipantes());
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
+                break;
+            case seEliminaParticipante:
+                vista.mostrarParticipantes(getFaltantes());
+                break;
+            case nuevaMano:
+                vista.inicioNuevaMano();
+                break;
+            case nuevaApuesta:
+                vista.inicioNuevaApuesta();
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
+                break;
+        }
+
     }
-    
-    
-    } 
-    
+
 }
