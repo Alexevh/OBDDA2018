@@ -26,8 +26,10 @@ public class Juego extends Observable {
     /*Preguntar al docente*/
     private boolean iniciado;
 
+   
+
     public enum Eventos {
-        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta;
+        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa;
     }
 
     public boolean isIniciado() {
@@ -127,12 +129,17 @@ public class Juego extends Observable {
 
         if (this.cantidadJugadores == listaParticipantes.size()) {
 
-            this.iniciado = true;
-            avisar(Eventos.inicioJuego);
-            generarNuevaMano();
+            iniciarJuego();
 
         }
 
+    }
+    
+    public void iniciarJuego()
+    {
+        this.iniciado = true;
+        avisar(Eventos.inicioJuego);
+        generarNuevaMano();
     }
 
     public void eliminarParticipante(Participante p) {
@@ -141,6 +148,7 @@ public class Juego extends Observable {
             p.setActivo(false);
 
         } else {
+            /* Si el juego no empezo, entonces le devolvemos el dinero y actualizamos el pozo*/
             p.getJugador().setSaldo(p.getJugador().getSaldo() + luz);
             pozo = pozo - luz;
             this.listaParticipantes.remove(p);
@@ -240,6 +248,64 @@ public class Juego extends Observable {
             avisar(Eventos.nuevaApuesta);
         }
 
+    }
+    
+    public void pagarApuesta(Participante p, Apuesta a)
+    {
+        
+        /* Consultar al docente por que, si cuando el jugador va a apostar tiene menos saldo que el */
+        if (JugadorTieneSaldo(p.getJugador()))
+        {
+          a.getListaPagan().add(p);
+          p.getJugador().restarAlSaldo(a.getValor());
+          this.pozo = this.pozo+a.getValor();
+        } else {
+            /* Si en el medio el jugador tiene menos de lo necesario para pagar, pasa automaticamente*/
+            a.getListaPasan().add(p);
+        }
+            
+        /* Hay que avisar si alguien paso??*/
+        if (hayDecision(a))
+        {
+            resolverGanador();
+        } else {
+            avisar(Eventos.nuevaPagaoPasa);
+        }
+    }
+    
+    /*  Esto es cuando no quiero pagar */
+    public void pasarApuesta(Participante p, Apuesta a)
+    {
+        a.getListaPasan().add(p);
+        /* Hay que avisar si alguien paso??*/
+        if (hayDecision(a))
+        {
+            resolverGanador();
+        } else {
+            avisar(Eventos.nuevaPagaoPasa);
+        }
+    }
+    
+    
+   /*  Este metodo lo que hace es calcular si todos los que podian tomar una 
+    decision en la mano actual lo hicieron, si lo hacen devuelve true*/
+    public boolean hayDecision(Apuesta a)
+    {
+        boolean result = false;
+        
+        int pagaron = a.getListaPagan().size();
+        int pasaron = a.getListaPasan().size();
+        if (pasaron+pagaron+1==this.getActivos().size())
+        {
+            result=true;
+        }
+        
+        return result;
+        
+    }
+    
+     private void resolverGanador() {
+        
     }
 
 }

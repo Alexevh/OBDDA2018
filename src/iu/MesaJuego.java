@@ -5,27 +5,16 @@
  */
 package iu;
 
-import Excepciones.PokerExcepciones;
 import controlador.ControladorJuego;
 import controlador.VistaJuego;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import static java.lang.System.exit;
 import java.util.List;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import modelo.Juego;
-import modelo.Jugador;
 import modelo.Participante;
 
 public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
@@ -259,7 +248,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         btnApostar.setEnabled(false);
         txtMontoApuesta.setEnabled(false);
         btnPagar.setEnabled(true);
-        //actualizarMesa();
+        
         
     }
 
