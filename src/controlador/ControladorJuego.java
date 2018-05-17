@@ -10,6 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Apuesta;
 import modelo.Fachada;
 import modelo.Juego;
 import modelo.Jugador;
@@ -23,6 +24,17 @@ public class ControladorJuego implements Observer {
 
     private Juego juego;
     private VistaJuego vista;
+    private Participante p;
+
+    public Participante getP() {
+        return p;
+    }
+
+    public void setP(Participante p) {
+        this.p = p;
+    }
+    
+    
 
     public Juego getJuego() {
         return juego;
@@ -43,7 +55,7 @@ public class ControladorJuego implements Observer {
     /* Cambiar jugador por particpante, */
     public ControladorJuego(Juego juego, VistaJuego vista, Participante j) {
         this.juego = juego;
-
+        this.p = j;
         this.vista = vista;
         juego.addObserver(this);
 
@@ -91,6 +103,13 @@ public class ControladorJuego implements Observer {
         return this.juego.getCantidadJugadores() - this.juego.getListaParticipantes().size();
     }
 
+    public void pagarApuesta(Participante p, Apuesta a) {
+        juego.pagarApuesta(p, a);
+    }
+
+    
+    
+    
     /* Metodo que escucha al juego y hace los cambios*/
     @Override
     public void update(Observable o, Object evento) {
@@ -109,17 +128,52 @@ public class ControladorJuego implements Observer {
                 break;
             case seEliminaParticipante:
                 vista.mostrarParticipantes(getFaltantes());
+                vista.actualizarMesa(juego.getActivos());
                 break;
             case nuevaMano:
                 vista.inicioNuevaMano();
+                vista.actualizarMesa(juego.getActivos());
                 break;
             case nuevaApuesta:
                 vista.inicioNuevaApuesta();
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
                 break;
+            case nuevaPagaoPasa:
+                
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
+                break;
+             case hayGanador:              
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
+                vista.seguirJugando();
+                break;
+             case finJuego:              
+                
+                vista.salirJuego();
+                break;
         }
 
     }
+
+    public void pagar() {
+        //vista.pagarApuesta(this.p, juego.getManoActual().getApuesta());
+        juego.pagarApuesta(p, juego.getManoActual().getApuesta());
+    }
+
+    public void registrarDesicionParticipantes(Participante p, boolean desicion) {
+        juego.registrarDesicionParticipantes(p, desicion);
+    }
+    
+    
+    public void juegoSiguienteMano(boolean desicion){
+        
+     
+      registrarDesicionParticipantes(p, desicion);
+       
+    }
+
+    
 
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import modelo.Apuesta;
 import modelo.Juego;
 import modelo.Participante;
 
@@ -139,6 +140,11 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
         btnPagar.setText("Pagar");
         btnPagar.setEnabled(false);
+        btnPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnPagar);
         btnPagar.setBounds(420, 400, 72, 29);
 
@@ -152,6 +158,10 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     private void btnApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApostarActionPerformed
        apostar();
     }//GEN-LAST:event_btnApostarActionPerformed
+
+    private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
+        controlador.pagar();
+    }//GEN-LAST:event_btnPagarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,4 +275,33 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         imgPozo.setIcon(pozo);
         imgPozo.setText("Pozo : $ " + valor);
     }
+
+    @Override
+    public void seguirJugando() {
+        
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Vas a jugar otra mano", "Otra mano?", dialogButton);
+
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            
+            
+            controlador.juegoSiguienteMano(true);
+            
+        } else {
+            controlador.juegoSiguienteMano(false);
+            controlador.eliminarParticipante(j);
+            dispose();
+        }
+    }
+
+    @Override
+    public void salirJuego() {
+        JOptionPane.showMessageDialog(this, "El jueo termino, gracias por dejar tu dinero con nosotros");
+        dispose();
+                
+    }
+
+   
+
+   
 }

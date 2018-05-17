@@ -21,17 +21,32 @@ public class Juego extends Observable {
     private int cantidadJugadores;
     private List<Mano> listaManos = new ArrayList();
     private List<Participante> listaParticipantes = new ArrayList();
+    private int contadorRespuestas;
+    private int contadorRespuestasObtenidas;
+    
+    
 
     private Mazo mazo;
     /*Preguntar al docente*/
     private boolean iniciado;
 
+    
    
 
     public enum Eventos {
-        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa;
+        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa, hayGanador, finJuego;
     }
 
+    public int getContadorRespuestas() {
+        return contadorRespuestas;
+    }
+
+    public void setContadorRespuestas(int contadorRespuestas) {
+        this.contadorRespuestas = contadorRespuestas;
+    }
+
+    
+    
     public boolean isIniciado() {
         return iniciado;
     }
@@ -194,6 +209,7 @@ public class Juego extends Observable {
     public void generarNuevaMano() {
         Mano m = new Mano();
         m.setManoActual(true);
+        this.listaManos.add(m);
 
         /* Genero un nuevo mazo y lo barajo */
  
@@ -242,6 +258,7 @@ public class Juego extends Observable {
             Apuesta a = new Apuesta();
             a.setDueno(p);
             a.setValor(valor);
+            getManoActual().setApuesta(a);
             pozo = pozo + valor;
             /*Quitamos del saldo al jugador*/
             p.getJugador().restarAlSaldo(valor);
@@ -267,7 +284,7 @@ public class Juego extends Observable {
         /* Hay que avisar si alguien paso??*/
         if (hayDecision(a))
         {
-            resolverGanador();
+            resolverGanador(getManoActual());
         } else {
             avisar(Eventos.nuevaPagaoPasa);
         }
@@ -280,7 +297,7 @@ public class Juego extends Observable {
         /* Hay que avisar si alguien paso??*/
         if (hayDecision(a))
         {
-            resolverGanador();
+            resolverGanador(getManoActual());
         } else {
             avisar(Eventos.nuevaPagaoPasa);
         }
@@ -304,8 +321,77 @@ public class Juego extends Observable {
         
     }
     
-     private void resolverGanador() {
+     private void resolverGanador(Mano m) {
+       
+       
+        /*Mientras resolvemos el algoritmo de ganador, el due;o siempre gana*/
+        m.setGanador(m.getApuesta().getDueno());
         
+        /*Pagamos la apuesta*/
+        m.getGanador().getJugador().sumarAlSaldo(pozo);
+        /*Reiniciar el pozo*/
+        pozo=0;
+        /* Si damos por terminada la mano, ya no es la actual*/
+        m.setManoActual(false);
+        
+        
+        /* Registrar la cantidad de jugadores activos para saber cuantas respuestas necitamos*/
+        contadorRespuestas = getActivos().size();
+        /* Avisamos que hay ganador*/
+        avisar(Eventos.hayGanador);
+        
+
+        
+       
+        
+         
     }
+     
+     public Mano getManoActual()
+     {
+         for (Mano m : listaManos)
+         {
+             if (m.isManoActual())
+             {
+                 return m;
+             }
+         }
+         
+         return null;
+     }
+     
+     public void registrarDesicionParticipantes(Participante p, boolean decicion)
+     {
+         if (!decicion)
+         {
+             p.setActivo(false);
+             contadorRespuestasObtenidas++;
+         } else {
+             
+             pozo = pozo+luz;
+             p.getJugador().restarAlSaldo(luz);
+             contadorRespuestasObtenidas++;
+         }
+         
+         if (contadorRespuestasObtenidas==contadorRespuestas)
+         {
+             if (getActivos().size()<=1)
+             {
+                 avisar(Eventos.finJuego);
+             } else {
+                 generarNuevaMano();
+                vaciarContadores();
+             }
+             
+         }
+       
+        
+     }
+     
+     private void vaciarContadores() {
+        contadorRespuestas=0;
+        contadorRespuestasObtenidas=0;
+    }
+
 
 }

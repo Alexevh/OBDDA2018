@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +17,11 @@ public class Apuesta {
     /* En nuestro UML las listas son de jugadores, mi duda es si se necesitaba por algo de la letra*/
     private int valor;
     private Participante dueno;
-    private List<Participante> listaPagan;
-    private List<Participante> listaPasan;
+    private List<Participante> listaPagan = new ArrayList();
+    private List<Participante> listaPasan = new ArrayList();
+   
+    
+    
 
     public int getValor() {
         return valor;
