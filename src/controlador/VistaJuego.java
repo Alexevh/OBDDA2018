@@ -34,6 +34,8 @@ public interface VistaJuego {
     public void seguirJugando();
 
     public void salirJuego();
+
+    public void mostrarGanador(String nombre, String carta);
     
  
 

@@ -23,18 +23,22 @@ public class Juego extends Observable {
     private List<Participante> listaParticipantes = new ArrayList();
     private int contadorRespuestas;
     private int contadorRespuestasObtenidas;
-    
-    
+    private Participante ultimoGanador;
 
     private Mazo mazo;
     /*Preguntar al docente*/
     private boolean iniciado;
 
-    
-   
-
     public enum Eventos {
-        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa, hayGanador, finJuego;
+        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa, hayGanador, finJuego, manoNuevaSiNo, huboEmpate;
+    }
+
+    public Participante getUltimoGanador() {
+        return ultimoGanador;
+    }
+
+    public void setUltimoGanador(Participante ultimoGanador) {
+        this.ultimoGanador = ultimoGanador;
     }
 
     public int getContadorRespuestas() {
@@ -45,8 +49,6 @@ public class Juego extends Observable {
         this.contadorRespuestas = contadorRespuestas;
     }
 
-    
-    
     public boolean isIniciado() {
         return iniciado;
     }
@@ -114,8 +116,6 @@ public class Juego extends Observable {
         this.mazo = new Mazo();
 
     }
-    
-  
 
     /* esto retrun a participante*/
     public void agregarJugador(Participante j) throws PokerExcepciones {
@@ -149,9 +149,8 @@ public class Juego extends Observable {
         }
 
     }
-    
-    public void iniciarJuego()
-    {
+
+    public void iniciarJuego() {
         this.iniciado = true;
         avisar(Eventos.inicioJuego);
         generarNuevaMano();
@@ -212,7 +211,6 @@ public class Juego extends Observable {
         this.listaManos.add(m);
 
         /* Genero un nuevo mazo y lo barajo */
- 
         this.mazo = new Mazo();
         this.mazo.barajar();
 
@@ -262,136 +260,157 @@ public class Juego extends Observable {
             pozo = pozo + valor;
             /*Quitamos del saldo al jugador*/
             p.getJugador().restarAlSaldo(valor);
+
+            /* Hay que vaciar la lista de los que ya pasaron*/
+            a.getListaPasan().clear();
+
             avisar(Eventos.nuevaApuesta);
         }
 
     }
-    
-    public void pagarApuesta(Participante p, Apuesta a)
-    {
-        
+
+    public void pagarApuesta(Participante p, Apuesta a) {
+
         /* Consultar al docente por que, si cuando el jugador va a apostar tiene menos saldo que el */
-        if (JugadorTieneSaldo(p.getJugador()))
-        {
-          a.getListaPagan().add(p);
-          p.getJugador().restarAlSaldo(a.getValor());
-          this.pozo = this.pozo+a.getValor();
+        if (JugadorTieneSaldo(p.getJugador())) {
+            a.getListaPagan().add(p);
+            p.getJugador().restarAlSaldo(a.getValor());
+            this.pozo = this.pozo + a.getValor();
         } else {
             /* Si en el medio el jugador tiene menos de lo necesario para pagar, pasa automaticamente*/
             a.getListaPasan().add(p);
         }
-            
+
         /* Hay que avisar si alguien paso??*/
-        if (hayDecision(a))
-        {
+        if (hayDecision(a)) {
             resolverGanador(getManoActual());
         } else {
             avisar(Eventos.nuevaPagaoPasa);
         }
     }
-    
+
     /*  Esto es cuando no quiero pagar */
-    public void pasarApuesta(Participante p, Apuesta a)
-    {
+    public void pasarApuesta(Participante p, Apuesta a) {
         a.getListaPasan().add(p);
+        System.out.println("El participante "+p.getJugador().getNombreCompleto()+" paso");
+      
         /* Hay que avisar si alguien paso??*/
-        if (hayDecision(a))
-        {
+        if (hayDecision(a)) {
+            System.out.println("Hay decision, resolvemos ganador o empate ");
             resolverGanador(getManoActual());
         } else {
             avisar(Eventos.nuevaPagaoPasa);
         }
     }
-    
-    
-   /*  Este metodo lo que hace es calcular si todos los que podian tomar una 
+
+    /*  Este metodo lo que hace es calcular si todos los que podian tomar una 
     decision en la mano actual lo hicieron, si lo hacen devuelve true*/
-    public boolean hayDecision(Apuesta a)
-    {
+    public boolean hayDecision(Apuesta a) {
         boolean result = false;
-        
         int pagaron = a.getListaPagan().size();
         int pasaron = a.getListaPasan().size();
-        if (pasaron+pagaron+1==this.getActivos().size())
-        {
-            result=true;
+        
+        System.out.println("Estan pasando "+pasaron);
+        System.out.println("Estan pagando "+pagaron);
+
+        if (todosPasaron(a)) {
+            result = true;
+        } 
+        
+        
+        else  if (pasaron + pagaron + 1 == this.getActivos().size() && a.getDueno()!=null) {
+            result = true;
         }
-        
+
         return result;
-        
-    }
-    
-     private void resolverGanador(Mano m) {
-       
-       
-        /*Mientras resolvemos el algoritmo de ganador, el due;o siempre gana*/
-        m.setGanador(m.getApuesta().getDueno());
-        
-        /*Pagamos la apuesta*/
-        m.getGanador().getJugador().sumarAlSaldo(pozo);
-        /*Reiniciar el pozo*/
-        pozo=0;
-        /* Si damos por terminada la mano, ya no es la actual*/
-        m.setManoActual(false);
-        
-        
-        /* Registrar la cantidad de jugadores activos para saber cuantas respuestas necitamos*/
-        contadorRespuestas = getActivos().size();
-        /* Avisamos que hay ganador*/
-        avisar(Eventos.hayGanador);
-        
 
-        
-       
-        
-         
     }
-     
-     public Mano getManoActual()
-     {
-         for (Mano m : listaManos)
-         {
-             if (m.isManoActual())
-             {
-                 return m;
-             }
-         }
-         
-         return null;
-     }
-     
-     public void registrarDesicionParticipantes(Participante p, boolean decicion)
-     {
-         if (!decicion)
-         {
-             p.setActivo(false);
-             contadorRespuestasObtenidas++;
-         } else {
-             
-             pozo = pozo+luz;
-             p.getJugador().restarAlSaldo(luz);
-             contadorRespuestasObtenidas++;
-         }
-         
-         if (contadorRespuestasObtenidas==contadorRespuestas)
-         {
-             if (getActivos().size()<=1)
-             {
-                 avisar(Eventos.finJuego);
-             } else {
-                 generarNuevaMano();
+
+    public boolean todosPasaron(Apuesta a) {
+        boolean resultado = false;
+
+        int pasaron = a.getListaPasan().size();
+
+        if (pasaron == this.getActivos().size()) {
+            resultado = true;
+        }
+
+        return resultado;
+    }
+
+    private void resolverGanador(Mano m) {
+
+        if (todosPasaron(m.getApuesta())) {
+            
+          
+           m.setManoActual(false);
+           avisar(Eventos.huboEmpate);
+           contadorRespuestasObtenidas =0;
+           
+
+        } else {
+            /*Mientras resolvemos el algoritmo de ganador, el due;o siempre gana*/
+            m.setGanador(m.getApuesta().getDueno());
+
+            /*Pagamos la apuesta*/
+            m.getGanador().getJugador().sumarAlSaldo(pozo);
+            /*Reiniciar el pozo*/
+            pozo = 0;
+            /* Si damos por terminada la mano, ya no es la actual*/
+            m.setManoActual(false);
+
+            /* Registrar la cantidad de jugadores activos para saber cuantas respuestas necitamos*/
+            contadorRespuestas = getActivos().size();
+            /* Refrescamos el ultio ganador*/
+            this.ultimoGanador = m.getGanador();
+
+            /* Avisamos que hay ganador*/
+            avisar(Eventos.hayGanador);
+          
+            
+        }
+
+    }
+
+    public Mano getManoActual() {
+        for (Mano m : listaManos) {
+            if (m.isManoActual()) {
+                return m;
+            }
+        }
+
+        return null;
+    }
+
+    public void registrarDesicionParticipantes(Participante p, boolean decicion) {
+        if (!decicion) {
+            p.setActivo(false);
+            contadorRespuestasObtenidas++;
+            avisar(Eventos.manoNuevaSiNo);
+        } else {
+
+            pozo = pozo + luz;
+            p.getJugador().restarAlSaldo(luz);
+            contadorRespuestasObtenidas++;
+            avisar(Eventos.manoNuevaSiNo);
+        }
+
+        if (contadorRespuestasObtenidas == contadorRespuestas) {
+            if (getActivos().size() <= 1) {
+                avisar(Eventos.finJuego);
+            } else {
                 vaciarContadores();
-             }
-             
-         }
-       
-        
-     }
-     
-     private void vaciarContadores() {
-        contadorRespuestas=0;
-        contadorRespuestasObtenidas=0;
+                generarNuevaMano();
+                
+            }
+
+        }
+
     }
 
+    private void vaciarContadores() {
+        contadorRespuestas = 0;
+        contadorRespuestasObtenidas = 0;
+    }
 
 }

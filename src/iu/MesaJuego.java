@@ -85,6 +85,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         btnApostar = new javax.swing.JButton();
         txtMontoApuesta = new javax.swing.JTextField();
         btnPagar = new javax.swing.JButton();
+        btnPasar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -148,6 +149,16 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         getContentPane().add(btnPagar);
         btnPagar.setBounds(420, 400, 72, 29);
 
+        btnPasar.setText("Pasar");
+        btnPasar.setEnabled(false);
+        btnPasar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPasarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnPasar);
+        btnPasar.setBounds(500, 400, 50, 29);
+
         setBounds(0, 0, 818, 472);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -163,6 +174,11 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         controlador.pagar();
     }//GEN-LAST:event_btnPagarActionPerformed
 
+    private void btnPasarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasarActionPerformed
+       pasar();
+        
+    }//GEN-LAST:event_btnPasarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -170,6 +186,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApostar;
     private javax.swing.JButton btnPagar;
+    private javax.swing.JButton btnPasar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel imgPozo;
     private javax.swing.JLabel imgSaldo;
@@ -248,6 +265,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         en imagenes*/
         
         btnApostar.setEnabled(true);
+        btnPasar.setEnabled(true);
         txtMontoApuesta.setEnabled(true);
         
     }
@@ -257,16 +275,24 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         
         btnApostar.setEnabled(false);
         txtMontoApuesta.setEnabled(false);
-        btnPagar.setEnabled(true);
+        deshabilitarHabilitarOpciones(true);
+        
         
         
     }
 
     private void apostar() {
         controlador.registrarApuesta(j, Integer.parseInt(txtMontoApuesta.getText()));
-                
+        deshabilitarHabilitarOpciones(false);
+        btnApostar.setEnabled(false);
+        
     }
     
+    public void deshabilitarHabilitarOpciones(boolean opcion)
+    {
+        btnPagar.setEnabled(opcion);
+        btnPasar.setEnabled(opcion);
+    }
     
     @Override
     public void actualizarPozo(int valor)
@@ -280,25 +306,43 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     public void seguirJugando() {
         
         int dialogButton = JOptionPane.YES_NO_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Vas a jugar otra mano", "Otra mano?", dialogButton);
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Vas a jugar otra mano", "Otra mano?"+j.getJugador().getNombreCompleto(), dialogButton);
 
         if (dialogResult == JOptionPane.YES_OPTION) {
             
-            
+         
             controlador.juegoSiguienteMano(true);
+            btnApostar.setEnabled(true);
+            btnPagar.setEnabled(false);
+            btnPasar.setEnabled(true);
             
         } else {
             controlador.juegoSiguienteMano(false);
             controlador.eliminarParticipante(j);
-            dispose();
+            controlador.desregistrarControlador();
+            controlador=null;
+            this.dispose();
         }
     }
 
     @Override
     public void salirJuego() {
         JOptionPane.showMessageDialog(this, "El jueo termino, gracias por dejar tu dinero con nosotros");
-        dispose();
+        this.dispose();
                 
+    }
+
+    private void pasar() {
+        deshabilitarHabilitarOpciones(false);
+        btnApostar.setEnabled(false);
+        controlador.pasarApuesta();
+       
+        
+    }
+
+    @Override
+    public void mostrarGanador(String nombre, String carta) {
+         JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue "+nombre+" y gano con "+carta);
     }
 
    

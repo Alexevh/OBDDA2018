@@ -16,8 +16,8 @@ public class Mano {
     
     private boolean manoActual;
     private List<Participante> listaParticipantesMano = new ArrayList();
-    private Apuesta apuesta;
-     private Participante ganador;
+    private Apuesta apuesta = new Apuesta();
+    private Participante ganador;
 
     public Participante getGanador() {
         return ganador;

@@ -74,6 +74,13 @@ public class ControladorJuego implements Observer {
         /* Esto hay que hacerlo en el login asi el sistema sabe si hay un juego nuevo*/
         //this.juego.agregarJugador(j);
     }
+    
+    
+    public void desregistrarControlador()
+    {
+        juego.deleteObserver(this);
+        
+    }
 
     /* Agregue este metodo por que como saque la segunda lista de jugadores por indicacion del docente, si dejaba en
     el constructor el agregar participante entonces en el inicio de la vista el constructor no habia acabado, entonces estaba en null
@@ -107,6 +114,12 @@ public class ControladorJuego implements Observer {
         juego.pagarApuesta(p, a);
     }
 
+    public void pasarApuesta() {
+        juego.pasarApuesta(this.p, this.juego.getManoActual().getApuesta());
+    }
+    
+    
+
     
     
     
@@ -139,16 +152,29 @@ public class ControladorJuego implements Observer {
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
                 break;
-            case nuevaPagaoPasa:
-                
+            case nuevaPagaoPasa:               
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
                 break;
              case hayGanador:              
+               
+                vista.mostrarGanador(juego.getUltimoGanador().getJugador().getNombreCompleto(), juego.getUltimoGanador().getCartasMano().get(0).toString());
+                vista.seguirJugando();
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
-                vista.seguirJugando();
                 break;
+             case manoNuevaSiNo:              
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
+                
+                break;
+             case huboEmpate: 
+                vista.seguirJugando();
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
+                
+                break;
+                
              case finJuego:              
                 
                 vista.salirJuego();
