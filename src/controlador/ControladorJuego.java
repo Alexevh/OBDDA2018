@@ -33,8 +33,6 @@ public class ControladorJuego implements Observer {
     public void setP(Participante p) {
         this.p = p;
     }
-    
-    
 
     public Juego getJuego() {
         return juego;
@@ -74,12 +72,10 @@ public class ControladorJuego implements Observer {
         /* Esto hay que hacerlo en el login asi el sistema sabe si hay un juego nuevo*/
         //this.juego.agregarJugador(j);
     }
-    
-    
-    public void desregistrarControlador()
-    {
+
+    public void desregistrarControlador() {
         juego.deleteObserver(this);
-        
+
     }
 
     /* Agregue este metodo por que como saque la segunda lista de jugadores por indicacion del docente, si dejaba en
@@ -117,12 +113,11 @@ public class ControladorJuego implements Observer {
     public void pasarApuesta() {
         juego.pasarApuesta(this.p, this.juego.getManoActual().getApuesta());
     }
-    
-    
 
-    
-    
-    
+    public boolean participanteTieneSaldo(Participante p) {
+        return juego.participanteTieneSaldo(p);
+    }
+
     /* Metodo que escucha al juego y hace los cambios*/
     @Override
     public void update(Observable o, Object evento) {
@@ -152,31 +147,43 @@ public class ControladorJuego implements Observer {
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
                 break;
-            case nuevaPagaoPasa:               
+            case nuevaPagaoPasa:
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
                 break;
-             case hayGanador:              
-               
+            case hayGanador:
                 vista.mostrarGanador(juego.getUltimoGanador().getJugador().getNombreCompleto(), juego.getUltimoGanador().getCartasMano().get(0).toString());
+                if (participanteTieneSaldo(p)) {
+                    vista.seguirJugando();
+                    vista.actualizarPozo(this.juego.getPozo());
+                    vista.actualizarMesa(juego.getActivos());
+                } else {
+                    vista.fuiExpulsado();
+                }
+
+                break;
+            case manoNuevaSiNo:
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
+
+                break;
+            case huboEmpate:
                 vista.seguirJugando();
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
+
                 break;
-             case manoNuevaSiNo:              
-                vista.actualizarPozo(this.juego.getPozo());
+            case expulsarParticipante:
+                if (!p.isActivo()) {
+                    vista.fuiExpulsado();
+                }
+                vista.mostrarParticipantes(getFaltantes());
                 vista.actualizarMesa(juego.getActivos());
-                
+
                 break;
-             case huboEmpate: 
-                vista.seguirJugando();
-                vista.actualizarPozo(this.juego.getPozo());
-                vista.actualizarMesa(juego.getActivos());
-                
-                break;
-                
-             case finJuego:              
-                
+
+            case finJuego:
+
                 vista.salirJuego();
                 break;
         }
@@ -191,15 +198,11 @@ public class ControladorJuego implements Observer {
     public void registrarDesicionParticipantes(Participante p, boolean desicion) {
         juego.registrarDesicionParticipantes(p, desicion);
     }
-    
-    
-    public void juegoSiguienteMano(boolean desicion){
-        
-     
-      registrarDesicionParticipantes(p, desicion);
-       
-    }
 
-    
+    public void juegoSiguienteMano(boolean desicion) {
+
+        registrarDesicionParticipantes(p, desicion);
+
+    }
 
 }

@@ -319,8 +319,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         } else {
             controlador.juegoSiguienteMano(false);
             controlador.eliminarParticipante(j);
-            controlador.desregistrarControlador();
-            controlador=null;
+             eliminarControlador();
             this.dispose();
         }
     }
@@ -328,6 +327,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     @Override
     public void salirJuego() {
         JOptionPane.showMessageDialog(this, "El jueo termino, gracias por dejar tu dinero con nosotros");
+        eliminarControlador();
         this.dispose();
                 
     }
@@ -345,7 +345,19 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
          JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue "+nombre+" y gano con "+carta);
     }
 
-   
+    @Override
+    public void fuiExpulsado() {
+        JOptionPane.showMessageDialog(this, "Lamentablemente su saldo no es suficiente para continuar en el juego");
+        eliminarControlador();
+        this.dispose();
+    }
+
+    public void eliminarControlador() {
+        
+        controlador.desregistrarControlador();
+        controlador = null;
+    }
+
 
    
 }

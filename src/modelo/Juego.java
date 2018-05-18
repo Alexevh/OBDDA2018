@@ -29,8 +29,10 @@ public class Juego extends Observable {
     /*Preguntar al docente*/
     private boolean iniciado;
 
+    
+
     public enum Eventos {
-        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa, hayGanador, finJuego, manoNuevaSiNo, huboEmpate;
+        inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa, hayGanador, finJuego, manoNuevaSiNo, huboEmpate, expulsarParticipante;
     }
 
     public Participante getUltimoGanador() {
@@ -347,6 +349,11 @@ public class Juego extends Observable {
            avisar(Eventos.huboEmpate);
            contadorRespuestasObtenidas =0;
            
+           /* Todos los jugadores con saldo 0 o sea menor o igual a la luz actual
+           
+           La letra dice solo saldo cero, preguntar al docente
+           */
+           expulsarPobres();
 
         } else {
             /*Mientras resolvemos el algoritmo de ganador, el due;o siempre gana*/
@@ -363,8 +370,8 @@ public class Juego extends Observable {
             contadorRespuestas = getActivos().size();
             /* Refrescamos el ultio ganador*/
             this.ultimoGanador = m.getGanador();
-
-            /* Avisamos que hay ganador*/
+         
+            /* Avisamos que hay ganador, preguntar al docente, si la expulsion no la debriamos hacer aca tamien*/
             avisar(Eventos.hayGanador);
           
             
@@ -411,6 +418,28 @@ public class Juego extends Observable {
     private void vaciarContadores() {
         contadorRespuestas = 0;
         contadorRespuestasObtenidas = 0;
+    }
+    
+    private void expulsarPobres() {
+        
+        for (Participante p: getActivos())
+        {
+            if (p.getJugador().getSaldo()<=luz)
+            {
+                p.setActivo(false);
+                avisar(Eventos.expulsarParticipante);
+            }
+        }
+    }
+    
+    public boolean participanteTieneSaldo(Participante p)
+    {
+        if (p.getJugador().getSaldo()<=luz)
+        {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

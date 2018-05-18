@@ -36,6 +36,8 @@ public interface VistaJuego {
     public void salirJuego();
 
     public void mostrarGanador(String nombre, String carta);
+
+    public void fuiExpulsado();
     
  
 
