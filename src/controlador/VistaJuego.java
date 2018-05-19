@@ -31,6 +31,8 @@ public interface VistaJuego {
     public void actualizarMesa(List<Participante> activos);
 
     public void actualizarPozo(int pozo);
+    
+    public void actualizarPagan(List<Participante> pagan);
 
     public void seguirJugando();
 

@@ -134,7 +134,7 @@ public class ControladorJuego implements Observer {
                 vista.inicioJuego(this.juego.getListaParticipantes());
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
-              
+
                 break;
             case seEliminaParticipante:
                 vista.mostrarParticipantes(getFaltantes());
@@ -146,23 +146,20 @@ public class ControladorJuego implements Observer {
                 vista.actualizarMano(p.getCartasMano());
                 break;
             case nuevaApuesta:
-                vista.inicioNuevaApuesta(juego.getManoActual().getApuesta().getDueno().getJugador().getNombreCompleto(),juego.getManoActual().getApuesta().getValor() );
+                vista.inicioNuevaApuesta(juego.getManoActual().getApuesta().getDueno().getJugador().getNombreCompleto(), juego.getManoActual().getApuesta().getValor());
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
                 break;
             case nuevaPagaoPasa:
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
+                vista.actualizarPagan(juego.getManoActual().getApuesta().getListaPagan());
                 break;
             case hayGanador:
                 vista.mostrarGanador(juego.getUltimoGanador().getJugador().getNombreCompleto(), juego.getUltimoGanador().getCartasMano().get(0).toString());
-                if (participanteTieneSaldo(p)) {
-                    vista.seguirJugando();
-                    vista.actualizarPozo(this.juego.getPozo());
-                    vista.actualizarMesa(juego.getActivos());
-                } else {
-                    vista.fuiExpulsado();
-                }
+                vista.seguirJugando();
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
 
                 break;
             case manoNuevaSiNo:
@@ -171,14 +168,10 @@ public class ControladorJuego implements Observer {
 
                 break;
             case huboEmpate:
-                
-                 if (participanteTieneSaldo(p)) {
-                    vista.seguirJugando();
-                    vista.actualizarPozo(this.juego.getPozo());
-                    vista.actualizarMesa(juego.getActivos());
-                } else {
-                    vista.fuiExpulsado();
-                }
+
+                vista.seguirJugando();
+                vista.actualizarPozo(this.juego.getPozo());
+                vista.actualizarMesa(juego.getActivos());
 
                 break;
             case expulsarParticipante:

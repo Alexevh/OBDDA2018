@@ -392,6 +392,7 @@ public class Juego extends Observable {
             /* Refrescamos el ultio ganador*/
             this.ultimoGanador = m.getGanador();
          
+            expulsarPobres();
             /* Avisamos que hay ganador, preguntar al docente, si la expulsion no la debriamos hacer aca tamien*/
             avisar(Eventos.hayGanador);
           
