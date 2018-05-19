@@ -24,7 +24,7 @@ public interface VistaJuego {
 
     public void inicioNuevaMano();
 
-    public void inicioNuevaApuesta();
+    public void inicioNuevaApuesta(String jugadorNombre, int monto);
 
    // public void actualizarMesa(int saldo, int pozo, List<Participante> lista);
 

@@ -99,7 +99,7 @@ public class ControladorJuego implements Observer {
         juego.eliminarParticipante(p);
     }
 
-    public void registrarApuesta(Participante p, int valor) {
+    public void registrarApuesta(Participante p, int valor) throws PokerExcepciones {
         juego.registrarApuesta(p, valor);
     }
 
@@ -146,7 +146,7 @@ public class ControladorJuego implements Observer {
                 vista.actualizarMano(p.getCartasMano());
                 break;
             case nuevaApuesta:
-                vista.inicioNuevaApuesta();
+                vista.inicioNuevaApuesta(juego.getManoActual().getApuesta().getDueno().getJugador().getNombreCompleto(),juego.getManoActual().getApuesta().getValor() );
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
                 break;

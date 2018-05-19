@@ -5,6 +5,7 @@
  */
 package iu;
 
+import Excepciones.PokerExcepciones;
 import controlador.ControladorJuego;
 import controlador.VistaJuego;
 import java.awt.BorderLayout;
@@ -42,30 +43,19 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         this.j = j;
     }
 
-  
-
     /**
      * Creates new form MesaJuego
      */
-    public MesaJuego(Participante j, Juego juego)  {
+    public MesaJuego(Participante j, Juego juego) {
         initComponents();
         this.j = j;
-         pintarMesa();
+        pintarMesa();
         /* El juego no se almacena en la vista, solo en el controlador*/
         controlador = new ControladorJuego(juego, this, j);
-        
-      
+
         this.setTitle(j.getJugador().getNombreCompleto());
-       
-        
-        
-        
-        
+
     }
-    
-   
-      
- 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -198,7 +188,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApostarActionPerformed
-       apostar();
+        apostar();
     }//GEN-LAST:event_btnApostarActionPerformed
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
@@ -206,8 +196,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     }//GEN-LAST:event_btnPagarActionPerformed
 
     private void btnPasarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasarActionPerformed
-       pasar();
-        
+        pasar();
+
     }//GEN-LAST:event_btnPasarActionPerformed
 
     /**
@@ -237,12 +227,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     @Override
     public void mostrarParticipantes(int cantidadFaltante) {
 
-        this.txtInformacion.setText("Hay un nuevo participante, faltan : " + cantidadFaltante);      
-        
-        
+        this.txtInformacion.setText("Esperando inicio del juego, faltan : " + cantidadFaltante);
+
     }
-    
-    
 
     private void pintarMesa() {
 
@@ -251,8 +238,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
         add(background);
         background.setLayout(new FlowLayout());
-        
-     
+
     }
 
     private void salir() {
@@ -261,9 +247,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         int dialogResult = JOptionPane.showConfirmDialog(this, "Seguro quieres salir", "Salir del juego", dialogButton);
 
         if (dialogResult == JOptionPane.YES_OPTION) {
-            
-            
+
             controlador.eliminarParticipante(j);
+            //salirJuego();
             dispose();
         }
 
@@ -271,22 +257,21 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     @Override
     public void inicioJuego(List<Participante> lista) {
-        
+
         this.txtInformacion.setText("Inicio el juego!!!");
         listaParticipantes.setListData(lista.toArray());
-        
+
     }
 
     @Override
     public void mostrarError(String mensaje) {
-               
-        JOptionPane.showMessageDialog(this, mensaje);      
-        
+
+        JOptionPane.showMessageDialog(this, mensaje);
+
     }
-    
+
     @Override
-    public void actualizarMesa( List<Participante> lista)
-    {
+    public void actualizarMesa(List<Participante> lista) {
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/imagenes/saldo.png").getImage().getScaledInstance(40, 60, Image.SCALE_DEFAULT));
         imgSaldo.setIcon(imageIcon);
         imgSaldo.setText("Saldo : " + j.getJugador().getSaldo());
@@ -296,44 +281,44 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     @Override
     public void inicioNuevaMano() {
-        
+
         /* Aca lo que hacemos es, vemos que cartas tiene en la mano el participante y las mostramos
         en imagenes*/
-        
         btnApostar.setEnabled(true);
         btnPasar.setEnabled(true);
         txtMontoApuesta.setEnabled(true);
-        
-        
+
     }
 
     @Override
-    public void inicioNuevaApuesta() {
-        
+    public void inicioNuevaApuesta(String jugadorNombre, int monto) {
+
         btnApostar.setEnabled(false);
         txtMontoApuesta.setEnabled(false);
         deshabilitarHabilitarOpciones(true);
-        
-        
-        
+        txtInformacion.setText(jugadorNombre+" ha realizado una apuesta por valor $:"+monto);
+
     }
 
     private void apostar() {
-        controlador.registrarApuesta(j, Integer.parseInt(txtMontoApuesta.getText()));
-        deshabilitarHabilitarOpciones(false);
-        btnApostar.setEnabled(false);
-        
+
+        try {
+            controlador.registrarApuesta(j, Integer.parseInt(txtMontoApuesta.getText()));
+            deshabilitarHabilitarOpciones(false);
+            btnApostar.setEnabled(false);
+        } catch (PokerExcepciones ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
     }
-    
-    public void deshabilitarHabilitarOpciones(boolean opcion)
-    {
+
+    public void deshabilitarHabilitarOpciones(boolean opcion) {
         btnPagar.setEnabled(opcion);
         btnPasar.setEnabled(opcion);
     }
-    
+
     @Override
-    public void actualizarPozo(int valor)
-    {
+    public void actualizarPozo(int valor) {
         ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
         imgPozo.setIcon(pozo);
         imgPozo.setText("Pozo : $ " + valor);
@@ -341,22 +326,21 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     @Override
     public void seguirJugando() {
-        
+
         int dialogButton = JOptionPane.YES_NO_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Vas a jugar otra mano", "Otra mano?"+j.getJugador().getNombreCompleto(), dialogButton);
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Vas a jugar otra mano", "Otra mano?" + j.getJugador().getNombreCompleto(), dialogButton);
 
         if (dialogResult == JOptionPane.YES_OPTION) {
-            
-         
+
             controlador.juegoSiguienteMano(true);
             btnApostar.setEnabled(true);
             btnPagar.setEnabled(false);
             btnPasar.setEnabled(true);
-            
+
         } else {
             controlador.juegoSiguienteMano(false);
             controlador.eliminarParticipante(j);
-             eliminarControlador();
+            eliminarControlador();
             this.dispose();
         }
     }
@@ -366,20 +350,19 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         JOptionPane.showMessageDialog(this, "El jueo termino, gracias por dejar tu dinero con nosotros");
         eliminarControlador();
         this.dispose();
-                
+
     }
 
     private void pasar() {
         deshabilitarHabilitarOpciones(false);
         btnApostar.setEnabled(false);
         controlador.pasarApuesta();
-       
-        
+
     }
 
     @Override
     public void mostrarGanador(String nombre, String carta) {
-         JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue "+nombre+" y gano con "+carta.toString());
+        JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre + " y gano con " + carta.toString());
     }
 
     @Override
@@ -390,29 +373,26 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     }
 
     public void eliminarControlador() {
-        
+
         controlador.desregistrarControlador();
         controlador = null;
     }
-    
+
     @Override
-    public void actualizarMano(List<Carta> cartas)
-    {
-        
-       ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(0).getImagen()).getImage());
-       // ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/10c.gif").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-       c1.setIcon(carta1);
-       System.out.println("La carta 1 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(0).getPalo().toString()+cartas.get(0).getNumero());
-       c2.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(1).getImagen()).getImage()));
-       System.out.println("La carta 2 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(1).getPalo().toString()+cartas.get(1).getNumero());
-       c3.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(2).getImagen()).getImage()));
-       System.out.println("La carta 3 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(2).getPalo().toString()+cartas.get(2).getNumero());
-       c4.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(3).getImagen()).getImage()));
-       System.out.println("La carta 4 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(3).getPalo().toString()+cartas.get(3).getNumero());
-       c5.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(4).getImagen()).getImage()));
-       System.out.println("La carta 5 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(4).getPalo().toString()+cartas.get(4).getNumero());
+    public void actualizarMano(List<Carta> cartas) {
+
+        ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(0).getImagen()).getImage());
+        // ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/10c.gif").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        c1.setIcon(carta1);
+        System.out.println("La carta 1 del " + j.getJugador().getNombreCompleto() + " es " + cartas.get(0).getPalo().toString() + cartas.get(0).getNumero());
+        c2.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(1).getImagen()).getImage()));
+        System.out.println("La carta 2 del " + j.getJugador().getNombreCompleto() + " es " + cartas.get(1).getPalo().toString() + cartas.get(1).getNumero());
+        c3.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(2).getImagen()).getImage()));
+        System.out.println("La carta 3 del " + j.getJugador().getNombreCompleto() + " es " + cartas.get(2).getPalo().toString() + cartas.get(2).getNumero());
+        c4.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(3).getImagen()).getImage()));
+        System.out.println("La carta 4 del " + j.getJugador().getNombreCompleto() + " es " + cartas.get(3).getPalo().toString() + cartas.get(3).getNumero());
+        c5.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(4).getImagen()).getImage()));
+        System.out.println("La carta 5 del " + j.getJugador().getNombreCompleto() + " es " + cartas.get(4).getPalo().toString() + cartas.get(4).getNumero());
     }
 
-
-   
 }

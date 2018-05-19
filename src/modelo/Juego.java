@@ -172,7 +172,16 @@ public class Juego extends Observable {
             this.listaParticipantes.remove(p);
 
         }
-        avisar(Eventos.seEliminaParticipante);
+        
+        if (getActivos().size()==1)
+        {
+            getActivos().get(0).getJugador().sumarAlSaldo(pozo);
+            avisar(Eventos.finJuego);
+            
+        } else {
+            avisar(Eventos.seEliminaParticipante);
+        }
+        
     }
 
     /* Metodo que avisa a los observadores*/
@@ -249,14 +258,14 @@ public class Juego extends Observable {
     public boolean validarApuesta(Participante p, int valor) {
         boolean valida = false;
 
-        if (p.getJugador().getSaldo() >= valor && valor <= obtenerApuestaMaxima()) {
+        if (p.getJugador().getSaldo() >= valor && valor <= obtenerApuestaMaxima() && valor>0) {
             valida = true;
         }
 
         return valida;
     }
 
-    public void registrarApuesta(Participante p, int valor) {
+    public void registrarApuesta(Participante p, int valor) throws PokerExcepciones  {
 
         if (validarApuesta(p, valor)) {
             Apuesta a = new Apuesta();
@@ -271,6 +280,8 @@ public class Juego extends Observable {
             a.getListaPasan().clear();
 
             avisar(Eventos.nuevaApuesta);
+        } else {
+            throw new PokerExcepciones("Error, el monto de la apuesta no es valido, debe ser mayor que cero y menor a :"+obtenerApuestaMaxima());
         }
 
     }

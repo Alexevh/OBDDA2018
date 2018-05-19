@@ -78,9 +78,9 @@ public class Carta implements Comparable <Carta>{
                 return 4;
             case DIAMANTE:
                 return 3;
-            case PIQUE:
+                case TREBOL:
                 return 2;
-            case TREBOL:
+            case PIQUE:
                 return 1;
 
         }
