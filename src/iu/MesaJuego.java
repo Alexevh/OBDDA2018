@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import modelo.Apuesta;
+import modelo.Carta;
 import modelo.Juego;
 import modelo.Participante;
 
@@ -86,6 +87,11 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         txtMontoApuesta = new javax.swing.JTextField();
         btnPagar = new javax.swing.JButton();
         btnPasar = new javax.swing.JButton();
+        c1 = new javax.swing.JLabel();
+        c2 = new javax.swing.JLabel();
+        c3 = new javax.swing.JLabel();
+        c4 = new javax.swing.JLabel();
+        c5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -103,7 +109,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         imgPozo.setForeground(new java.awt.Color(254, 254, 254));
         imgPozo.setText("Pozo actual  $: ");
         getContentPane().add(imgPozo);
-        imgPozo.setBounds(340, 170, 260, 100);
+        imgPozo.setBounds(240, 70, 260, 100);
 
         jScrollPane1.setViewportView(listaParticipantes);
 
@@ -159,6 +165,31 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         getContentPane().add(btnPasar);
         btnPasar.setBounds(500, 400, 50, 29);
 
+        c1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/Invertida.gif"))); // NOI18N
+        c1.setText("Card 1");
+        getContentPane().add(c1);
+        c1.setBounds(190, 220, 110, 150);
+
+        c2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/Invertida.gif"))); // NOI18N
+        c2.setText("Card2");
+        getContentPane().add(c2);
+        c2.setBounds(290, 220, 110, 150);
+
+        c3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/Invertida.gif"))); // NOI18N
+        c3.setText("Card3");
+        getContentPane().add(c3);
+        c3.setBounds(390, 220, 100, 150);
+
+        c4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/Invertida.gif"))); // NOI18N
+        c4.setText("Card4");
+        getContentPane().add(c4);
+        c4.setBounds(490, 220, 110, 150);
+
+        c5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/Invertida.gif"))); // NOI18N
+        c5.setText("Card5");
+        getContentPane().add(c5);
+        c5.setBounds(590, 220, 110, 150);
+
         setBounds(0, 0, 818, 472);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -188,6 +219,11 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     private javax.swing.JButton btnPagar;
     private javax.swing.JButton btnPasar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel c1;
+    private javax.swing.JLabel c2;
+    private javax.swing.JLabel c3;
+    private javax.swing.JLabel c4;
+    private javax.swing.JLabel c5;
     private javax.swing.JLabel imgPozo;
     private javax.swing.JLabel imgSaldo;
     private javax.swing.JLabel jLabel1;
@@ -268,6 +304,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         btnPasar.setEnabled(true);
         txtMontoApuesta.setEnabled(true);
         
+        
     }
 
     @Override
@@ -342,7 +379,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     @Override
     public void mostrarGanador(String nombre, String carta) {
-         JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue "+nombre+" y gano con "+carta);
+         JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue "+nombre+" y gano con "+carta.toString());
     }
 
     @Override
@@ -356,6 +393,24 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         
         controlador.desregistrarControlador();
         controlador = null;
+    }
+    
+    @Override
+    public void actualizarMano(List<Carta> cartas)
+    {
+        
+       ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(0).getImagen()).getImage());
+       // ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/10c.gif").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+       c1.setIcon(carta1);
+       System.out.println("La carta 1 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(0).getPalo().toString()+cartas.get(0).getNumero());
+       c2.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(1).getImagen()).getImage()));
+       System.out.println("La carta 2 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(1).getPalo().toString()+cartas.get(1).getNumero());
+       c3.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(2).getImagen()).getImage()));
+       System.out.println("La carta 3 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(2).getPalo().toString()+cartas.get(2).getNumero());
+       c4.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(3).getImagen()).getImage()));
+       System.out.println("La carta 4 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(3).getPalo().toString()+cartas.get(3).getNumero());
+       c5.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/"+cartas.get(4).getImagen()).getImage()));
+       System.out.println("La carta 5 del "+j.getJugador().getNombreCompleto()+" es "+cartas.get(4).getPalo().toString()+cartas.get(4).getNumero());
     }
 
 

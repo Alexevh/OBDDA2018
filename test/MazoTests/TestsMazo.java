@@ -57,4 +57,20 @@ public class TestsMazo {
        
     }
     
+      @Test
+    public void obtenerImagenCartas()
+    {
+       Mazo m = new Mazo();
+       m.barajar();
+       
+       List<Carta> lista1 = m.repartir(5);
+       
+       System.out.println(lista1.get(0).obtenerImagen());
+       System.out.println(lista1.get(1).obtenerImagen());
+       System.out.println(lista1.get(2).obtenerImagen());
+       
+       
+    }
+    
+    
 }

@@ -7,6 +7,7 @@ package controlador;
 
 import java.util.List;
 import modelo.Apuesta;
+import modelo.Carta;
 import modelo.Participante;
 
 /**
@@ -38,6 +39,8 @@ public interface VistaJuego {
     public void mostrarGanador(String nombre, String carta);
 
     public void fuiExpulsado();
+
+    public void actualizarMano(List<Carta> cartasMano);
     
  
 

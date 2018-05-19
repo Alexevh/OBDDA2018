@@ -62,6 +62,7 @@ public class ControladorJuego implements Observer {
             vista.actualizarMesa(this.juego.getActivos());
             vista.actualizarPozo(juego.getPozo());
             vista.inicioNuevaMano();
+            vista.actualizarMano(p.getCartasMano());
 
         } else {
             vista.mostrarParticipantes(getFaltantes());
@@ -133,6 +134,7 @@ public class ControladorJuego implements Observer {
                 vista.inicioJuego(this.juego.getListaParticipantes());
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
+              
                 break;
             case seEliminaParticipante:
                 vista.mostrarParticipantes(getFaltantes());
@@ -141,6 +143,7 @@ public class ControladorJuego implements Observer {
             case nuevaMano:
                 vista.inicioNuevaMano();
                 vista.actualizarMesa(juego.getActivos());
+                vista.actualizarMano(p.getCartasMano());
                 break;
             case nuevaApuesta:
                 vista.inicioNuevaApuesta();
@@ -168,9 +171,14 @@ public class ControladorJuego implements Observer {
 
                 break;
             case huboEmpate:
-                vista.seguirJugando();
-                vista.actualizarPozo(this.juego.getPozo());
-                vista.actualizarMesa(juego.getActivos());
+                
+                 if (participanteTieneSaldo(p)) {
+                    vista.seguirJugando();
+                    vista.actualizarPozo(this.juego.getPozo());
+                    vista.actualizarMesa(juego.getActivos());
+                } else {
+                    vista.fuiExpulsado();
+                }
 
                 break;
             case expulsarParticipante:

@@ -9,12 +9,24 @@ package modelo;
  *
  * @author alex
  */
-public class Carta {
- 
-   public enum Palo {CORAZON, DIAMANTE, TREBOL, PIQUE}
-   
-   private Palo palo;
-   private int numero;
+public class Carta implements Comparable <Carta>{
+
+    
+    public enum Palo {
+        CORAZON, DIAMANTE, TREBOL, PIQUE
+    }
+
+    private Palo palo;
+    private int numero;
+    private String imagen;
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
     public Palo getPalo() {
         return palo;
@@ -35,43 +47,97 @@ public class Carta {
     public Carta(Palo palo, int numero) {
         this.palo = palo;
         this.numero = numero;
+        this.imagen = obtenerImagen();
     }
-    
-   
-    
-    private int obtenerValorPalo(Palo p)
-    {
-        
-      switch (p){
-          
-          case CORAZON:
-              return 4;
-          case DIAMANTE:
-              return 3;
-          case PIQUE:
-              return 2;
-          case TREBOL:
-              return 1;
-                  
-      }
-         return 0;     
-              
+
+    public String obtenerImagen() {
+        String img = "";
+        /* El 11 es J, 12 es Q, 13 es K y 14 es A*/
+        if (this.numero < 11) {
+            img = this.numero + "" + obtenerCartaPalo(this.palo) + ".gif";
+        } else if (this.numero == 11) {
+
+            img = "J" + obtenerCartaPalo(palo) + ".gif";
+
+        } else if (this.numero == 12) {
+            img = "Q" + obtenerCartaPalo(palo) + ".gif";
+        } else if (this.numero == 13) {
+            img = "K" + obtenerCartaPalo(palo) + ".gif";
+        } else {
+            img="A"+obtenerCartaPalo(palo)+".gif";
+        }
+
+        return img;
     }
-    
-     @Override
-    public boolean equals(Object object)
-    {
+
+    private int obtenerValorPalo(Palo p) {
+
+        switch (p) {
+
+            case CORAZON:
+                return 4;
+            case DIAMANTE:
+                return 3;
+            case PIQUE:
+                return 2;
+            case TREBOL:
+                return 1;
+
+        }
+        return 0;
+
+    }
+
+    private String obtenerCartaPalo(Palo p) {
+
+        switch (p) {
+
+            case CORAZON:
+                return "c";
+            case DIAMANTE:
+                return "d";
+            case PIQUE:
+                return "p";
+            case TREBOL:
+                return "t";
+
+        }
+        return "";
+
+    }
+
+    @Override
+    public boolean equals(Object object) {
         boolean mismo = false;
 
-        if (object != null && object instanceof Carta)
-        {
-            if (this.getNumero() == ((Carta)object).getNumero() && this.getPalo() == ((Carta)object).getPalo())
-            {
+        if (object != null && object instanceof Carta) {
+            if (this.getNumero() == ((Carta) object).getNumero() && this.getPalo() == ((Carta) object).getPalo()) {
                 mismo = true;
             }
         }
 
         return mismo;
     }
+
+    @Override
+    public int compareTo(Carta o) {
+        
+        if (this.numero==o.numero)
+        {
+            return Integer.compare(this.obtenerValorPalo(palo), o.obtenerValorPalo(o.palo));
+            
+        } else {
+            return Integer.compare(this.numero, o.numero);
+        }
+        
+        
+    }
+    
+    @Override
+    public String toString()
+    {
+        return this.numero+""+this.obtenerCartaPalo(palo);
+    }
+
 
 }

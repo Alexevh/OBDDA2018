@@ -7,6 +7,7 @@ package modelo;
 
 import Excepciones.PokerExcepciones;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
@@ -146,6 +147,7 @@ public class Juego extends Observable {
 
         if (this.cantidadJugadores == listaParticipantes.size()) {
 
+            j.setActivo(true);
             iniciarJuego();
 
         }
@@ -212,6 +214,7 @@ public class Juego extends Observable {
         m.setManoActual(true);
         this.listaManos.add(m);
 
+        
         /* Genero un nuevo mazo y lo barajo */
         this.mazo = new Mazo();
         this.mazo.barajar();
@@ -222,7 +225,8 @@ public class Juego extends Observable {
                 m.getListaParticipantesMano().add(p);
                 /* Le doy 5 cartas nuevas */
                 p.setCartasMano(mazo.repartir(5));
-
+                Collections.sort(p.getCartasMano(), Collections.reverseOrder());
+                
             }
         }
 
@@ -342,22 +346,28 @@ public class Juego extends Observable {
 
     private void resolverGanador(Mano m) {
 
-        if (todosPasaron(m.getApuesta())) {
+        
+        if (m.getApuesta().getDueno()==null || todosPasaron(m.getApuesta())) {
             
           
            m.setManoActual(false);
-           avisar(Eventos.huboEmpate);
+           
            contadorRespuestasObtenidas =0;
+           contadorRespuestas = getActivos().size();
            
-           /* Todos los jugadores con saldo 0 o sea menor o igual a la luz actual
-           
+           /* Todos los jugadores con saldo 0 o sea menor o igual a la luz actual       
            La letra dice solo saldo cero, preguntar al docente
            */
            expulsarPobres();
+           avisar(Eventos.huboEmpate);
+           
+           
 
         } else {
+            
+            
             /*Mientras resolvemos el algoritmo de ganador, el due;o siempre gana*/
-            m.setGanador(m.getApuesta().getDueno());
+            m.setGanador(obtenerGanador(m));
 
             /*Pagamos la apuesta*/
             m.getGanador().getJugador().sumarAlSaldo(pozo);
@@ -378,6 +388,32 @@ public class Juego extends Observable {
         }
 
     }
+    
+    
+    public Participante obtenerGanador(Mano m)
+    {
+        Participante ganador = m.getApuesta().getDueno();
+        Carta ganadora =m.getApuesta().getDueno().getCartasMano().get(0);
+        
+        if (m.getApuesta().getListaPagan().isEmpty())
+        {
+            return ganador;
+        }
+        
+        
+        for (Participante p: m.getApuesta().getListaPagan())
+        {
+          
+          if (p.getCartasMano().get(0).compareTo(ganadora)==1)
+            {
+                ganadora = p.getCartasMano().get(0);
+                ganador = p;
+            }
+        }
+        
+        return ganador;
+    }
+    
 
     public Mano getManoActual() {
         for (Mano m : listaManos) {
