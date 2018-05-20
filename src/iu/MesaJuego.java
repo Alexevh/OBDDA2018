@@ -279,8 +279,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     @Override
     public void inicioJuego(List<Participante> lista) {
 
-        this.txtInformacion.setText("Inicio el juego!!!");
+        
         listaParticipantes.setListData(lista.toArray());
+        this.txtInformacion.setText("Inicio el juego!!!");
 
     }
 
@@ -359,7 +360,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         int dialogResult = JOptionPane.showConfirmDialog(this, "Vas a jugar otra mano", "Otra mano?" + j.getJugador().getNombreCompleto(), dialogButton);
         
         if (dialogResult == JOptionPane.YES_OPTION) {
-
+            
+            txtInformacion.setText("Esperando apuesta");
             controlador.juegoSiguienteMano(true);
             btnApostar.setEnabled(true);
             btnPagar.setEnabled(false);

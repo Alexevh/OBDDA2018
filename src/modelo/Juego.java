@@ -6,8 +6,10 @@
 package modelo;
 
 import Excepciones.PokerExcepciones;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
@@ -25,17 +27,30 @@ public class Juego extends Observable {
     private int contadorRespuestas;
     private int contadorRespuestasObtenidas;
     private Participante ultimoGanador;
-
+    private Date fechaInicio;
+   
     private Mazo mazo;
     /*Preguntar al docente*/
     private boolean iniciado;
 
+    SimpleDateFormat dt1 = new SimpleDateFormat("dd-mm-yyyy");
     
 
     public enum Eventos {
         inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa, hayGanador, finJuego, manoNuevaSiNo, huboEmpate, expulsarParticipante;
     }
 
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    
+    
+    
     public Participante getUltimoGanador() {
         return ultimoGanador;
     }
@@ -82,6 +97,7 @@ public class Juego extends Observable {
 
     public void setCantidadJugadores(int cantidadJugadores) {
         this.cantidadJugadores = cantidadJugadores;
+        avisar(Eventos.ingresaNuevoParticipante);
     }
 
     public List<Mano> getListaManos() {
@@ -137,8 +153,12 @@ public class Juego extends Observable {
         if (this.listaParticipantes.size() < this.cantidadJugadores) {
 
             j.setActivo(true);
-
+            
             j.getJugador().setSaldo(j.getJugador().getSaldo() - this.luz);
+            /*Luego de descontarle la luz registramos el saldo inicial*/
+            j.setSaldoInicial(j.getJugador().getSaldo());
+            j.setTotalApostado(j.getTotalApostado()+luz);
+            
             this.pozo = pozo + luz;
             this.listaParticipantes.add(j);
             /* Aviso el cambio */
@@ -154,8 +174,9 @@ public class Juego extends Observable {
 
     }
 
-    public void iniciarJuego() {
+    public void iniciarJuego()  {
         this.iniciado = true;
+        this.fechaInicio = new Date();
         avisar(Eventos.inicioJuego);
         generarNuevaMano();
     }
@@ -176,7 +197,8 @@ public class Juego extends Observable {
         if (getActivos().size()==1)
         {
             getActivos().get(0).getJugador().sumarAlSaldo(pozo);
-            avisar(Eventos.finJuego);
+            this.setIniciado(false);
+           avisar(Eventos.finJuego);
             
         } else {
             avisar(Eventos.seEliminaParticipante);
@@ -234,6 +256,9 @@ public class Juego extends Observable {
                 m.getListaParticipantesMano().add(p);
                 /* Le doy 5 cartas nuevas */
                 p.setCartasMano(mazo.repartir(5));
+                
+                /*Registro que participo en esta mano*/
+                p.setCantidadManosJugadas(p.getCantidadManosJugadas()+1);
                 Collections.sort(p.getCartasMano(), Collections.reverseOrder());
                 
             }
@@ -271,6 +296,7 @@ public class Juego extends Observable {
             Apuesta a = new Apuesta();
             a.setDueno(p);
             a.setValor(valor);
+            p.setTotalApostado(p.getTotalApostado()+valor);
             getManoActual().setApuesta(a);
             pozo = pozo + valor;
             /*Quitamos del saldo al jugador*/
@@ -292,6 +318,7 @@ public class Juego extends Observable {
         if (JugadorTieneSaldo(p.getJugador())) {
             a.getListaPagan().add(p);
             p.getJugador().restarAlSaldo(a.getValor());
+            p.setTotalApostado(p.getTotalApostado()+a.getValor());
             this.pozo = this.pozo + a.getValor();
         } else {
             /* Si en el medio el jugador tiene menos de lo necesario para pagar, pasa automaticamente*/
@@ -382,6 +409,10 @@ public class Juego extends Observable {
 
             /*Pagamos la apuesta*/
             m.getGanador().getJugador().sumarAlSaldo(pozo);
+            
+            /* Registramos lo que va ganando */
+            m.getGanador().setTotalGanado(m.getGanador().getTotalGanado()+pozo);
+            
             /*Reiniciar el pozo*/
             pozo = 0;
             /* Si damos por terminada la mano, ya no es la actual*/
@@ -446,12 +477,15 @@ public class Juego extends Observable {
 
             pozo = pozo + luz;
             p.getJugador().restarAlSaldo(luz);
+            p.setTotalApostado(p.getTotalApostado()+luz);
             contadorRespuestasObtenidas++;
             avisar(Eventos.manoNuevaSiNo);
         }
 
         if (contadorRespuestasObtenidas == contadorRespuestas) {
             if (getActivos().size() <= 1) {
+                this.setIniciado(false);
+                
                 avisar(Eventos.finJuego);
             } else {
                 vaciarContadores();
@@ -488,6 +522,26 @@ public class Juego extends Observable {
         } else {
             return true;
         }
+    }
+    
+    
+    @Override
+    public String toString()
+    {
+        return "Juego :"+this.dt1.format(fechaInicio)+"- Cantidad de manos = "+this.listaManos.size()+ " Apuestas $:"+obtenerTotalApuestas();
+    }
+    
+    public int obtenerTotalApuestas()
+    {
+        int total =0;
+        
+        for (Participante p : this.listaParticipantes)
+        {
+            total =+ p.getTotalApostado();
+        }
+        
+        return total;
+        
     }
 
 }

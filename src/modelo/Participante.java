@@ -16,7 +16,49 @@ public class Participante {
     private boolean activo;
     private List<Carta> cartasMano;
     private Jugador jugador;
+    private int saldoInicial;
+    private int totalApostado;
+    private int cantidadManosJugadas;
+    private int totalGanado;
 
+    public int getTotalGanado() {
+        return totalGanado;
+    }
+
+    public void setTotalGanado(int totalGanado) {
+        this.totalGanado = totalGanado;
+    }
+    
+    
+    
+
+    public int getSaldoInicial() {
+        return saldoInicial;
+    }
+
+    public void setSaldoInicial(int saldoInicial) {
+        this.saldoInicial = saldoInicial;
+    }
+
+    public int getTotalApostado() {
+        return totalApostado;
+    }
+
+    public void setTotalApostado(int totalApostado) {
+        this.totalApostado = totalApostado;
+    }
+
+    public int getCantidadManosJugadas() {
+        return cantidadManosJugadas;
+    }
+
+    public void setCantidadManosJugadas(int cantidadManosJugadas) {
+        this.cantidadManosJugadas = cantidadManosJugadas;
+    }
+    
+    
+    
+    
     public boolean isActivo() {
         return activo;
     }

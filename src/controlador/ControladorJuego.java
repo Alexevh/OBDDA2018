@@ -125,16 +125,17 @@ public class ControladorJuego implements Observer {
 
         switch ((Juego.Eventos) evento) {
             case ingresaNuevoParticipante:
-                vista.mostrarParticipantes(getFaltantes());
+                
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
+                vista.mostrarParticipantes(getFaltantes());
                 break;
 
             case inicioJuego:
-                vista.inicioJuego(this.juego.getListaParticipantes());
+                
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
-
+                vista.inicioJuego(this.juego.getListaParticipantes());
                 break;
             case seEliminaParticipante:
                 vista.mostrarParticipantes(getFaltantes());

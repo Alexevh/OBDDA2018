@@ -8,13 +8,14 @@ package modelo;
 import Excepciones.PokerExcepciones;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 
-public class SistemaJuegos {
+public class SistemaJuegos extends Observable {
     
     private List<Juego> listaJuegos = new ArrayList();
     
-    private int maxJugadores = 3;
+    private int maxJugadores = 2;
     private int luz = 1;
     /* Esto es para calcular el saldo antes de dejar entrar al jugador, si el saldo del jugador es menor a este numero X luz entonces no entra*/
     private int minimasApuestas = 3;
@@ -105,6 +106,87 @@ public class SistemaJuegos {
         this.listaAdmins = listaAdmins;
     }
     
+    
+    
+    
+    
+    public void actualizarLuz(int valor) throws PokerExcepciones
+    {
+        if (validarLuz(valor))
+        {
+            /* El valor de la luz en el cambio siempre cambia */
+            this.luz = valor;
+            
+            /* Si el juego siguiente no arranco y tampoco hay nadie en espera entonces le actualizamos la luz*/
+            if (!proximoJuego.isIniciado() && proximoJuego.getListaParticipantes().isEmpty())
+            {
+                proximoJuego.setLuz(luz);
+            }
+            
+        } else 
+        {
+            throw new PokerExcepciones("Valor de la luz invalido, debe ser mayor a cero");
+        }
+    }
+    
+    
+   public void actualizarMaximoJugadores(int numero) throws PokerExcepciones
+   {
+       if (numero >=2 & numero <6)
+       {
+           /*Paso 1, actualizamos el valor*/
+           maxJugadores = numero;
+           
+           if (proximoJuego.getListaParticipantes().size()<numero)
+           {
+               proximoJuego.setCantidadJugadores(maxJugadores);
+               
+               
+           } else if (proximoJuego.getListaParticipantes().size()==numero)
+           {
+               proximoJuego.setCantidadJugadores(maxJugadores);
+               proximoJuego.iniciarJuego();
+           }
+           
+           
+           
+           
+       } else {
+           throw new PokerExcepciones("La cantidad de jugadores por partida debe ser mayor o igual a 2 y menor a 6");
+       }
+   }
+    
+    
+    public boolean validarLuz(int valor)
+    {
+        boolean result = false;
+        
+        if (valor>0)
+        {
+            result=true;
+        }
+        
+        return result;
+        
+    }
+    
+    
+    public List<Juego> obtenerJuegosActivos()
+    {
+      List<Juego> partidas = new ArrayList();
+      
+      for (Juego j: listaJuegos)
+      {
+          /* Is iniciado nos devuelve true siempre que el juego haya iniciado y ademas este activo, si el juego termina da false*/
+          if (j.isIniciado())
+          {
+              partidas.add(j);
+          }
+      }
+      
+      
+      return partidas;
+    }
     
     
 }
