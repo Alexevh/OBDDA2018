@@ -335,6 +335,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
             btnApostar.setEnabled(false);
         } catch (PokerExcepciones ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (NumberFormatException numberex)
+        {
+            JOptionPane.showMessageDialog(this, "El valor de la apuesta debe ser un numero");
         }
 
     }
@@ -378,7 +381,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     @Override
     public void salirJuego() {
-        JOptionPane.showMessageDialog(this, "El jueo termino, gracias por dejar tu dinero con nosotros");
+        JOptionPane.showMessageDialog(this, "El juego termino, gracias por dejar tu dinero con nosotros");
         eliminarControlador();
         this.dispose();
 

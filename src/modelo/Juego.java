@@ -340,7 +340,7 @@ public class Juego extends Observable {
       
         /* Hay que avisar si alguien paso??*/
         if (hayDecision(a)) {
-            System.out.println("Hay decision, resolvemos ganador o empate ");
+           
             resolverGanador(getManoActual());
         } else {
             avisar(Eventos.nuevaPagaoPasa);
@@ -354,8 +354,7 @@ public class Juego extends Observable {
         int pagaron = a.getListaPagan().size();
         int pasaron = a.getListaPasan().size();
         
-        System.out.println("Estan pasando "+pasaron);
-        System.out.println("Estan pagando "+pagaron);
+      
 
         if (todosPasaron(a)) {
             result = true;

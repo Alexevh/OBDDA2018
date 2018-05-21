@@ -92,7 +92,7 @@ public class Fachada {
         return sisJuegos.obtenerJuegosActivos();
     }
     
-    /* Este no es un metodo degelegado */
+    /* Este no es un metodo delegado */
     public void registrarControlador(ControladorAdministracion con)
     {
         sisJuegos.addObserver(con);
