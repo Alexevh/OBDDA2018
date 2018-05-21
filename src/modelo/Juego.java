@@ -33,7 +33,7 @@ public class Juego extends Observable {
     /*Preguntar al docente*/
     private boolean iniciado;
 
-    SimpleDateFormat dt1 = new SimpleDateFormat("dd-mm-yyyy");
+    SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-yyyy");
     
 
     public enum Eventos {

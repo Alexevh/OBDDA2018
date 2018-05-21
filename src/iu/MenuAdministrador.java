@@ -90,7 +90,8 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         jLabel5 = new javax.swing.JLabel();
         btnVerDetalles = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor luz"));
@@ -125,6 +126,11 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         jLabel1.setBounds(450, 10, 270, 17);
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnSalir);
         btnSalir.setBounds(1030, 590, 72, 29);
 
@@ -160,6 +166,16 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Partidas"));
         jPanel3.setLayout(null);
 
+        listaPartidasActivas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaPartidasActivasMouseClicked(evt);
+            }
+        });
+        listaPartidasActivas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaPartidasActivasValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaPartidasActivas);
 
         jPanel3.add(jScrollPane1);
@@ -206,6 +222,18 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     private void btnVerDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallesActionPerformed
         verDatosPartidaSeleccionada();
     }//GEN-LAST:event_btnVerDetallesActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        salir();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void listaPartidasActivasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaPartidasActivasValueChanged
+      
+    }//GEN-LAST:event_listaPartidasActivasValueChanged
+
+    private void listaPartidasActivasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaPartidasActivasMouseClicked
+       verDatosPartidaSeleccionada();
+    }//GEN-LAST:event_listaPartidasActivasMouseClicked
 
     
 
@@ -292,6 +320,13 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         
         
         txtVerDetalles.setText(info);
+    }
+
+    private void salir() {
+      JOptionPane.showMessageDialog(this, "Chau");
+        controlador.desRegistrar();
+        controlador=null;
+        this.dispose();
     }
     
     

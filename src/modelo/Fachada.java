@@ -6,6 +6,7 @@
 package modelo;
 
 import Excepciones.PokerExcepciones;
+import controlador.ControladorAdministracion;
 import java.util.List;
 import java.util.Observable;
 
@@ -13,21 +14,13 @@ import java.util.Observable;
  *
  * @author alex
  */
-public class Fachada extends Observable{
+public class Fachada {
     
     private SistemaJuegos sisJuegos = new SistemaJuegos();
     private SistemaUsuarios sisUsuarios = new SistemaUsuarios();
     
-    /* Enum con la lista de eventos que reportamos */
-     public enum Eventos{
-        inicioJuego;
-    }
-     
-    /*El metodo que avisa a los observadores*/ 
-    protected void avisar(Object evento){
-        setChanged();
-        notifyObservers(evento);
-    }
+   
+  
     
     
     
@@ -99,7 +92,16 @@ public class Fachada extends Observable{
         return sisJuegos.obtenerJuegosActivos();
     }
     
+    /* Este no es un metodo degelegado */
+    public void registrarControlador(ControladorAdministracion con)
+    {
+        sisJuegos.addObserver(con);
+    }
     
+    public void desRegistrarControlador(ControladorAdministracion con)
+    {
+        sisJuegos.deleteObserver(con);
+    }
     
     
 }

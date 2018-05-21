@@ -12,6 +12,7 @@ import java.util.Observer;
 import modelo.Administrador;
 import modelo.Fachada;
 import modelo.Juego;
+import modelo.SistemaJuegos;
 
 /**
  *
@@ -42,6 +43,7 @@ public class ControladorAdministracion implements Observer {
     public ControladorAdministracion(VistaAdministrador vista, Administrador usuario) {
         this.vista = vista;
         this.usuario = usuario;
+        Fachada.getInstancia().registrarControlador(this);
     }
     
     public void actualizarLuz(int valor) throws PokerExcepciones
@@ -64,7 +66,20 @@ public class ControladorAdministracion implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Observable o, Object evento) {
+        
+          switch ((SistemaJuegos.Eventos) evento) {
+            case seAgregoUnNuevoJuego:
+                vista.actualizarPartidasActivas(Fachada.getInstancia().obtenerJuegosActivos());
+               
+                break;
+    }
+          
+    }
+    
+    
+    public void desRegistrar()
+    {
+        Fachada.getInstancia().desRegistrarControlador(this);
     }
 }

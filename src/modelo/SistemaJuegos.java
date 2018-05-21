@@ -23,7 +23,12 @@ public class SistemaJuegos extends Observable {
     private List<Administrador> listaAdmins = new ArrayList();
     private Juego proximoJuego = new Juego(luz, maxJugadores);
     
+    public enum Eventos {
+        seAgregoUnNuevoJuego;
+    }
 
+    
+    
     public SistemaJuegos() {
         
         /* Consultar al docente si cargamos el juego a la lista o no antes de iniciarse
@@ -41,10 +46,15 @@ public class SistemaJuegos extends Observable {
         {
             this.listaJuegos.add(proximoJuego);
             this.proximoJuego = new Juego(luz, maxJugadores);
-            
+            avisar(Eventos.seAgregoUnNuevoJuego);
         }
     }
 
+     /* Metodo que avisa a los observadores*/
+    private void avisar(Eventos evento) {
+        setChanged();
+        notifyObservers(evento);
+    }
   
   
     

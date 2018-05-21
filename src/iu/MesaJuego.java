@@ -106,7 +106,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         imgPozo.setForeground(new java.awt.Color(254, 254, 254));
         imgPozo.setText("Pozo actual  $: ");
         getContentPane().add(imgPozo);
-        imgPozo.setBounds(360, 90, 260, 100);
+        imgPozo.setBounds(440, 110, 260, 100);
 
         jScrollPane1.setViewportView(listaParticipantes);
 
