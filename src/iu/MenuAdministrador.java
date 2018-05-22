@@ -8,6 +8,7 @@ package iu;
 import Excepciones.PokerExcepciones;
 import controlador.ControladorAdministracion;
 import controlador.VistaAdministrador;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Administrador;
@@ -261,8 +262,8 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     private void actualizarDatos() {
         
         /* Consultar al docente si podemos acceder directamente a la fachada o lo hacemos por el controlador*/
-       txtValorActualLuz.setText("Valor actual $:"+Fachada.getInstancia().getLuz());
-       txtCantidadJugadores.setText("Cantidad maxima de jugadores :"+Fachada.getInstancia().getMaxJugadores());
+       txtValorActualLuz.setText("Valor actual $:"+controlador.getValorluz());
+       txtCantidadJugadores.setText("Cantidad maxima de jugadores :"+controlador.getMaximoJugadores());
        controlador.actualizarPartidas();
        
        
@@ -298,14 +299,22 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     @Override
     public void actualizarPartidasActivas(List<Juego> lista) {
         
-        listaPartidasActivas.setListData(lista.toArray());
-        
+         ArrayList<String> lineas = new ArrayList();
+        for(Juego p:lista){
+            lineas.add(formato(p));
+            listaPartidasActivas.setListData(lineas.toArray());
+        }
         
     }
     
     public void verDatosPartidaSeleccionada()
     {
-        Juego j = (Juego)listaPartidasActivas.getSelectedValue();
+        /* pedir al controlador la partida por indice*/
+        int indice = listaPartidasActivas.getSelectedIndex();
+        
+        Juego j = controlador.obtenerJuegoPorIndice(indice);
+            
+        
         String info = "Informacion del juego \n _____________________";
         
         for (Participante p: j.getListaParticipantes())
@@ -324,6 +333,14 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         controlador.desRegistrar();
         controlador=null;
         this.dispose();
+    }
+    
+    
+     private String formato(Juego j) {
+        String formato = "Juego:"+j.getFechaInicio().toString()+"- Cantidad de manos = "+j.getListaManos().size()+ " Apuestas $:"+j.obtenerTotalApuestas();;
+            
+        
+        return formato;
     }
     
     

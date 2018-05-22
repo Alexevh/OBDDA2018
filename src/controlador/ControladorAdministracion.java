@@ -6,6 +6,7 @@
 package controlador;
 
 import Excepciones.PokerExcepciones;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -22,8 +23,21 @@ public class ControladorAdministracion implements Observer {
     
     private VistaAdministrador vista;
     private Administrador usuario;
+    /*tener copia de listajuegos*/
+    
+    private List<Juego> listaLocal;
+
+    public List<Juego> getListaLocal() {
+        return listaLocal;
+    }
+
+    public void setListaLocal(List<Juego> listaLocal) {
+        this.listaLocal = listaLocal;
+    }
     
 
+    
+    
     public VistaAdministrador getVista() {
         return vista;
     }
@@ -43,7 +57,8 @@ public class ControladorAdministracion implements Observer {
     public ControladorAdministracion(VistaAdministrador vista, Administrador usuario) {
         this.vista = vista;
         this.usuario = usuario;
-        Fachada.getInstancia().registrarControlador(this);
+        Fachada.getInstancia().registrarObservador(this);
+        listaLocal = obtenerJuegosActivos();
     }
     
     public void actualizarLuz(int valor) throws PokerExcepciones
@@ -58,7 +73,7 @@ public class ControladorAdministracion implements Observer {
     
     public List<Juego> obtenerJuegosActivos()
     {
-        return Fachada.getInstancia().obtenerJuegosActivos();
+        return new ArrayList(Fachada.getInstancia().obtenerJuegosActivos());
     }
     
     public void actualizarPartidas(){
@@ -70,8 +85,9 @@ public class ControladorAdministracion implements Observer {
         
           switch ((SistemaJuegos.Eventos) evento) {
             case seAgregoUnNuevoJuego:
+                
                 vista.actualizarPartidasActivas(Fachada.getInstancia().obtenerJuegosActivos());
-               
+                listaLocal = obtenerJuegosActivos();
                 break;
     }
           
@@ -80,6 +96,20 @@ public class ControladorAdministracion implements Observer {
     
     public void desRegistrar()
     {
-        Fachada.getInstancia().desRegistrarControlador(this);
+        Fachada.getInstancia().eliminarObservador(this);
+    }
+    
+    public int getValorluz()
+    {
+        return Fachada.getInstancia().getLuz();
+    }
+    
+    public int getMaximoJugadores()
+    {
+       return Fachada.getInstancia().getMaxJugadores();
+    }
+
+    public Juego obtenerJuegoPorIndice(int indice) {
+        return this.listaLocal.get(indice);
     }
 }

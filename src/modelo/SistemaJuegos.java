@@ -9,6 +9,7 @@ import Excepciones.PokerExcepciones;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 
 public class SistemaJuegos extends Observable {
@@ -197,6 +198,18 @@ public class SistemaJuegos extends Observable {
       
       return partidas;
     }
+    
+    
+    public void registrarObservador(Observer observador)
+    {
+        addObserver(observador);
+    }
+    
+    public void eliminarObservador(Observer observador)
+    {
+        deleteObserver(observador);
+    }
+    
     
     
 }

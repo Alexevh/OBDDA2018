@@ -542,5 +542,8 @@ public class Juego extends Observable {
         return total;
         
     }
+    
+    
+    /*El juego si puede ir directo a la fachada y pedir que avise a sus observadores */
 
 }

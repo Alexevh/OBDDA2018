@@ -6,24 +6,19 @@
 package modelo;
 
 import Excepciones.PokerExcepciones;
-import controlador.ControladorAdministracion;
 import java.util.List;
-import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
- * @author alex
+ * @author alex, poner que se puede mejorar observando a la fachada en vez del sistema de juegos, poner en autoevaluacion
  */
 public class Fachada {
     
     private SistemaJuegos sisJuegos = new SistemaJuegos();
     private SistemaUsuarios sisUsuarios = new SistemaUsuarios();
     
-   
-  
-    
-    
-    
+
     
     /* Singleton */
      private static Fachada instancia = new Fachada();
@@ -92,15 +87,14 @@ public class Fachada {
         return sisJuegos.obtenerJuegosActivos();
     }
     
-    /* Este no es un metodo delegado */
-    public void registrarControlador(ControladorAdministracion con)
-    {
-        sisJuegos.addObserver(con);
+
+
+    public void registrarObservador(Observer observador) {
+        sisJuegos.registrarObservador(observador);
     }
-    
-    public void desRegistrarControlador(ControladorAdministracion con)
-    {
-        sisJuegos.deleteObserver(con);
+
+    public void eliminarObservador(Observer observador) {
+        sisJuegos.eliminarObservador(observador);
     }
     
     
