@@ -396,7 +396,11 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     @Override
     public void mostrarGanador(String nombre, String carta) {
+        
+         ImageIcon icon = new ImageIcon("src/imagenes/cartas/"+carta);
         JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre + " y gano con " + carta);
+        //JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre, "Ganador", JOptionPane.INFORMATION_MESSAGE, icon);
+       
     }
 
     @Override
