@@ -5,10 +5,7 @@
  */
 package Excepciones;
 
-/**
- *
- * @author alex
- */
+
 public class PokerExcepciones extends Exception {
     
     public PokerExcepciones(String message) {

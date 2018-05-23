@@ -30,11 +30,9 @@ public class Juego extends Observable {
     private Date fechaInicio;
    
     private Mazo mazo;
-    /*Preguntar al docente*/
+   
     private boolean iniciado;
-
-    SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-yyyy");
-    
+  
 
     public enum Eventos {
         inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa, hayGanador, finJuego, manoNuevaSiNo, huboEmpate, expulsarParticipante;
@@ -47,10 +45,7 @@ public class Juego extends Observable {
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-
-    
-    
-    
+   
     public Participante getUltimoGanador() {
         return ultimoGanador;
     }
@@ -129,17 +124,14 @@ public class Juego extends Observable {
      */
     public Juego(int luz, int cantidadJugadores) {
         this.luz = luz;
-        this.cantidadJugadores = cantidadJugadores;
-        //this.listaManos = new ArrayList();
-        //this.listaParticipantes = new ArrayList();
+        this.cantidadJugadores = cantidadJugadores;       
         this.mazo = new Mazo();
 
     }
 
-    /* esto retrun a participante*/
+    
     public void agregarJugador(Participante j) throws PokerExcepciones {
-        /*Validar saldo y no este*/
-        // Participante p = new Participante();
+    
 
         /* Lo primero antes de agregar un jugador es verificar que haya lugar */
         if (!JugadorTieneSaldo(j.getJugador())) {
@@ -188,7 +180,7 @@ public class Juego extends Observable {
 
         } else {
             /* Si el juego no empezo, entonces le devolvemos el dinero y actualizamos el pozo*/
-            p.getJugador().setSaldo(p.getJugador().getSaldo() + luz);
+            p.getJugador().sumarAlSaldo(luz);
             pozo = pozo - luz;
             this.listaParticipantes.remove(p);
 
@@ -259,6 +251,7 @@ public class Juego extends Observable {
                 
                 /*Registro que participo en esta mano*/
                 p.setCantidadManosJugadas(p.getCantidadManosJugadas()+1);
+                /* Las ordenamos de mayor a menor para obtener siempre en pos 0 la de mayor valor para comparar*/
                 Collections.sort(p.getCartasMano(), Collections.reverseOrder());
                 
             }
@@ -325,7 +318,7 @@ public class Juego extends Observable {
             a.getListaPasan().add(p);
         }
 
-        /* Hay que avisar si alguien paso??*/
+        
         if (hayDecision(a)) {
             resolverGanador(getManoActual());
         } else {
@@ -336,9 +329,8 @@ public class Juego extends Observable {
     /*  Esto es cuando no quiero pagar */
     public void pasarApuesta(Participante p, Apuesta a) {
         a.getListaPasan().add(p);
-        System.out.println("El participante "+p.getJugador().getNombreCompleto()+" paso");
-      
-        /* Hay que avisar si alguien paso??*/
+        
+
         if (hayDecision(a)) {
            
             resolverGanador(getManoActual());
@@ -527,7 +519,7 @@ public class Juego extends Observable {
     @Override
     public String toString()
     {
-        return "Juego :"+this.dt1.format(fechaInicio)+"- Cantidad de manos = "+this.listaManos.size()+ " Apuestas $:"+obtenerTotalApuestas();
+        return "Juego :"+this.fechaInicio;
     }
     
     public int obtenerTotalApuestas()
@@ -543,6 +535,10 @@ public class Juego extends Observable {
         
     }
     
+    public int obtenerFaltantes()
+    {
+        return this.cantidadJugadores - this.getListaParticipantes().size();
+    }
     
     /*El juego si puede ir directo a la fachada y pedir que avise a sus observadores */
 

@@ -136,7 +136,7 @@ public class SistemaJuegos extends Observable {
             
         } else 
         {
-            throw new PokerExcepciones("Valor de la luz invalido, debe ser mayor a cero");
+            throw new PokerExcepciones("Valor de la luz inválido, debe ser mayor a cero");
         }
     }
     

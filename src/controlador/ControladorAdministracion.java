@@ -23,8 +23,8 @@ public class ControladorAdministracion implements Observer {
     
     private VistaAdministrador vista;
     private Administrador usuario;
-    /*tener copia de listajuegos*/
     
+    /* Esra lista es local para actualizar en la vista del admin*/
     private List<Juego> listaLocal;
 
     public List<Juego> getListaLocal() {

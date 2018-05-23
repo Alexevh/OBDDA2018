@@ -16,14 +16,13 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import modelo.Apuesta;
 import modelo.Carta;
 import modelo.Juego;
 import modelo.Participante;
 
 public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
-    /* JUgador o participante aca???*/
+   
     Participante j;
 
     ControladorJuego controlador;
@@ -398,8 +397,8 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     public void mostrarGanador(String nombre, String carta) {
         
          ImageIcon icon = new ImageIcon("src/imagenes/cartas/"+carta);
-        JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre + " y gano con " + carta);
-        //JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre, "Ganador", JOptionPane.INFORMATION_MESSAGE, icon);
+        //JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre + " y gano con " + carta);
+        JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre, "Ganador", JOptionPane.INFORMATION_MESSAGE, icon);
        
     }
 

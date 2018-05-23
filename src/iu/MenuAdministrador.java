@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Administrador;
-import modelo.Fachada;
 import modelo.Juego;
 import modelo.Participante;
 
@@ -261,7 +260,7 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
 
     private void actualizarDatos() {
         
-        /* Consultar al docente si podemos acceder directamente a la fachada o lo hacemos por el controlador*/
+  
        txtValorActualLuz.setText("Valor actual $:"+controlador.getValorluz());
        txtCantidadJugadores.setText("Cantidad maxima de jugadores :"+controlador.getMaximoJugadores());
        controlador.actualizarPartidas();
@@ -329,7 +328,7 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     }
 
     private void salir() {
-      JOptionPane.showMessageDialog(this, "Chau");
+      JOptionPane.showMessageDialog(this, "Usted ha salido del menú con exito");
         controlador.desRegistrar();
         controlador=null;
         this.dispose();

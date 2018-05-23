@@ -36,21 +36,7 @@ public class ControladorLogin {
     }
     
   
-    /*
-   public void loginAdmin(String u, String p)throws PokerExcepciones  {
-       
-       try {
-           Administrador a = fachada.loginAdmin(u, p);
-       vista.ingresar(a);
-       } catch (PokerExcepciones ex)
-       {
-           vista.errorLoginIncorrecto(ex.getMessage());
-       }
-       
-   
-        
-    }
-*/
+
     
    
     

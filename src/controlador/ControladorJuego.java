@@ -8,12 +8,9 @@ package controlador;
 import Excepciones.PokerExcepciones;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.Apuesta;
 import modelo.Fachada;
 import modelo.Juego;
-import modelo.Jugador;
 import modelo.Participante;
 
 /**
@@ -70,8 +67,7 @@ public class ControladorJuego implements Observer {
             vista.actualizarPozo(juego.getPozo());
         }
 
-        /* Esto hay que hacerlo en el login asi el sistema sabe si hay un juego nuevo*/
-        //this.juego.agregarJugador(j);
+      
     }
 
     public void desregistrarControlador() {
@@ -79,14 +75,7 @@ public class ControladorJuego implements Observer {
 
     }
 
-    /* Agregue este metodo por que como saque la segunda lista de jugadores por indicacion del docente, si dejaba en
-    el constructor el agregar participante entonces en el inicio de la vista el constructor no habia acabado, entonces estaba en null
-    y cuando se disparaba el evento daba una excepcion
-    
-    Es por eso que ahora la clase mesajuego primero crea el controlador y recien luego agrega al participante, hay que pensar y de ultima
-    consultar al docente si eso esta bien, si esta bien que la vista llame a ese metodo del controlador o si deberiamos solucionar toda la
-    linea en el mismo metodo del controlador.
-     */
+  
     public void agregarParticipante(Participante j) {
         try {
             Fachada.getInstancia().agregarJugadorSiguienteJuego(j);
@@ -104,7 +93,7 @@ public class ControladorJuego implements Observer {
     }
 
     public int getFaltantes() {
-        return this.juego.getCantidadJugadores() - this.juego.getListaParticipantes().size();
+        return this.juego.obtenerFaltantes();
     }
 
     public void pagarApuesta(Participante p, Apuesta a) {
@@ -157,7 +146,7 @@ public class ControladorJuego implements Observer {
                 vista.actualizarPagan(juego.getManoActual().getApuesta().getListaPagan());
                 break;
             case hayGanador:
-                vista.mostrarGanador(juego.getUltimoGanador().getJugador().getNombreCompleto(), juego.getUltimoGanador().getCartasMano().get(0).toString());
+                vista.mostrarGanador(juego.getUltimoGanador().getJugador().getNombreCompleto(), juego.getUltimoGanador().getCartasMano().get(0).obtenerImagen());
                 vista.seguirJugando();
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
@@ -193,7 +182,7 @@ public class ControladorJuego implements Observer {
     }
 
     public void pagar() {
-        //vista.pagarApuesta(this.p, juego.getManoActual().getApuesta());
+        
         juego.pagarApuesta(p, juego.getManoActual().getApuesta());
     }
 

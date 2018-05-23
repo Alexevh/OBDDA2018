@@ -6,7 +6,6 @@
 package controlador;
 
 import java.util.List;
-import modelo.Apuesta;
 import modelo.Carta;
 import modelo.Participante;
 
@@ -26,7 +25,6 @@ public interface VistaJuego {
 
     public void inicioNuevaApuesta(String jugadorNombre, int monto);
 
-   // public void actualizarMesa(int saldo, int pozo, List<Participante> lista);
 
     public void actualizarMesa(List<Participante> activos);
 

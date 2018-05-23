@@ -49,7 +49,6 @@ public class Fachada {
     }
     
   
-    
     public Juego getSiguienteJuego(){
         return sisJuegos.getProximoJuego();
     }

@@ -17,6 +17,6 @@ public interface VistaLoginParticipante {
     
      public void errorLoginIncorrecto(String msg);
 
-     /* esto cambia a participante*/
+    
     public void ingresar(Participante p) throws PokerExcepciones;
 }
