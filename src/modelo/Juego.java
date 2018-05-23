@@ -13,10 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
-/**
- *
- * @author alex
- */
+
 public class Juego extends Observable {
 
     private int pozo;
