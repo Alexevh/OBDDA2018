@@ -254,6 +254,7 @@ public class Juego extends Observable {
             }
         }
 
+        Fachada.getInstancia().avisar(Fachada.Eventos.nuevaMano);
         avisar(Eventos.nuevaMano);
     }
 

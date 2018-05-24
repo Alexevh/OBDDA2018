@@ -57,7 +57,8 @@ public class ControladorAdministracion implements Observer {
     public ControladorAdministracion(VistaAdministrador vista, Administrador usuario) {
         this.vista = vista;
         this.usuario = usuario;
-        Fachada.getInstancia().registrarObservador(this);
+        //Fachada.getInstancia().registrarObservador(this);
+        Fachada.getInstancia().addObserver(this);
         listaLocal = obtenerJuegosActivos();
     }
     
@@ -83,8 +84,13 @@ public class ControladorAdministracion implements Observer {
     @Override
     public void update(Observable o, Object evento) {
         
-          switch ((SistemaJuegos.Eventos) evento) {
+          switch ((Fachada.Eventos) evento) {
             case seAgregoUnNuevoJuego:
+                
+                vista.actualizarPartidasActivas(Fachada.getInstancia().obtenerJuegosActivos());
+                listaLocal = obtenerJuegosActivos();
+                break;
+                case nuevaMano:
                 
                 vista.actualizarPartidasActivas(Fachada.getInstancia().obtenerJuegosActivos());
                 listaLocal = obtenerJuegosActivos();

@@ -336,7 +336,7 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     
     
      private String formato(Juego j) {
-        String formato = "Juego:"+j.getFechaInicio().toString()+"- Cantidad de manos = "+j.getListaManos().size()+ " Apuestas $:"+j.obtenerTotalApuestas();;
+        String formato = "Juego:"+j.getFechaInicio().toString()+"- Cantidad de manos = "+j.getListaManos().size()+ " Apuestas $:"+j.obtenerTotalApuestas();
             
         
         return formato;

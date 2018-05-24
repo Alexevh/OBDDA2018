@@ -47,7 +47,7 @@ public class SistemaJuegos extends Observable {
         {
             this.listaJuegos.add(proximoJuego);
             this.proximoJuego = new Juego(luz, maxJugadores);
-            avisar(Eventos.seAgregoUnNuevoJuego);
+            Fachada.getInstancia().avisar(Fachada.Eventos.seAgregoUnNuevoJuego);
         }
     }
 
