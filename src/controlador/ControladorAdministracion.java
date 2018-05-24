@@ -100,11 +100,7 @@ public class ControladorAdministracion implements Observer {
     }
     
     
-    public void desRegistrar()
-    {
-        Fachada.getInstancia().eliminarObservador(this);
-    }
-    
+   
     public int getValorluz()
     {
         return Fachada.getInstancia().getLuz();

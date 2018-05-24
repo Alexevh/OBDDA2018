@@ -329,7 +329,7 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
 
     private void salir() {
       JOptionPane.showMessageDialog(this, "Usted ha salido del menú con exito");
-        controlador.desRegistrar();
+        
         controlador=null;
         this.dispose();
     }

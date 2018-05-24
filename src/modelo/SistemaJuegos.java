@@ -200,16 +200,7 @@ public class SistemaJuegos extends Observable {
     }
     
     
-    public void registrarObservador(Observer observador)
-    {
-        addObserver(observador);
-    }
-    
-    public void eliminarObservador(Observer observador)
-    {
-        deleteObserver(observador);
-    }
-    
+  
     
     
 }

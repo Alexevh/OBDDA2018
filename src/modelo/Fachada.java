@@ -89,15 +89,6 @@ public class Fachada extends Observable{
         return sisJuegos.obtenerJuegosActivos();
     }
     
-
-
-    public void registrarObservador(Observer observador) {
-        sisJuegos.registrarObservador(observador);
-    }
-
-    public void eliminarObservador(Observer observador) {
-        sisJuegos.eliminarObservador(observador);
-    }
     
       /* Metodo que avisa a los observadores*/
     public void avisar(Eventos evento) {
