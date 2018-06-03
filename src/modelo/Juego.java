@@ -564,7 +564,14 @@ public class Juego extends Observable {
             figura = new FiguraPar(lista);
             
             
-        } else {
+        } else if (tieneDoblePar(lista))
+        {
+            figura = new FiguraDoblePar(lista);
+        }
+        
+        
+        
+        else {
             figura = new FiguraVacia(lista);
         }
       
@@ -607,6 +614,38 @@ public class Juego extends Observable {
         
     }
    
+     public static boolean tieneDoblePar(List<Carta> lista)
+    {
+        
+        boolean resultado = false;
+        
+        /* Esta lista deberia tener 2 elementos*/
+        List<Carta> valorPar = new ArrayList();
+        
+       
+        for (int i=0; i<lista.size();i++)
+        {
+            
+            for (int z=i+1; z<lista.size(); z++)
+            {
+                if (lista.get(i).getNumero()==lista.get(z).getNumero())
+            {
+                valorPar.add(lista.get(i));
+                valorPar.add(lista.get(z));
+                
+            }
+            }
+            
+        }
+          
+        if (valorPar.size()==4)
+        {
+            resultado=true;
+        }
+        
+        return resultado;
+        
+    }
     
     
     
