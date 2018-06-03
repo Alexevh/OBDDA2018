@@ -20,5 +20,9 @@ public interface FiguraMano {
     
     public int compareTo(FiguraMano f);
     
+    public String toString();
+    
+
+    
     
 }

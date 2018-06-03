@@ -394,11 +394,13 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     }
 
     @Override
-    public void mostrarGanador(String nombre, String carta) {
+    public void mostrarGanador(String nombre, String figura, List<Carta> cartas) {
         
-         ImageIcon icon = new ImageIcon("src/imagenes/cartas/"+carta);
-        //JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre + " y gano con " + carta);
-        JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre, "Ganador", JOptionPane.INFORMATION_MESSAGE, icon);
+         //ImageIcon icon = new ImageIcon("src/imagenes/cartas/"+carta);
+        //JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre + " y gano con " + figura);
+        //JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre, "Ganador", JOptionPane.INFORMATION_MESSAGE, icon);
+        
+        new ManoGanador(nombre, figura, cartas).setVisible(true);
        
     }
 
@@ -416,7 +418,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     }
 
     @Override
-    public void actualizarMano(List<Carta> cartas) {
+    public void actualizarMano(List<Carta> cartas, String figura) {
 
         ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(0).getImagen()).getImage());
         // ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/10c.gif").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
@@ -425,6 +427,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         c3.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(2).getImagen()).getImage()));
         c4.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(3).getImagen()).getImage()));
         c5.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(4).getImagen()).getImage()));
+        txtInformacion.setText("En la mano actual tenes :"+figura);
     }
 
     @Override

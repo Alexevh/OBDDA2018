@@ -77,5 +77,9 @@ public class FiguraVacia implements FiguraMano {
        return this.figuraCartas;
     }
     
+     @Override
+    public String toString() {
+        return "No hay figura";
+    }
     
 }

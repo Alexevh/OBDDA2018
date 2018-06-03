@@ -6,56 +6,48 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  *
  * @author alex
  */
-public class FiguraPar implements FiguraMano, Comparable<FiguraMano>{
+public class FiguraColor implements FiguraMano{
+
     
-    
-    private List<Carta> cartas = new ArrayList();
+     private List<Carta> cartas = new ArrayList();
     private List<Carta> figuraCartas = new ArrayList();
-    
 
-    public FiguraPar() {
-    }
-
-    
-     public FiguraPar(List<Carta> lista) {
-         this.cartas = lista;
-         
-           for (int i=0; i<lista.size();i++)
-        {
-            
-            for (int z=i+1; z<lista.size(); z++)
-            {
-                if (lista.get(i).getNumero()==lista.get(z).getNumero())
-            {
-                figuraCartas.add(lista.get(i));
-                figuraCartas.add(lista.get(z));
-                
-            }
-            }
-            
-        }
+   public FiguraColor(List<Carta> lista) {
+        
+        this.cartas = lista;
+        this.figuraCartas = lista;
+        Collections.sort(lista, Collections.reverseOrder());
     }
     
     
-   
-
     @Override
     public FiguraMano obtenerFigura(List<Carta> cartas) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getValor() {
-        return 1;
+    public List<Carta> obtenerListaCartas() {
+        return this.cartas;
     }
 
     @Override
+    public List<Carta> obtenerListaCartasFormandoFigura() {
+        return this.figuraCartas;
+    }
+
+    @Override
+    public int getValor() {
+        return 3;
+    }
+
+   @Override
     public int compareTo(FiguraMano o) {
          if (this.getValor()==o.getValor())
         {
@@ -80,18 +72,10 @@ public class FiguraPar implements FiguraMano, Comparable<FiguraMano>{
     }
 
     @Override
-    public List<Carta> obtenerListaCartas() {
-        return this.cartas;
-    }
-
-    @Override
-    public List<Carta> obtenerListaCartasFormandoFigura() {
-       return this.figuraCartas;
+    public String toString() {
+        return "Color";
     }
     
-     @Override
-    public String toString() {
-        return "Par";
-    }
+    
     
 }

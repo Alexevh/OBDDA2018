@@ -552,10 +552,10 @@ public class Juego extends Observable {
         return this.cantidadJugadores - this.getListaParticipantes().size();
     }
     
-    /*El juego si puede ir directo a la fachada y pedir que avise a sus observadores */
-
     
-    public FiguraMano obtenerFigura(List<Carta> lista)
+    
+    /*El juego si puede ir directo a la fachada y pedir que avise a sus observadores */
+    public  FiguraMano obtenerFigura(List<Carta> lista)
     {
         FiguraMano figura = null;
         
@@ -569,6 +569,10 @@ public class Juego extends Observable {
             figura = new FiguraDoblePar(lista);
         }
         
+        else if (tieneColor(lista))
+        {
+            figura = new FiguraColor(lista);
+        }
         
         
         else {
@@ -578,8 +582,7 @@ public class Juego extends Observable {
         
         return figura;
     }
-    
-    
+     
     /* Este metodo dada una lista de cartas se fija si tiene par unicamente */
     public static boolean tienePar(List<Carta> lista)
     {
@@ -646,7 +649,19 @@ public class Juego extends Observable {
         return resultado;
         
     }
-    
+    public static boolean tieneColor(List<Carta> lista)
+    {
+        boolean resultado = false;
+        
+        Carta.Palo palo = lista.get(0).getPalo();
+        
+        if (lista.get(1).getPalo()==palo && lista.get(2).getPalo()==palo && lista.get(3).getPalo()==palo && lista.get(4).getPalo()==palo)
+        {
+            resultado = true;
+        }
+        
+        return resultado;
+    }
     
     
     

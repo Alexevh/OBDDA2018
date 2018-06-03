@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
 import modelo.Carta;
+import modelo.FiguraColor;
 import modelo.FiguraDoblePar;
 import modelo.FiguraMano;
 import modelo.FiguraPar;
@@ -192,6 +193,48 @@ public class TestsMazo {
        
     }
     
+    @Test
+    public void CompararColor()
+    {
+       Mazo m = new Mazo();
+       m.barajar();
+       
+       Carta c1 = new Carta(Carta.Palo.DIAMANTE, 1);
+       Carta c2 = new Carta(Carta.Palo.DIAMANTE, 2);
+       Carta c3 = new Carta(Carta.Palo.DIAMANTE, 10);
+       Carta c4 = new Carta(Carta.Palo.DIAMANTE, 8);
+       Carta c5= new Carta(Carta.Palo.DIAMANTE, 14);
+       
+       Carta c6 = new Carta(Carta.Palo.DIAMANTE, 13);
+       Carta c7= new Carta(Carta.Palo.DIAMANTE, 4);
+       Carta c8 = new Carta(Carta.Palo.DIAMANTE, 8);
+       Carta c9 = new Carta(Carta.Palo.DIAMANTE, 2);
+       Carta c10= new Carta(Carta.Palo.DIAMANTE, 5);
+       
+       
+       
+       List<Carta> lista1 = new ArrayList();
+       lista1.add(c1);
+       lista1.add(c2);
+       lista1.add(c3);
+       lista1.add(c4);
+       lista1.add(c5);
+       
+       List<Carta> lista2 = new ArrayList();
+        lista2.add(c6);
+       lista2.add(c7);
+       lista2.add(c8);
+       lista2.add(c9);
+       lista2.add(c10);
+       
+       FiguraColor m1 = new FiguraColor(lista1);
+       FiguraColor m2 = new FiguraColor(lista2);
+       
+       Assert.assertTrue(m1.compareTo(m2)==1);
+      
+       
+       
+    }
     
     
 }

@@ -91,4 +91,9 @@ public class FiguraDoblePar implements FiguraMano, Comparable<FiguraMano>{
        return this.figuraCartas;
     }
     
+     @Override
+    public String toString() {
+        return "Doble Par";
+    }
+    
 }

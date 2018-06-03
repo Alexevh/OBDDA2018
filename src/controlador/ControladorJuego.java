@@ -59,7 +59,7 @@ public class ControladorJuego implements Observer {
             vista.actualizarMesa(this.juego.getActivos());
             vista.actualizarPozo(juego.getPozo());
             vista.inicioNuevaMano();
-            vista.actualizarMano(p.getCartasMano());
+            vista.actualizarMano(p.getCartasMano(), this.juego.obtenerFigura(p.getCartasMano()).toString());
 
         } else {
             vista.mostrarParticipantes(getFaltantes());
@@ -133,7 +133,7 @@ public class ControladorJuego implements Observer {
             case nuevaMano:
                 vista.inicioNuevaMano();
                 vista.actualizarMesa(juego.getActivos());
-                vista.actualizarMano(p.getCartasMano());
+                vista.actualizarMano(p.getCartasMano(), this.juego.obtenerFigura(p.getCartasMano()).toString());
                 break;
             case nuevaApuesta:
                 vista.inicioNuevaApuesta(juego.getManoActual().getApuesta().getDueno().getJugador().getNombreCompleto(), juego.getManoActual().getApuesta().getValor());
@@ -146,7 +146,7 @@ public class ControladorJuego implements Observer {
                 vista.actualizarPagan(juego.getManoActual().getApuesta().getListaPagan());
                 break;
             case hayGanador:
-                vista.mostrarGanador(juego.getUltimoGanador().getJugador().getNombreCompleto(), juego.getUltimoGanador().getCartasMano().get(0).obtenerImagen());
+                vista.mostrarGanador(juego.getUltimoGanador().getJugador().getNombreCompleto(), this.juego.obtenerFigura(juego.getUltimoGanador().getCartasMano()).toString(), juego.getUltimoGanador().getCartasMano());
                 vista.seguirJugando();
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());

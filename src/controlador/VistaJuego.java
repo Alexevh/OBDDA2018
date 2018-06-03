@@ -36,11 +36,11 @@ public interface VistaJuego {
 
     public void salirJuego();
 
-    public void mostrarGanador(String nombre, String carta);
+    public void mostrarGanador(String nombre, String figura, List<Carta> cartas);
 
     public void fuiExpulsado();
 
-    public void actualizarMano(List<Carta> cartasMano);
+    public void actualizarMano(List<Carta> cartasMano, String figura);
     
  
 
