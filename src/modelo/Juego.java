@@ -29,6 +29,10 @@ public class Juego extends Observable {
     private Mazo mazo;
    
     private boolean iniciado;
+
+   
+
+    
   
 
     public enum Eventos {
@@ -425,7 +429,8 @@ public class Juego extends Observable {
     public Participante obtenerGanador(Mano m)
     {
         Participante ganador = m.getApuesta().getDueno();
-        Carta ganadora =m.getApuesta().getDueno().getCartasMano().get(0);
+        //Carta ganadora =m.getApuesta().getDueno().getCartasMano().get(0);
+        FiguraMano ganadora = obtenerFigura(m.getApuesta().getDueno().getCartasMano());
         
         if (m.getApuesta().getListaPagan().isEmpty())
         {
@@ -436,11 +441,20 @@ public class Juego extends Observable {
         for (Participante p: m.getApuesta().getListaPagan())
         {
           
+            /*
           if (p.getCartasMano().get(0).compareTo(ganadora)==1)
             {
                 ganadora = p.getCartasMano().get(0);
                 ganador = p;
+            }*/
+            
+              
+          if (obtenerFigura(p.getCartasMano()).compareTo(ganadora)==1)
+            {
+                ganadora = obtenerFigura(p.getCartasMano());
+                ganador = p;
             }
+            
         }
         
         return ganador;
@@ -540,4 +554,61 @@ public class Juego extends Observable {
     
     /*El juego si puede ir directo a la fachada y pedir que avise a sus observadores */
 
+    
+    public FiguraMano obtenerFigura(List<Carta> lista)
+    {
+        FiguraMano figura = null;
+        
+        if (tienePar(lista))
+        {
+            figura = new FiguraPar(lista);
+            
+            
+        } else {
+            figura = new FiguraVacia(lista);
+        }
+      
+        
+        return figura;
+    }
+    
+    
+    /* Este metodo dada una lista de cartas se fija si tiene par unicamente */
+    public static boolean tienePar(List<Carta> lista)
+    {
+        
+        boolean resultado = false;
+        
+        /* Esta lista deberia tener 2 elementos*/
+        List<Carta> valorPar = new ArrayList();
+        
+       
+        for (int i=0; i<lista.size();i++)
+        {
+            
+            for (int z=i+1; z<lista.size(); z++)
+            {
+                if (lista.get(i).getNumero()==lista.get(z).getNumero())
+            {
+                valorPar.add(lista.get(i));
+                valorPar.add(lista.get(z));
+                
+            }
+            }
+            
+        }
+          
+        if (valorPar.size()==2)
+        {
+            resultado=true;
+        }
+        
+        return resultado;
+        
+    }
+   
+    
+    
+    
+    
 }

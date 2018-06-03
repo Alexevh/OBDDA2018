@@ -70,7 +70,7 @@ public class Carta implements Comparable <Carta>{
         return img;
     }
 
-    private int obtenerValorPalo(Palo p) {
+    public int obtenerValorPalo(Palo p) {
 
         switch (p) {
 

@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- *
- * @author alex, poner que se puede mejorar observando a la fachada en vez del sistema de juegos, poner en autoevaluacion
- */
+
 public class Fachada extends Observable{
     
     private SistemaJuegos sisJuegos = new SistemaJuegos();
