@@ -99,7 +99,7 @@ public class TestsMazo {
        lista1.add(c4);
        lista1.add(c5);
  
-       boolean par = Juego.tienePar(lista1);
+       boolean par = FiguraMano.tienePar(lista1);
        
        System.out.println(lista1.get(0).obtenerImagen());
        

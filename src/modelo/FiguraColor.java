@@ -13,40 +13,27 @@ import java.util.List;
  *
  * @author alex
  */
-public class FiguraColor implements FiguraMano{
+public class FiguraColor extends FiguraMano implements Comparable<FiguraMano>{
 
     
-     private List<Carta> cartas = new ArrayList();
-    private List<Carta> figuraCartas = new ArrayList();
+   
 
    public FiguraColor(List<Carta> lista) {
         
-        this.cartas = lista;
-        this.figuraCartas = lista;
+        super.setCartas(lista);
+        super.setFiguraCartas(lista);
         Collections.sort(lista, Collections.reverseOrder());
     }
     
     
-    @Override
-    public FiguraMano obtenerFigura(List<Carta> cartas) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Carta> obtenerListaCartas() {
-        return this.cartas;
-    }
-
-    @Override
-    public List<Carta> obtenerListaCartasFormandoFigura() {
-        return this.figuraCartas;
-    }
+ 
 
     @Override
     public int getValor() {
         return 3;
     }
 
+    /*
    @Override
     public int compareTo(FiguraMano o) {
          if (this.getValor()==o.getValor())
@@ -70,7 +57,7 @@ public class FiguraColor implements FiguraMano{
             return Integer.compare(this.getValor(), o.getValor());
         }
     }
-
+*/
     @Override
     public String toString() {
         return "Color";

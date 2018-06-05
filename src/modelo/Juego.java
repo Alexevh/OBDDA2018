@@ -430,7 +430,7 @@ public class Juego extends Observable {
     {
         Participante ganador = m.getApuesta().getDueno();
         //Carta ganadora =m.getApuesta().getDueno().getCartasMano().get(0);
-        FiguraMano ganadora = obtenerFigura(m.getApuesta().getDueno().getCartasMano());
+        FiguraMano ganadora = FiguraMano.obtenerFigura(m.getApuesta().getDueno().getCartasMano());
         
         if (m.getApuesta().getListaPagan().isEmpty())
         {
@@ -449,9 +449,9 @@ public class Juego extends Observable {
             }*/
             
               
-          if (obtenerFigura(p.getCartasMano()).compareTo(ganadora)==1)
+          if (FiguraMano.obtenerFigura(p.getCartasMano()).compareTo(ganadora)==1)
             {
-                ganadora = obtenerFigura(p.getCartasMano());
+                ganadora = FiguraMano.obtenerFigura(p.getCartasMano());
                 ganador = p;
             }
             
@@ -552,117 +552,8 @@ public class Juego extends Observable {
         return this.cantidadJugadores - this.getListaParticipantes().size();
     }
     
-    
-    
-    /*El juego si puede ir directo a la fachada y pedir que avise a sus observadores */
-    public  FiguraMano obtenerFigura(List<Carta> lista)
-    {
-        FiguraMano figura = null;
-        
-        if (tienePar(lista))
-        {
-            figura = new FiguraPar(lista);
-            
-            
-        } else if (tieneDoblePar(lista))
-        {
-            figura = new FiguraDoblePar(lista);
-        }
-        
-        else if (tieneColor(lista))
-        {
-            figura = new FiguraColor(lista);
-        }
-        
-        
-        else {
-            figura = new FiguraVacia(lista);
-        }
-      
-        
-        return figura;
-    }
-     
-    /* Este metodo dada una lista de cartas se fija si tiene par unicamente */
-    public static boolean tienePar(List<Carta> lista)
-    {
-        
-        boolean resultado = false;
-        
-        /* Esta lista deberia tener 2 elementos*/
-        List<Carta> valorPar = new ArrayList();
-        
-       
-        for (int i=0; i<lista.size();i++)
-        {
-            
-            for (int z=i+1; z<lista.size(); z++)
-            {
-                if (lista.get(i).getNumero()==lista.get(z).getNumero())
-            {
-                valorPar.add(lista.get(i));
-                valorPar.add(lista.get(z));
-                
-            }
-            }
-            
-        }
-          
-        if (valorPar.size()==2)
-        {
-            resultado=true;
-        }
-        
-        return resultado;
-        
-    }
    
-     public static boolean tieneDoblePar(List<Carta> lista)
-    {
-        
-        boolean resultado = false;
-        
-        /* Esta lista deberia tener 2 elementos*/
-        List<Carta> valorPar = new ArrayList();
-        
-       
-        for (int i=0; i<lista.size();i++)
-        {
-            
-            for (int z=i+1; z<lista.size(); z++)
-            {
-                if (lista.get(i).getNumero()==lista.get(z).getNumero())
-            {
-                valorPar.add(lista.get(i));
-                valorPar.add(lista.get(z));
-                
-            }
-            }
-            
-        }
-          
-        if (valorPar.size()==4)
-        {
-            resultado=true;
-        }
-        
-        return resultado;
-        
-    }
-    public static boolean tieneColor(List<Carta> lista)
-    {
-        boolean resultado = false;
-        
-        Carta.Palo palo = lista.get(0).getPalo();
-        
-        if (lista.get(1).getPalo()==palo && lista.get(2).getPalo()==palo && lista.get(3).getPalo()==palo && lista.get(4).getPalo()==palo)
-        {
-            resultado = true;
-        }
-        
-        return resultado;
-    }
-    
+  
     
     
 }

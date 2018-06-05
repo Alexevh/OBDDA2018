@@ -12,19 +12,19 @@ import java.util.List;
  *
  * @author alex
  */
-public class FiguraPar implements FiguraMano, Comparable<FiguraMano>{
+public class FiguraPar extends FiguraMano implements Comparable<FiguraMano>{
     
-    
+    /*
     private List<Carta> cartas = new ArrayList();
     private List<Carta> figuraCartas = new ArrayList();
-    
+    */
 
     public FiguraPar() {
     }
 
     
      public FiguraPar(List<Carta> lista) {
-         this.cartas = lista;
+         super.setCartas(lista);
          
            for (int i=0; i<lista.size();i++)
         {
@@ -33,8 +33,8 @@ public class FiguraPar implements FiguraMano, Comparable<FiguraMano>{
             {
                 if (lista.get(i).getNumero()==lista.get(z).getNumero())
             {
-                figuraCartas.add(lista.get(i));
-                figuraCartas.add(lista.get(z));
+                super.getFiguraCartas().add(lista.get(i));
+                super.getFiguraCartas().add(lista.get(z));
                 
             }
             }
@@ -45,16 +45,13 @@ public class FiguraPar implements FiguraMano, Comparable<FiguraMano>{
     
    
 
-    @Override
-    public FiguraMano obtenerFigura(List<Carta> cartas) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+ 
     @Override
     public int getValor() {
         return 1;
     }
 
+    /*
     @Override
     public int compareTo(FiguraMano o) {
          if (this.getValor()==o.getValor())
@@ -78,16 +75,9 @@ public class FiguraPar implements FiguraMano, Comparable<FiguraMano>{
             return Integer.compare(this.getValor(), o.getValor());
         }
     }
-
-    @Override
-    public List<Carta> obtenerListaCartas() {
-        return this.cartas;
-    }
-
-    @Override
-    public List<Carta> obtenerListaCartasFormandoFigura() {
-       return this.figuraCartas;
-    }
+*/
+    
+  
     
      @Override
     public String toString() {

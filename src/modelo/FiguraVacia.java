@@ -12,38 +12,27 @@ import java.util.List;
  *
  * @author alex
  */
-public class FiguraVacia implements FiguraMano {
+public class FiguraVacia extends FiguraMano implements Comparable<FiguraMano> {
     
         
-    private List<Carta> cartas = new ArrayList();
-     private List<Carta> figuraCartas = new ArrayList();
-    
-    
+   
     public FiguraVacia(List<Carta> lista) {
         
-        this.cartas = lista;
-        this.figuraCartas = lista;
+        super.setCartas(lista); 
+        super.setFiguraCartas(lista);
     }
     
     
 
-    @Override
-    public FiguraMano obtenerFigura(List<Carta> cartas) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     @Override
     public int getValor() {
         return 0;
     }
     
-       @Override
-    public List<Carta> obtenerListaCartas() {
-        return this.cartas;
-    }
-
-  
-    
+   
+    /*
      @Override
     public int compareTo(FiguraMano o) {
          if (this.getValor()==o.getValor())
@@ -68,15 +57,9 @@ public class FiguraVacia implements FiguraMano {
         }
     }
     
+  */  
     
-    
-    
-    
-        @Override
-    public List<Carta> obtenerListaCartasFormandoFigura() {
-       return this.figuraCartas;
-    }
-    
+
      @Override
     public String toString() {
         return "No hay figura";
