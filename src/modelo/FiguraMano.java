@@ -85,34 +85,26 @@ public abstract class FiguraMano {
     }
     
         /*El juego si puede ir directo a la fachada y pedir que avise a sus observadores */
-    public static FiguraMano obtenerFigura(List<Carta> lista)
-    {
+    public static FiguraMano obtenerFigura(List<Carta> lista) {
         FiguraMano figura = null;
-        
-        if (tienePar(lista))
-        {
+
+        if (tienePar(lista)) {
             figura = new FiguraPar(lista);
-            
-            
-        } else if (tieneDoblePar(lista))
-        {
+
+        } else if (tieneDoblePar(lista)) {
             figura = new FiguraDoblePar(lista);
-        }
-        
-        else if (tieneColor(lista))
-        {
+        } else if (tieneColor(lista)) {
             figura = new FiguraColor(lista);
-        }
-        
-        
-        else {
+        } else {
             figura = new FiguraVacia(lista);
         }
-      
-        
+
         return figura;
     }
-     
+
+    
+    
+    
     /* Este metodo dada una lista de cartas se fija si tiene par unicamente */
     public static boolean tienePar(List<Carta> lista)
     {
@@ -192,6 +184,8 @@ public abstract class FiguraMano {
         
         return resultado;
     }
+    
+    public abstract String tiene(List<Carta> lista);
     
     
 }

@@ -430,7 +430,10 @@ public class Juego extends Observable {
     {
         Participante ganador = m.getApuesta().getDueno();
         //Carta ganadora =m.getApuesta().getDueno().getCartasMano().get(0);
+        
         FiguraMano ganadora = FiguraMano.obtenerFigura(m.getApuesta().getDueno().getCartasMano());
+        
+       
         
         if (m.getApuesta().getListaPagan().isEmpty())
         {

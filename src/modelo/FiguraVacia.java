@@ -64,5 +64,10 @@ public class FiguraVacia extends FiguraMano implements Comparable<FiguraMano> {
     public String toString() {
         return "No hay figura";
     }
+
+    @Override
+    public String tiene(List<Carta> lista) {
+        return this.toString();
+    }
     
 }

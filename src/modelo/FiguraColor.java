@@ -62,6 +62,20 @@ public class FiguraColor extends FiguraMano implements Comparable<FiguraMano>{
     public String toString() {
         return "Color";
     }
+
+    @Override
+    public String tiene(List<Carta> lista) {
+          String resultado = "";
+        
+        Carta.Palo palo = lista.get(0).getPalo();
+        
+        if (lista.get(1).getPalo()==palo && lista.get(2).getPalo()==palo && lista.get(3).getPalo()==palo && lista.get(4).getPalo()==palo)
+        {
+            resultado = this.toString();
+        }
+        
+        return resultado;
+    }
     
     
     

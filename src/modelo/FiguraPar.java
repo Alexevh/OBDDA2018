@@ -83,5 +83,39 @@ public class FiguraPar extends FiguraMano implements Comparable<FiguraMano>{
     public String toString() {
         return "Par";
     }
+
+    @Override
+    public String tiene(List<Carta> lista) {
+        
+        String resultado ="";     
+        
+        /* Esta lista deberia tener 2 elementos*/
+        List<Carta> valorPar = new ArrayList();
+        
+       
+        for (int i=0; i<lista.size();i++)
+        {
+            
+            for (int z=i+1; z<lista.size(); z++)
+            {
+                if (lista.get(i).getNumero()==lista.get(z).getNumero())
+            {
+                valorPar.add(lista.get(i));
+                valorPar.add(lista.get(z));
+                
+            }
+            }
+            
+        }
+          
+        if (valorPar.size()==2)
+        {
+            return this.toString();
+        }
+        
+        return resultado;
+     
+        
+    }
     
 }
