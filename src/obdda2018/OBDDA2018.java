@@ -6,11 +6,15 @@
 package obdda2018;
 
 import com.sun.prism.impl.BaseMesh;
+import java.util.ArrayList;
 import modelo.Administrador;
 import modelo.Fachada;
 import modelo.Juego;
 import modelo.Jugador;
 import modelo.SistemaUsuarios;
+import persistencia.Mapeador;
+import persistencia.Persistencia;
+import mapeadores.MapeadorJugador;
 
 /**
  *
@@ -40,6 +44,7 @@ public class OBDDA2018 {
         Fachada.getInstancia().agregarAdmin(a2);
         
         /* Agrego a tres jugadores */
+        /*
         Jugador j1 = new Jugador("Mario B", "mario", "password", 500); 
         Jugador j2 = new Jugador("Luigi B", "luigi", "password", 400); 
         Jugador j3 = new Jugador("Amanda A", "amanda", "password", 10); 
@@ -47,6 +52,16 @@ public class OBDDA2018 {
         Fachada.getInstancia().agregarJugador(j1);
         Fachada.getInstancia().agregarJugador(j2);
         Fachada.getInstancia().agregarJugador(j3);
+        */
+        
+        Mapeador map = new MapeadorJugador();
+        ArrayList<Jugador> lista = Persistencia.getInstancia().todos(map);
+        for (Jugador j: lista)
+        {
+            Fachada.getInstancia().agregarJugador(j);
+            System.out.println("Agregue a "+j.getNombreCompleto());
+        }
+        
         
         
       
@@ -58,6 +73,7 @@ public class OBDDA2018 {
         
     }
 
+  
    
     
 }

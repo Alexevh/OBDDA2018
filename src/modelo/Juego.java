@@ -12,6 +12,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Observable;
+import mapeadores.MapeadorJuego;
+import mapeadores.MapeadorJugador;
+import persistencia.Mapeador;
+import persistencia.Persistencia;
 
 
 public class Juego extends Observable {
@@ -25,20 +29,68 @@ public class Juego extends Observable {
     private int contadorRespuestasObtenidas;
     private Participante ultimoGanador;
     private Date fechaInicio;
+    private int oid;
+    
+    private int cantidadManosJugadasFinal;
+    private int cantidadJugadoresTotal;
+    private int totalApostadoPartida;
    
     private Mazo mazo;
    
     private boolean iniciado;
 
-   
+    public Juego() {
+       
+    }
 
     
-  
-
+   
     public enum Eventos {
         inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa, hayGanador, finJuego, manoNuevaSiNo, huboEmpate, expulsarParticipante;
     }
 
+    public int getOid() {
+        return oid;
+    }
+
+    public void setOid(int oid) {
+        this.oid = oid;
+    }
+
+    public int getContadorRespuestasObtenidas() {
+        return contadorRespuestasObtenidas;
+    }
+
+    public void setContadorRespuestasObtenidas(int contadorRespuestasObtenidas) {
+        this.contadorRespuestasObtenidas = contadorRespuestasObtenidas;
+    }
+
+    public int getCantidadManosJugadasFinal() {
+        return cantidadManosJugadasFinal;
+    }
+
+    public void setCantidadManosJugadasFinal(int cantidadManosJugadasFinal) {
+        this.cantidadManosJugadasFinal = cantidadManosJugadasFinal;
+    }
+
+    public int getCantidadJugadoresTotal() {
+        return cantidadJugadoresTotal;
+    }
+
+    public void setCantidadJugadoresTotal(int cantidadJugadoresTotal) {
+        this.cantidadJugadoresTotal = cantidadJugadoresTotal;
+    }
+
+    public int getTotalApostadoPartida() {
+        return totalApostadoPartida;
+    }
+
+    public void setTotalApostadoPartida(int totalApostadoPartida) {
+        this.totalApostadoPartida = totalApostadoPartida;
+    }
+
+    
+    
     public Date getFechaInicio() {
         return fechaInicio;
     }
@@ -178,6 +230,7 @@ public class Juego extends Observable {
         /*Si el juego ya inicio, el participante no se le devuelve lo que haya puesto*/
         if (iniciado) {
             p.setActivo(false);
+            actualizarParticipante(p);
 
         } else {
             /* Si el juego no empezo, entonces le devolvemos el dinero y actualizamos el pozo*/
@@ -190,8 +243,11 @@ public class Juego extends Observable {
         if (getActivos().size()==1)
         {
             getActivos().get(0).getJugador().sumarAlSaldo(pozo);
+            actualizarParticipante(getActivos().get(0));
             this.setIniciado(false);
+            
            avisar(Eventos.finJuego);
+           finJuegoActualizar();
             
         } else {
             avisar(Eventos.seEliminaParticipante);
@@ -386,6 +442,13 @@ public class Juego extends Observable {
            contadorRespuestasObtenidas =0;
            contadorRespuestas = getActivos().size();
            
+           /* Si todos pasaron, el saldo en el pozo no se devuleve nunca por ende se actualizan los saldos*/
+           for (Participante p: getActivos())
+           {
+               actualizarParticipante(p);
+           }
+           
+           
            /* Todos los jugadores con saldo 0 o sea menor o igual a la luz actual       
            La letra dice solo saldo cero, preguntar al docente
            */
@@ -402,6 +465,13 @@ public class Juego extends Observable {
 
             /*Pagamos la apuesta*/
             m.getGanador().getJugador().sumarAlSaldo(pozo);
+            
+            /*Actualizamos los saldos */
+            for (Participante p: getActivos())
+           {
+               actualizarParticipante(p);
+           }
+            
             
             /* Registramos lo que va ganando */
             m.getGanador().setTotalGanado(m.getGanador().getTotalGanado()+pozo);
@@ -450,7 +520,13 @@ public class Juego extends Observable {
                 ganadora = p.getCartasMano().get(0);
                 ganador = p;
             }*/
-            
+          /*
+            1. me fijo que tiene el p p
+            2. instancio la figura
+            3. comparo la figura y si es mayor
+            4. gago los cambios
+            5. sigo iterando
+            */  
               
           if (FiguraMano.obtenerFigura(p.getCartasMano()).compareTo(ganadora)==1)
             {
@@ -493,6 +569,7 @@ public class Juego extends Observable {
                 this.setIniciado(false);
                 
                 avisar(Eventos.finJuego);
+                finJuegoActualizar();
             } else {
                 vaciarContadores();
                 generarNuevaMano();
@@ -555,7 +632,18 @@ public class Juego extends Observable {
         return this.cantidadJugadores - this.getListaParticipantes().size();
     }
     
-   
+    /* Consultar al docente, si esto lo hace directamente aca o en otro lado */
+    private void actualizarParticipante(Participante p) {
+        Mapeador map = new MapeadorJugador(p.getJugador());
+        Persistencia.getInstancia().guardar(map);
+    }
+
+   private void finJuegoActualizar() {
+        Mapeador map = new MapeadorJuego(this);
+        Persistencia.getInstancia().guardar(map);
+        
+    }
+
   
     
     

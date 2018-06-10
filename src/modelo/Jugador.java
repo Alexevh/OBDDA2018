@@ -13,6 +13,21 @@ public class Jugador extends Usuario{
     
     private int saldo;
 
+    private int oid;
+
+    public Jugador() {
+        
+    }
+
+    public int getOid() {
+        return oid;
+    }
+
+    public void setOid(int oid) {
+        this.oid = oid;
+    }
+    
+    
     public int getSaldo() {
         return saldo;
     }
