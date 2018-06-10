@@ -26,6 +26,9 @@ public class ControladorAdministracion implements Observer {
     
     /* Esra lista es local para actualizar en la vista del admin*/
     private List<Juego> listaLocal;
+    
+    private List<Juego> listaLocalFinalizados;
+    
 
     public List<Juego> getListaLocal() {
         return listaLocal;
@@ -33,6 +36,14 @@ public class ControladorAdministracion implements Observer {
 
     public void setListaLocal(List<Juego> listaLocal) {
         this.listaLocal = listaLocal;
+    }
+
+    public List<Juego> getListaLocalFinalizados() {
+        return listaLocalFinalizados;
+    }
+
+    public void setListaLocalFinalizados(List<Juego> listaLocalFinalizados) {
+        this.listaLocalFinalizados = listaLocalFinalizados;
     }
     
 
@@ -60,6 +71,7 @@ public class ControladorAdministracion implements Observer {
         //Fachada.getInstancia().registrarObservador(this);
         Fachada.getInstancia().addObserver(this);
         listaLocal = obtenerJuegosActivos();
+        listaLocalFinalizados = obtenerJuegosFinalizados();
     }
     
     public void actualizarLuz(int valor) throws PokerExcepciones
@@ -77,8 +89,13 @@ public class ControladorAdministracion implements Observer {
         return new ArrayList(Fachada.getInstancia().obtenerJuegosActivos());
     }
     
+      private List<Juego> obtenerJuegosFinalizados() {
+        return new ArrayList(Fachada.getInstancia().obtenerJuegosFinalizados());
+    }
+    
     public void actualizarPartidas(){
         vista.actualizarPartidasActivas(Fachada.getInstancia().obtenerJuegosActivos());
+        vista.actualizarPartidasFinalizadas(Fachada.getInstancia().getListaJuegosTerminados());
     }
 
     @Override
@@ -89,11 +106,13 @@ public class ControladorAdministracion implements Observer {
                 
                 vista.actualizarPartidasActivas(Fachada.getInstancia().obtenerJuegosActivos());
                 listaLocal = obtenerJuegosActivos();
+                listaLocalFinalizados = obtenerJuegosFinalizados();
                 break;
                 case nuevaMano:
                 
                 vista.actualizarPartidasActivas(Fachada.getInstancia().obtenerJuegosActivos());
                 listaLocal = obtenerJuegosActivos();
+                listaLocalFinalizados = obtenerJuegosFinalizados();
                 break;
     }
           
@@ -114,4 +133,10 @@ public class ControladorAdministracion implements Observer {
     public Juego obtenerJuegoPorIndice(int indice) {
         return this.listaLocal.get(indice);
     }
+
+    public Juego obtenerJuegoFinalizadoPorIndice(int indice) {
+        return this.listaLocalFinalizados.get(indice);
+    }
+
+  
 }

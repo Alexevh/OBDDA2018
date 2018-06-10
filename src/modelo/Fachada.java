@@ -26,6 +26,7 @@ public class Fachada extends Observable{
     
     private Fachada() {
     }
+
     
     
      public enum Eventos {
@@ -86,12 +87,24 @@ public class Fachada extends Observable{
         return sisJuegos.obtenerJuegosActivos();
     }
     
+    public List<Juego>  obtenerJuegosFinalizados() {
+       return sisJuegos.getListaJuegosTerminados();
+    }
+    
+    
     
       /* Metodo que avisa a los observadores*/
     public void avisar(Eventos evento) {
         setChanged();
         notifyObservers(evento);
     }
+
+    public List<Juego> getListaJuegosTerminados() {
+        return sisJuegos.getListaJuegosTerminados();
+    }
+
+   
+    
   
     
 }

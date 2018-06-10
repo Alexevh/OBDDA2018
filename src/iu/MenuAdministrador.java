@@ -85,7 +85,9 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         jScrollPane2 = new javax.swing.JScrollPane();
         txtVerDetalles = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
-        btnVerDetalles = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaFinalizadas = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -129,7 +131,7 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
             }
         });
         getContentPane().add(btnSalir);
-        btnSalir.setBounds(1030, 590, 72, 29);
+        btnSalir.setBounds(1020, 670, 72, 29);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Jugadores"));
         jPanel2.setLayout(null);
@@ -176,7 +178,7 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         jScrollPane1.setViewportView(listaPartidasActivas);
 
         jPanel3.add(jScrollPane1);
-        jScrollPane1.setBounds(20, 40, 640, 360);
+        jScrollPane1.setBounds(20, 40, 640, 220);
 
         jLabel2.setText("Activas");
         jPanel3.add(jLabel2);
@@ -187,25 +189,30 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         jScrollPane2.setViewportView(txtVerDetalles);
 
         jPanel3.add(jScrollPane2);
-        jScrollPane2.setBounds(680, 40, 300, 330);
+        jScrollPane2.setBounds(680, 40, 300, 410);
 
         jLabel5.setText("Detalles");
         jPanel3.add(jLabel5);
         jLabel5.setBounds(680, 20, 210, 20);
 
-        btnVerDetalles.setText("Ver ");
-        btnVerDetalles.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerDetallesActionPerformed(evt);
+        jLabel6.setText("Finalizadas");
+        jPanel3.add(jLabel6);
+        jLabel6.setBounds(20, 270, 110, 17);
+
+        listaFinalizadas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaFinalizadasMouseClicked(evt);
             }
         });
-        jPanel3.add(btnVerDetalles);
-        btnVerDetalles.setBounds(680, 380, 100, 29);
+        jScrollPane3.setViewportView(listaFinalizadas);
+
+        jPanel3.add(jScrollPane3);
+        jScrollPane3.setBounds(20, 300, 640, 150);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(20, 190, 1000, 420);
+        jPanel3.setBounds(20, 190, 1000, 480);
 
-        setBounds(0, 0, 1117, 658);
+        setBounds(0, 0, 1117, 746);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -215,10 +222,6 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     private void btnActualizarJugadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarJugadoresActionPerformed
         actualizarMaximoJugadores();
     }//GEN-LAST:event_btnActualizarJugadoresActionPerformed
-
-    private void btnVerDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallesActionPerformed
-        verDatosPartidaSeleccionada();
-    }//GEN-LAST:event_btnVerDetallesActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         salir();
@@ -232,24 +235,30 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
        verDatosPartidaSeleccionada();
     }//GEN-LAST:event_listaPartidasActivasMouseClicked
 
+    private void listaFinalizadasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaFinalizadasMouseClicked
+        verDatosPartidaSeleccionadaFinalizada();
+    }//GEN-LAST:event_listaFinalizadasMouseClicked
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarJugadores;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnVerDetalles;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JList listaFinalizadas;
     private javax.swing.JList listaPartidasActivas;
     private javax.swing.JLabel txtCantidadJugadores;
     private javax.swing.JLabel txtValorActualLuz;
@@ -306,6 +315,17 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         
     }
     
+      @Override
+    public void actualizarPartidasFinalizadas(List<Juego> lista) {
+        
+         ArrayList<String> lineas = new ArrayList();
+        for(Juego p:lista){
+            lineas.add(formatoFinalizadas(p));
+            listaFinalizadas.setListData(lineas.toArray());
+        }
+        
+    }
+    
     public void verDatosPartidaSeleccionada()
     {
         /* pedir al controlador la partida por indice*/
@@ -342,5 +362,32 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         return formato;
     }
     
+         private String formatoFinalizadas(Juego j) {
+        String formato = "Juego:"+j.getFechaInicio().toString()+"- Cantidad de manos = "+j.getCantidadManosJugadasFinal()+ " Apuestas $:"+j.getTotalApostadoPartida()+"- Cantidad de jugadores :"+j.getCantidadJugadoresTotal();
+            
+        
+        return formato;
+    }
+         
+    
+         public void verDatosPartidaSeleccionadaFinalizada()
+         {
+                    /* pedir al controlador la partida por indice*/
+        int indice = listaFinalizadas.getSelectedIndex();
+        
+        Juego j = controlador.obtenerJuegoFinalizadoPorIndice(indice);
+            
+        
+        String info = "Informacion del juego \n _____________________";
+        
+        for (Participante p: j.getListaParticipantes())
+        {
+            info = info + "\n"+"Nombre:"+p.getJugador().getNombreCompleto() + "\n total apostado :"+p.getTotalApostado()+"\n saldo incial :"+p.getSaldoInicial()+"\n Total ganado $:"+p.getTotalGanado()+"\n _____________________";
+        }
+        
+        
+        
+        txtVerDetalles.setText(info);
+         }
     
 }

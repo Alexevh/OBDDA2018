@@ -10,11 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import mapeadores.MapeadorJuego;
+import persistencia.Mapeador;
+import persistencia.Persistencia;
 
 
 public class SistemaJuegos extends Observable {
     
     private List<Juego> listaJuegos = new ArrayList();
+    private List<Juego> listaJuegosTerminados = new ArrayList();
     
     private int maxJugadores = 2;
     private int luz = 1;
@@ -32,12 +36,24 @@ public class SistemaJuegos extends Observable {
     
     public SistemaJuegos() {
         
-        /* Consultar al docente si cargamos el juego a la lista o no antes de iniciarse
-        Consultar si conviene o no tener lista de participantes en el sistema de juegos
         
-        */
-        //this.listaJuegos.add(proximoJuego);
     }
+
+    public List<Juego> getListaJuegosTerminados() {
+        /* Cragar la lista de partidas finalizadas */
+        Juego j = new Juego();
+
+       Mapeador m = new MapeadorJuego(j);
+       this.listaJuegosTerminados = Persistencia.getInstancia().todosJuegos(m);
+        return listaJuegosTerminados;
+    }
+
+    public void setListaJuegosTerminados(List<Juego> listaJuegosTerminados) {
+        this.listaJuegosTerminados = listaJuegosTerminados;
+    }
+    
+    
+    
     
     /* por experto */
     public void agregarJugadorAproximoJuego(Participante j) throws PokerExcepciones 

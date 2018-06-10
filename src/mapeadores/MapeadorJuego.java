@@ -124,7 +124,7 @@ public class MapeadorJuego implements Mapeador{
         /*Consultar si esta bien esto o debemos traernos el registro del jugador completo de la BD*/
         Jugador ju = new Jugador();
         ju.setNombreCompleto(rs.getString("nombrecompleto"));   
-        ju.setSaldo(900);
+        ju.setSaldo(rs.getInt("saldoinicial"));
         p.setJugador(ju);
         
         try {

@@ -15,4 +15,6 @@ import modelo.Juego;
 public interface  VistaAdministrador {
     
     public void actualizarPartidasActivas(List<Juego> lista);
+   
+     public void actualizarPartidasFinalizadas(List<Juego> lista);
 }
