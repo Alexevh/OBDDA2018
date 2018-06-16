@@ -20,7 +20,7 @@ public class SistemaJuegos extends Observable {
     private List<Juego> listaJuegos = new ArrayList();
     private List<Juego> listaJuegosTerminados = new ArrayList();
     
-    private int maxJugadores = 2;
+    private int maxJugadores = 3;
     private int luz = 1;
     /* Esto es para calcular el saldo antes de dejar entrar al jugador, si el saldo del jugador es menor a este numero X luz entonces no entra*/
     private int minimasApuestas = 3;
@@ -53,11 +53,30 @@ public class SistemaJuegos extends Observable {
     }
     
     
+    private boolean jugadorEstaEnPartidaEnCurso(Participante p)
+    {
+        boolean resultado = false;
+        
+        for (Juego j: listaJuegos)
+        {
+            if (j.getActivos().contains(p) && j!=proximoJuego ){
+                return true;
+            }
+        }
+        
+        
+        return resultado;
+    }
+    
     
     
     /* por experto */
     public void agregarJugadorAproximoJuego(Participante j) throws PokerExcepciones 
     {
+        if (jugadorEstaEnPartidaEnCurso(j))
+        {
+            throw new PokerExcepciones("El jugador esta en una partida activa");
+        }
         this.proximoJuego.agregarJugador(j);
         if (proximoJuego.getCantidadJugadores()==proximoJuego.getListaParticipantes().size())
         {

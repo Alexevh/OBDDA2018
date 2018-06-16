@@ -116,12 +116,17 @@ public class MapeadorJuego implements Mapeador{
 
     @Override
     public void leerComponente(ResultSet rs) throws SQLException {
+        
+        /* ver si hay un metodo que dado un jugador hace el participante en la partida*/
         Participante p = new Participante();
         p.setSaldoInicial(rs.getInt("saldoinicial"));
         p.setTotalApostado(rs.getInt("totalapostado"));
         p.setTotalGanado(rs.getInt("totalganado"));
         
-        /*Consultar si esta bien esto o debemos traernos el registro del jugador completo de la BD*/
+        /*Consultar si esta bien esto o debemos traernos el registro del jugador completo de la BD
+        huicar cual es el jugador que corresponde con el ID que esta trayendo ahi, en la tabla guardamos el OID del jugador que
+        corresponde
+        */ 
         Jugador ju = new Jugador();
         ju.setNombreCompleto(rs.getString("nombrecompleto"));   
         ju.setSaldo(rs.getInt("saldoinicial"));
