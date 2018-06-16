@@ -6,12 +6,15 @@
 package modelo;
 
 import Excepciones.PokerExcepciones;
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mapeadores.MapeadorJuego;
 import mapeadores.MapeadorJugador;
 import persistencia.Mapeador;
@@ -501,9 +504,14 @@ public class Juego extends Observable {
         Participante ganador = m.getApuesta().getDueno();
         //Carta ganadora =m.getApuesta().getDueno().getCartasMano().get(0);
         
-        FiguraMano ganadora = FiguraMano.obtenerFigura(m.getApuesta().getDueno().getCartasMano());
+        //FiguraMano ganadora = FiguraMano.obtenerFigura(m.getApuesta().getDueno().getCartasMano());
         
-       
+       FiguraMano ganadora = null;
+        try {
+            ganadora = figuraEnLaMano(m.getApuesta().getDueno().getCartasMano());
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         if (m.getApuesta().getListaPagan().isEmpty())
         {
@@ -514,24 +522,28 @@ public class Juego extends Observable {
         for (Participante p: m.getApuesta().getListaPagan())
         {
           
-            /*
-          if (p.getCartasMano().get(0).compareTo(ganadora)==1)
-            {
+            try {
+                /*
+                if (p.getCartasMano().get(0).compareTo(ganadora)==1)
+                {
                 ganadora = p.getCartasMano().get(0);
                 ganador = p;
-            }*/
-          /*
-            1. me fijo que tiene el p p
-            2. instancio la figura
-            3. comparo la figura y si es mayor
-            4. gago los cambios
-            5. sigo iterando
-            */  
-              
-          if (FiguraMano.obtenerFigura(p.getCartasMano()).compareTo(ganadora)==1)
-            {
-                ganadora = FiguraMano.obtenerFigura(p.getCartasMano());
-                ganador = p;
+                }*/
+                /*
+                1. me fijo que tiene el p p
+                2. instancio la figura
+                3. comparo la figura y si es mayor
+                4. gago los cambios
+                5. sigo iterando
+                */
+                
+                if (figuraEnLaMano(p.getCartasMano()).compareTo(ganadora)==1)
+                {
+                    ganadora = figuraEnLaMano(p.getCartasMano());
+                    ganador = p;
+                }
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
+                Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }
@@ -644,6 +656,24 @@ public class Juego extends Observable {
         
     }
 
+   /* Esto quizas vaya a sistemJuegos */
+   private FiguraMano figuraEnLaMano(List<Carta> lista) throws InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException
+   {
+       FiguraMano figura = new FiguraVacia();
+       
+       for (FiguraMano fig: Fachada.getInstancia().getListaFiguras())
+       {
+           if (fig.tiene(lista)==true)
+           {
+              FiguraMano f = fig.getClass().getDeclaredConstructor(List.class).newInstance(lista);
+              return f;
+           
+           }
+       }
+       
+       
+       return figura;
+   }
   
     
     

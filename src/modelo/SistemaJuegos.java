@@ -6,7 +6,9 @@
 package modelo;
 
 import Excepciones.PokerExcepciones;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -19,6 +21,7 @@ public class SistemaJuegos extends Observable {
     
     private List<Juego> listaJuegos = new ArrayList();
     private List<Juego> listaJuegosTerminados = new ArrayList();
+    private List<FiguraMano> listaFiguras = new ArrayList();
     
     private int maxJugadores = 3;
     private int luz = 1;
@@ -27,6 +30,8 @@ public class SistemaJuegos extends Observable {
     private List<Jugador> listaJugadores = new ArrayList();
     private List<Administrador> listaAdmins = new ArrayList();
     private Juego proximoJuego = new Juego(luz, maxJugadores);
+
+   
     
     public enum Eventos {
         seAgregoUnNuevoJuego;
@@ -36,7 +41,7 @@ public class SistemaJuegos extends Observable {
     
     public SistemaJuegos() {
         
-        
+        poblarListaFiguras();
     }
 
     public List<Juego> getListaJuegosTerminados() {
@@ -90,6 +95,14 @@ public class SistemaJuegos extends Observable {
     private void avisar(Eventos evento) {
         setChanged();
         notifyObservers(evento);
+    }
+
+    public List<FiguraMano> getListaFiguras() {
+        return listaFiguras;
+    }
+
+    public void setListaFiguras(List<FiguraMano> listaFiguras) {
+        this.listaFiguras = listaFiguras;
     }
   
   
@@ -235,7 +248,38 @@ public class SistemaJuegos extends Observable {
     }
     
     
-  
+   private void poblarListaFiguras() {
+       
+       FiguraMano par = new FiguraPar();
+       FiguraMano doblepar = new FiguraDoblePar();
+       FiguraMano color = new FiguraColor();
+       FiguraMano vacia = new FiguraVacia();
+       this.listaFiguras.add(par);
+       this.listaFiguras.add(doblepar);
+       this.listaFiguras.add(color);
+       this.listaFiguras.add(vacia);
+       Collections.sort(this.listaFiguras, Collections.reverseOrder());
+       
+    }
+   
+     /* Esto quizas vaya a sistemJuegos */
+   public FiguraMano figuraEnLaMano(List<Carta> lista) throws InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException
+   {
+       FiguraMano figura = new FiguraVacia();
+       
+       for (FiguraMano fig: Fachada.getInstancia().getListaFiguras())
+       {
+           if (fig.tiene(lista)==true)
+           {
+              FiguraMano f = fig.getClass().getDeclaredConstructor(List.class).newInstance(lista);
+              return f;
+           
+           }
+       }
+       
+       
+       return figura;
+   }
     
     
 }

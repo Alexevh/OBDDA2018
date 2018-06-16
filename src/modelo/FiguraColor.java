@@ -24,6 +24,10 @@ public class FiguraColor extends FiguraMano implements Comparable<FiguraMano>{
         super.setFiguraCartas(lista);
         Collections.sort(lista, Collections.reverseOrder());
     }
+
+    FiguraColor() {
+        
+    }
     
     
  
@@ -64,14 +68,14 @@ public class FiguraColor extends FiguraMano implements Comparable<FiguraMano>{
     }
 
     @Override
-    public String tiene(List<Carta> lista) {
-          String resultado = "";
+    public boolean tiene(List<Carta> lista) {
+          boolean resultado = false;
         
         Carta.Palo palo = lista.get(0).getPalo();
         
         if (lista.get(1).getPalo()==palo && lista.get(2).getPalo()==palo && lista.get(3).getPalo()==palo && lista.get(4).getPalo()==palo)
         {
-            resultado = this.toString();
+            resultado = true;
         }
         
         return resultado;

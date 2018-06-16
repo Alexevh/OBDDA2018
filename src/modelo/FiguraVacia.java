@@ -21,6 +21,10 @@ public class FiguraVacia extends FiguraMano implements Comparable<FiguraMano> {
         super.setCartas(lista); 
         super.setFiguraCartas(lista);
     }
+
+    FiguraVacia() {
+       
+    }
     
     
 
@@ -66,8 +70,8 @@ public class FiguraVacia extends FiguraMano implements Comparable<FiguraMano> {
     }
 
     @Override
-    public String tiene(List<Carta> lista) {
-        return this.toString();
+    public boolean tiene(List<Carta> lista) {
+        return true;
     }
     
 }

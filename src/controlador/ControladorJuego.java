@@ -6,8 +6,11 @@
 package controlador;
 
 import Excepciones.PokerExcepciones;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Apuesta;
 import modelo.Fachada;
 import modelo.FiguraMano;
@@ -60,7 +63,11 @@ public class ControladorJuego implements Observer {
             vista.actualizarMesa(this.juego.getActivos());
             vista.actualizarPozo(juego.getPozo());
             vista.inicioNuevaMano();
-            vista.actualizarMano(p.getCartasMano(), FiguraMano.obtenerFigura(p.getCartasMano()).toString());
+            try {
+                vista.actualizarMano(p.getCartasMano(), Fachada.getInstancia().figuraEnLaMano(p.getCartasMano()).toString());
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
+                Logger.getLogger(ControladorJuego.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } else {
             vista.mostrarParticipantes(getFaltantes());
@@ -134,7 +141,13 @@ public class ControladorJuego implements Observer {
             case nuevaMano:
                 vista.inicioNuevaMano();
                 vista.actualizarMesa(juego.getActivos());
-                vista.actualizarMano(p.getCartasMano(), FiguraMano.obtenerFigura(p.getCartasMano()).toString());
+        {
+            try {
+                vista.actualizarMano(p.getCartasMano(), Fachada.getInstancia().figuraEnLaMano(p.getCartasMano()).toString());
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
+                Logger.getLogger(ControladorJuego.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
             case nuevaApuesta:
                 vista.inicioNuevaApuesta(juego.getManoActual().getApuesta().getDueno().getJugador().getNombreCompleto(), juego.getManoActual().getApuesta().getValor());
@@ -147,7 +160,13 @@ public class ControladorJuego implements Observer {
                 vista.actualizarPagan(juego.getManoActual().getApuesta().getListaPagan());
                 break;
             case hayGanador:
-                vista.mostrarGanador(juego.getUltimoGanador().getJugador().getNombreCompleto(), FiguraMano.obtenerFigura(juego.getUltimoGanador().getCartasMano()).toString(), juego.getUltimoGanador().getCartasMano());
+        {
+            try {
+                vista.mostrarGanador(juego.getUltimoGanador().getJugador().getNombreCompleto(), Fachada.getInstancia().figuraEnLaMano(juego.getUltimoGanador().getCartasMano()).toString(), juego.getUltimoGanador().getCartasMano());
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
+                Logger.getLogger(ControladorJuego.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 vista.seguirJugando();
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());

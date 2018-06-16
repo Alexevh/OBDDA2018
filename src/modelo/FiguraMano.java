@@ -27,6 +27,7 @@ public abstract class FiguraMano {
 */
     private List<Carta> cartas = new ArrayList();
     private List<Carta> figuraCartas = new ArrayList();
+    
 
     public List<Carta> getCartas() {
         return cartas;
@@ -45,6 +46,7 @@ public abstract class FiguraMano {
     }
     
     
+    public abstract boolean tiene(List<Carta> figuraCartas);
     
     
     public int compareTo(FiguraMano o) {
@@ -84,7 +86,7 @@ public abstract class FiguraMano {
        return this.figuraCartas;
     }
     
-        /*El juego si puede ir directo a la fachada y pedir que avise a sus observadores */
+        /*El juego si puede ir directo a la fachada y pedir que avise a sus observadores 
     public static FiguraMano obtenerFigura(List<Carta> lista) {
         FiguraMano figura = null;
 
@@ -102,7 +104,7 @@ public abstract class FiguraMano {
         return figura;
     }
 
-    
+    */
     
     
     /* Este metodo dada una lista de cartas se fija si tiene par unicamente */
@@ -185,7 +187,7 @@ public abstract class FiguraMano {
         return resultado;
     }
     
-    public abstract String tiene(List<Carta> lista);
+
     
     
 }

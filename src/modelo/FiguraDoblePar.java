@@ -97,9 +97,9 @@ public class FiguraDoblePar extends FiguraMano implements Comparable<FiguraMano>
     }
 
     @Override
-    public String tiene(List<Carta> lista) {
+    public boolean tiene(List<Carta> lista) {
           
-        String resultado = "";
+        boolean resultado = false;
         
         /* Esta lista deberia tener 2 elementos*/
         List<Carta> valorPar = new ArrayList();
@@ -122,7 +122,7 @@ public class FiguraDoblePar extends FiguraMano implements Comparable<FiguraMano>
           
         if (valorPar.size()==4)
         {
-            resultado=this.toString();
+            resultado=true;
         }
         
         return resultado;

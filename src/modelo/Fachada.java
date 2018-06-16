@@ -6,6 +6,7 @@
 package modelo;
 
 import Excepciones.PokerExcepciones;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -101,6 +102,14 @@ public class Fachada extends Observable{
 
     public List<Juego> getListaJuegosTerminados() {
         return sisJuegos.getListaJuegosTerminados();
+    }
+
+    public List<FiguraMano> getListaFiguras() {
+        return sisJuegos.getListaFiguras();
+    }
+
+    public FiguraMano figuraEnLaMano(List<Carta> lista) throws InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {
+        return sisJuegos.figuraEnLaMano(lista);
     }
 
    
