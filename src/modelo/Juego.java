@@ -508,7 +508,7 @@ public class Juego extends Observable {
         
        FiguraMano ganadora = null;
         try {
-            ganadora = figuraEnLaMano(m.getApuesta().getDueno().getCartasMano());
+            ganadora = Fachada.getInstancia().figuraEnLaMano(m.getApuesta().getDueno().getCartasMano());
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -537,9 +537,9 @@ public class Juego extends Observable {
                 5. sigo iterando
                 */
                 
-                if (figuraEnLaMano(p.getCartasMano()).compareTo(ganadora)==1)
+                if (Fachada.getInstancia().figuraEnLaMano(p.getCartasMano()).compareTo(ganadora)==1)
                 {
-                    ganadora = figuraEnLaMano(p.getCartasMano());
+                    ganadora = Fachada.getInstancia().figuraEnLaMano(p.getCartasMano());
                     ganador = p;
                 }
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
@@ -656,25 +656,6 @@ public class Juego extends Observable {
         
     }
 
-   /* Esto quizas vaya a sistemJuegos */
-   private FiguraMano figuraEnLaMano(List<Carta> lista) throws InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException
-   {
-       FiguraMano figura = new FiguraVacia();
-       
-       for (FiguraMano fig: Fachada.getInstancia().getListaFiguras())
-       {
-           if (fig.tiene(lista)==true)
-           {
-              FiguraMano f = fig.getClass().getDeclaredConstructor(List.class).newInstance(lista);
-              return f;
-           
-           }
-       }
-       
-       
-       return figura;
-   }
-  
-    
+
     
 }
