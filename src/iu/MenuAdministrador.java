@@ -81,13 +81,9 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaPartidasActivas = new javax.swing.JList();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtVerDetalles = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        listaFinalizadas = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -178,11 +174,7 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         jScrollPane1.setViewportView(listaPartidasActivas);
 
         jPanel3.add(jScrollPane1);
-        jScrollPane1.setBounds(20, 40, 640, 220);
-
-        jLabel2.setText("Activas");
-        jPanel3.add(jLabel2);
-        jLabel2.setBounds(20, 20, 130, 17);
+        jScrollPane1.setBounds(20, 40, 640, 410);
 
         txtVerDetalles.setColumns(20);
         txtVerDetalles.setRows(5);
@@ -194,20 +186,6 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
         jLabel5.setText("Detalles");
         jPanel3.add(jLabel5);
         jLabel5.setBounds(680, 20, 210, 20);
-
-        jLabel6.setText("Finalizadas");
-        jPanel3.add(jLabel6);
-        jLabel6.setBounds(20, 270, 110, 17);
-
-        listaFinalizadas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaFinalizadasMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(listaFinalizadas);
-
-        jPanel3.add(jScrollPane3);
-        jScrollPane3.setBounds(20, 300, 640, 150);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(20, 190, 1000, 480);
@@ -235,10 +213,6 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
        verDatosPartidaSeleccionada();
     }//GEN-LAST:event_listaPartidasActivasMouseClicked
 
-    private void listaFinalizadasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaFinalizadasMouseClicked
-        verDatosPartidaSeleccionadaFinalizada();
-    }//GEN-LAST:event_listaFinalizadasMouseClicked
-
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -246,19 +220,15 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JList listaFinalizadas;
     private javax.swing.JList listaPartidasActivas;
     private javax.swing.JLabel txtCantidadJugadores;
     private javax.swing.JLabel txtValorActualLuz;
@@ -304,27 +274,8 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     }
 
     
-    @Override
-    public void actualizarPartidasActivas(List<Juego> lista) {
-        
-         ArrayList<String> lineas = new ArrayList();
-        for(Juego p:lista){
-            lineas.add(formato(p));
-            listaPartidasActivas.setListData(lineas.toArray());
-        }
-        
-    }
-    
-      @Override
-    public void actualizarPartidasFinalizadas(List<Juego> lista) {
-        
-         ArrayList<String> lineas = new ArrayList();
-        for(Juego p:lista){
-            lineas.add(formatoFinalizadas(p));
-            listaFinalizadas.setListData(lineas.toArray());
-        }
-        
-    }
+
+   
     
     public void verDatosPartidaSeleccionada()
     {
@@ -356,7 +307,7 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     
     
      private String formato(Juego j) {
-        String formato = "Juego:"+j.getFechaInicio().toString()+"- Cantidad de manos = "+j.getListaManos().size()+ " Apuestas $:"+j.obtenerTotalApuestas();
+        String formato = "Juego:"+j.getFechaInicio().toString()+"- Cantidad de manos = "+j.getCantidadManosJugadasFinal()+ " Apuestas $:"+j.obtenerTotalApuestas();
             
         
         return formato;
@@ -370,24 +321,16 @@ public class MenuAdministrador extends javax.swing.JFrame implements VistaAdmini
     }
          
     
-         public void verDatosPartidaSeleccionadaFinalizada()
-         {
-                    /* pedir al controlador la partida por indice*/
-        int indice = listaFinalizadas.getSelectedIndex();
+       
+
+    @Override
+    public void actualizarTodasPartidas(List<Juego> listaTotales) {
         
-        Juego j = controlador.obtenerJuegoFinalizadoPorIndice(indice);
-            
-        
-        String info = "Informacion del juego \n _____________________";
-        
-        for (Participante p: j.getListaParticipantes())
-        {
-            info = info + "\n"+"Nombre:"+p.getJugador().getNombreCompleto() + "\n total apostado :"+p.getTotalApostado()+"\n saldo incial :"+p.getSaldoInicial()+"\n Total ganado $:"+p.getTotalGanado()+"\n _____________________";
+          ArrayList<String> lineas = new ArrayList();
+        for(Juego p:listaTotales){
+            lineas.add(formato(p));
+            listaPartidasActivas.setListData(lineas.toArray());
         }
-        
-        
-        
-        txtVerDetalles.setText(info);
-         }
+    }
     
 }

@@ -296,7 +296,7 @@ public class Juego extends Observable {
         Mano m = new Mano();
         m.setManoActual(true);
         this.listaManos.add(m);
-
+        this.cantidadManosJugadasFinal++;
         
         /* Genero un nuevo mazo y lo barajo */
         this.mazo = new Mazo();
@@ -653,6 +653,7 @@ public class Juego extends Observable {
    private void finJuegoActualizar() {
         Mapeador map = new MapeadorJuego(this);
         Persistencia.getInstancia().guardar(map);
+        Fachada.getInstancia().avisar(Fachada.Eventos.finJuego);
         
     }
 

@@ -125,14 +125,21 @@ public class MapeadorJuego implements Mapeador{
         
         /*Consultar si esta bien esto o debemos traernos el registro del jugador completo de la BD
         huicar cual es el jugador que corresponde con el ID que esta trayendo ahi, en la tabla guardamos el OID del jugador que
-        corresponde
+        corresponde.
+        
+        Si nos traemos el jugador de la lista que sistemajuegos tiene, la informaicon de ese jugador no es la que tenia
+        durante la patryida, por ende hay cosas que pdorian no coincidir y deberiamos sobreescribirlas como por ejemplo el nombrecompleto
+        saldos, etc.
+        
         */ 
         Jugador ju = new Jugador();
-        ju.setNombreCompleto(rs.getString("nombrecompleto"));   
+        ju.setNombreCompleto(rs.getString("nombrecompleto")); 
+        ju.setNombreUsuario("");
         ju.setSaldo(rs.getInt("saldoinicial"));
         p.setJugador(ju);
         
         try {
+            
             j.agregarJugador(p);
         } catch (PokerExcepciones ex) {
             Logger.getLogger(MapeadorJuego.class.getName()).log(Level.SEVERE, null, ex);
