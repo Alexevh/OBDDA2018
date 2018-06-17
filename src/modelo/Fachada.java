@@ -31,7 +31,7 @@ public class Fachada extends Observable{
     
     
      public enum Eventos {
-        seAgregoUnNuevoJuego, nuevaMano, finJuego;
+        seAgregoUnNuevoJuego, nuevaMano, finJuego, timerApuesta;
     }
     
     public void agregarAdmin(Administrador a)

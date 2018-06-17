@@ -87,6 +87,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         txtJugadoresPagan = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaPagan = new javax.swing.JList();
+        txtTimer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -196,6 +197,10 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(750, 60, 140, 120);
 
+        txtTimer.setForeground(new java.awt.Color(254, 254, 254));
+        getContentPane().add(txtTimer);
+        txtTimer.setBounds(160, 50, 530, 70);
+
         setBounds(0, 0, 973, 500);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -241,6 +246,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     private javax.swing.JLabel txtInformacion;
     private javax.swing.JLabel txtJugadoresPagan;
     private javax.swing.JTextField txtMontoApuesta;
+    private javax.swing.JLabel txtTimer;
     // End of variables declaration//GEN-END:variables
 
     /* OJO la vista jamas debe conocer nada del modelo, solo trabaja mediante el controlador*/
@@ -433,6 +439,11 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     @Override
     public void actualizarPagan(List<Participante> pagan) {
         listaPagan.setListData(pagan.toArray());
+    }
+
+    @Override
+    public void actualizarTimer(int timer) {
+        txtTimer.setText("Faltan "+(30-timer)+" segundos para que todos los jugadores respondan a la apuesta");
     }
 
 }

@@ -153,6 +153,7 @@ public class ControladorJuego implements Observer {
                 vista.inicioNuevaApuesta(juego.getManoActual().getApuesta().getDueno().getJugador().getNombreCompleto(), juego.getManoActual().getApuesta().getValor());
                 vista.actualizarPozo(this.juego.getPozo());
                 vista.actualizarMesa(juego.getActivos());
+                
                 break;
             case nuevaPagaoPasa:
                 vista.actualizarPozo(this.juego.getPozo());
@@ -191,6 +192,10 @@ public class ControladorJuego implements Observer {
                 vista.mostrarParticipantes(getFaltantes());
                 vista.actualizarMesa(juego.getActivos());
 
+                break;
+             case timerApuesta:
+
+                vista.actualizarTimer(this.juego.getTimer());
                 break;
 
             case finJuego:

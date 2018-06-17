@@ -41,6 +41,8 @@ public interface VistaJuego {
     public void fuiExpulsado();
 
     public void actualizarMano(List<Carta> cartasMano, String figura);
+
+    public void actualizarTimer(int timer);
     
  
 
