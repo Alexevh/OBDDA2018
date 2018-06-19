@@ -41,10 +41,25 @@ public class Juego extends Observable {
     private Mazo mazo;
 
     private boolean iniciado;
+    HiloTimer hilo = new HiloTimer("Hilo", this);
+
+    public HiloTimer getHilo() {
+        return hilo;
+    }
+
+    public void setHilo(HiloTimer hilo) {
+        this.hilo = hilo;
+    }
+            
+    
+    
 
     public Juego() {
 
     }
+
+    
+    
 
     public enum Eventos {
         inicioJuego, ingresaNuevoParticipante, seEliminaParticipante, nuevaMano, nuevaApuesta, nuevaPagaoPasa, hayGanador, finJuego, manoNuevaSiNo, huboEmpate, expulsarParticipante, timerApuesta;
@@ -360,7 +375,11 @@ public class Juego extends Observable {
 
             /* Hay que vaciar la lista de los que ya pasaron*/
             a.getListaPasan().clear();
+            /*
             HiloTimer hilo = new HiloTimer("Hilo", this);
+            hilo.start();
+            */
+            this.hilo =  new HiloTimer("Hilo", this);
             hilo.start();
             avisar(Eventos.nuevaApuesta);
         } else {
@@ -383,6 +402,8 @@ public class Juego extends Observable {
         }
 
         if (hayDecision(a)) {
+            this.timer =0;
+            cortarTimer();
             resolverGanador(getManoActual());
         } else {
             avisar(Eventos.nuevaPagaoPasa);
@@ -395,6 +416,8 @@ public class Juego extends Observable {
 
         if (hayDecision(a)) {
 
+            this.timer =0;
+            cortarTimer();
             resolverGanador(getManoActual());
         } else {
             avisar(Eventos.nuevaPagaoPasa);
@@ -573,6 +596,7 @@ public class Juego extends Observable {
     private void vaciarContadores() {
         contadorRespuestas = 0;
         contadorRespuestasObtenidas = 0;
+        
     }
 
     private void expulsarPobres() {
@@ -630,7 +654,43 @@ public class Juego extends Observable {
 
         this.timer =x;
         avisar(Eventos.timerApuesta);
+        
+        /* Si se llego a 30 resolvemos la mano*/
+        if (this.timer==30)
+        {
+            resolverApuestas();
+        }
+        
+    }
 
+    
+    private void resolverApuestas() {
+        
+        /* Seteamos el timer en 0 asi nos queda para la proxima */
+        this.timer =0;
+        
+        /*Si un jugador habia pagado o habia pasado el metodo obtenerganador ya
+        lo contempla, lo que hay que resolver es que el jugador que dejo pasar el
+        tiempo pase a la lista de jugadores que pasaron*/
+        
+        for (Participante p: getActivos())
+        {
+            if (this.getManoActual().getApuesta().getDueno()!=p
+               && !this.getManoActual().getApuesta().getListaPagan().contains(p)
+               && !this.getManoActual().getApuesta().getListaPasan().contains(p))
+            {
+                this.getManoActual().getApuesta().getListaPasan().add(p);
+            }
+        }
+        
+        resolverGanador(getManoActual());
+        
+    }
+    
+    
+    private void cortarTimer() {
+        hilo.stop();
+        this.hilo = new HiloTimer("Hilo", this);;
     }
 
 }

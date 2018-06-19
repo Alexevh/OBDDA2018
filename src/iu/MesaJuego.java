@@ -199,7 +199,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
         txtTimer.setForeground(new java.awt.Color(254, 254, 254));
         getContentPane().add(txtTimer);
-        txtTimer.setBounds(160, 50, 530, 70);
+        txtTimer.setBounds(160, 40, 530, 30);
 
         setBounds(0, 0, 973, 500);
     }// </editor-fold>//GEN-END:initComponents
@@ -407,6 +407,7 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
         //JOptionPane.showMessageDialog(this, "El ganador de la ultima mano fue " + nombre, "Ganador", JOptionPane.INFORMATION_MESSAGE, icon);
         
         new ManoGanador(nombre, figura, cartas).setVisible(true);
+        this.txtTimer.setText("");
        
     }
 

@@ -23,7 +23,7 @@ public class SistemaJuegos extends Observable {
     private List<Juego> listaJuegosTerminados = new ArrayList();
     private List<FiguraMano> listaFiguras = new ArrayList();
     
-    private int maxJugadores = 2;
+    private int maxJugadores = 3;
     private int luz = 1;
     /* Esto es para calcular el saldo antes de dejar entrar al jugador, si el saldo del jugador es menor a este numero X luz entonces no entra*/
     private int minimasApuestas = 3;
