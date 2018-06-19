@@ -43,7 +43,7 @@ public class HiloTimer extends Thread{
                 
                 sleep(1000);
                 
-                x++;
+               
                 
             } catch (InterruptedException ex) { }
             System.out.println(getName() + ":" + x);
