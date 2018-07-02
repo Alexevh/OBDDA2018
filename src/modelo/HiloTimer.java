@@ -16,6 +16,18 @@ import modelo.Fachada.Eventos;
 public class HiloTimer extends Thread{
     
     private Juego j;
+    
+    private boolean corriendo = false;
+
+    public boolean isCorriendo() {
+        return corriendo;
+    }
+
+    public void setCorriendo(boolean corriendo) {
+        this.corriendo = corriendo;
+    }
+    
+    
 
     public Juego getJ() {
         return j;
@@ -34,6 +46,7 @@ public class HiloTimer extends Thread{
     
     @Override
     public void run(){
+        
         
         for(int x=1;x<=30;x++){
             try {

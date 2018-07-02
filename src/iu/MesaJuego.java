@@ -260,7 +260,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     private void pintarMesa() {
 
         setLayout(new BorderLayout());
-        JLabel background = new JLabel(new ImageIcon("src/imagenes/mesa.jpg"));
+        //JLabel background = new JLabel(new ImageIcon("src/imagenes/mesa.jpg"));
+        JLabel background = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mesa.jpg")));
+        
 
         add(background);
         background.setLayout(new FlowLayout());
@@ -299,7 +301,12 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     @Override
     public void actualizarMesa(List<Participante> lista) {
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/imagenes/saldo.png").getImage().getScaledInstance(40, 60, Image.SCALE_DEFAULT));
+        ImageIcon imageIcon = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/saldo.png")).getImage().getScaledInstance(40, 60, Image.SCALE_DEFAULT));
+        
+
+        
+        
+        
         imgSaldo.setIcon(imageIcon);
         imgSaldo.setText("Saldo : " + j.getJugador().getSaldo());
 
@@ -354,7 +361,9 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
 
     @Override
     public void actualizarPozo(int valor) {
-        ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        //ImageIcon pozo = new ImageIcon(new ImageIcon("src/imagenes/pozo.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        
+        ImageIcon pozo = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pozo.png")).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
         imgPozo.setIcon(pozo);
         imgPozo.setText("Pozo : $ " + valor);
     }
@@ -427,13 +436,14 @@ public class MesaJuego extends javax.swing.JFrame implements VistaJuego {
     @Override
     public void actualizarMano(List<Carta> cartas, String figura) {
 
-        ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(0).getImagen()).getImage());
+        ImageIcon carta1 = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(0).getImagen())).getImage());
+        //ImageIcon pozo = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pozo.png")).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
         // ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/10c.gif").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
         c1.setIcon(carta1);
-        c2.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(1).getImagen()).getImage()));
-        c3.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(2).getImagen()).getImage()));
-        c4.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(3).getImagen()).getImage()));
-        c5.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(4).getImagen()).getImage()));
+        c2.setIcon( new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(1).getImagen())).getImage()));
+        c3.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(2).getImagen())).getImage()));
+        c4.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(3).getImagen())).getImage()));
+        c5.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(4).getImagen())).getImage()));
         txtInformacion.setText("En la mano actual tenes :"+figura);
     }
 

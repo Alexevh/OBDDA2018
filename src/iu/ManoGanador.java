@@ -5,6 +5,7 @@
  */
 package iu;
 
+import java.awt.Image;
 import java.util.List;
 import javax.swing.ImageIcon;
 import modelo.Carta;
@@ -79,13 +80,14 @@ public class ManoGanador extends javax.swing.JFrame {
       private void pintarResultado(String ganador, String figura, List<Carta> cartas) {
         txtInformacion.setText("El ganador fue "+ganador+" con "+figura);
         
-        ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(0).getImagen()).getImage());
+               ImageIcon carta1 = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(0).getImagen())).getImage());
+        //ImageIcon pozo = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pozo.png")).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
         // ImageIcon carta1 = new ImageIcon(new ImageIcon("src/imagenes/cartas/10c.gif").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
         c1.setIcon(carta1);
-        c2.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(1).getImagen()).getImage()));
-        c3.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(2).getImagen()).getImage()));
-        c4.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(3).getImagen()).getImage()));
-        c5.setIcon(new ImageIcon(new ImageIcon("src/imagenes/cartas/" + cartas.get(4).getImagen()).getImage()));
+        c2.setIcon( new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(1).getImagen())).getImage()));
+        c3.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(2).getImagen())).getImage()));
+        c4.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(3).getImagen())).getImage()));
+        c5.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cartas/" + cartas.get(4).getImagen())).getImage()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
