@@ -47,8 +47,10 @@ public class HiloTimer extends Thread{
     @Override
     public void run(){
         
+        corriendo = true;
         
-        for(int x=1;x<=30;x++){
+        for(int x=1;x<=30 && corriendo ;x++){
+           
             try {
                 /* ACtualziamos el timer */
                 j.aumentarTimer(x);
@@ -65,5 +67,10 @@ public class HiloTimer extends Thread{
         //j.avisar(Juego.Eventos.timerApuesta);
         
         
+    }
+    
+    public void parar()
+    {
+        corriendo=false;
     }
 }

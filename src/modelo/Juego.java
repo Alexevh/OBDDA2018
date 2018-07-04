@@ -690,8 +690,8 @@ public class Juego extends Observable {
     
     private void cortarTimer() {
         //hilo.setCorriendo(false);
-        hilo.stop();
-        //hilo.parar();
+        //hilo.stop();
+        hilo.parar();
         this.hilo = new HiloTimer("Hilo", this);
     }
 
